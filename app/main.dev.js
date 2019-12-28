@@ -63,12 +63,21 @@ const createWindow = async () => {
   if (!process.env.DEV_DB) {
     mainWindow = new BrowserWindow({
       show: false,
-      width: 1024,
-      height: 728,
+      width: 1280,
+      height: 1040,
+      minWidth: 1024,
+      minHeight: 728,
       webPreferences: {
         nodeIntegration: true
       }
     });
+
+    mainWindow.on('closed', () => {
+      mainWindow = null;
+    });
+
+    const menuBuilder = new MenuBuilder(mainWindow);
+    menuBuilder.buildMenu();
 
     mainWindow.loadURL(`file://${__dirname}/app.html`);
 
@@ -85,13 +94,6 @@ const createWindow = async () => {
         mainWindow.focus();
       }
     });
-
-    mainWindow.on('closed', () => {
-      mainWindow = null;
-    });
-
-    const menuBuilder = new MenuBuilder(mainWindow);
-    menuBuilder.buildMenu();
   }
 };
 
@@ -100,12 +102,14 @@ const createWindow = async () => {
  */
 
 app.on('window-all-closed', () => {
+  db.end();
+  signale.log('closed the database connection');
+
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {
     app.quit();
   }
-  db.close();
 });
 
 app.on('ready', createWindow);

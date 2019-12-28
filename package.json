@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
+  "name": "proyecto-bd",
+  "productName": "ProyectoBD",
   "version": "0.18.1",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "proyecto de base de datos",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
@@ -50,8 +50,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "ProyectoBD",
+    "appId": "org.ucab.ProyectoBD",
     "files": [
       "dist/",
       "node_modules/",
@@ -220,7 +220,6 @@
     "eslint-plugin-testcafe": "^0.2.1",
     "fbjs-scripts": "^1.2.0",
     "file-loader": "^5.0.2",
-    "history": "^4.9.0",
     "husky": "^3.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
@@ -231,9 +230,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^1.19.1",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
     "react-chartjs-2": "^2.7.6",
-    "react-dom": "^16.8.6",
     "react-perfect-scrollbar": "^1.5.3",
     "react-scripts": "^3.0.1",
     "react-test-renderer": "^16.12.0",
