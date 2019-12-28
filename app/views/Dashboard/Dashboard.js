@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 
+import {
+  getUsers
+} from '../../../db/lib/querys/get-users';
 import {
   Budget,
   TotalUsers,
@@ -20,10 +23,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Dashboard = () => {
+  const [value, setValue] = useState(null);
   const classes = useStyles();
+
+  useEffect(() => {
+    (async () => {
+      const [_value] = await getUsers();
+      setValue(_value);
+    })();
+  }, []);
 
   return (
     <div className={classes.root}>
+      <h1>{JSON.stringify(value)}</h1>
       <Grid
         container
         spacing={4}

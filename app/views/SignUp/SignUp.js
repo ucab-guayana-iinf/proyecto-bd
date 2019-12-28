@@ -100,9 +100,6 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
-  logoImage: {
-    marginLeft: theme.spacing(4)
-  },
   contentBody: {
     flexGrow: 1,
     display: 'flex',

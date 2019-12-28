@@ -11,17 +11,10 @@
  *
  */
 import { app, BrowserWindow } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
+import signale from 'signale';
+import db from '../db/lib/index';
+import setupDatabase from '../db/lib/setupDatabase';
 import MenuBuilder from './menu';
-
-export default class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
 
 let mainWindow = null;
 
@@ -48,48 +41,60 @@ const installExtensions = async () => {
 };
 
 const createWindow = async () => {
+  await db.connect((err) => {
+    if (err) {
+      const error = new Error('Error connecting to database');
+      signale.error(error);
+      reject(error);
+    } else {
+      signale.success('Connection to DB stablished')      
+    }
+  });
+  await setupDatabase(db);
+
   if (
+    process.env.DEV_DB !== 1 && (
     process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
+    process.env.DEBUG_PROD === 'true')
   ) {
     await installExtensions();
   }
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  });
+  if (!process.env.DEV_DB) {
+    mainWindow = new BrowserWindow({
+      show: false,
+      width: 1280,
+      height: 1040,
+      minWidth: 1024,
+      minHeight: 728,
+      webPreferences: {
+        nodeIntegration: true
+      }
+    });
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+    mainWindow.on('closed', () => {
+      mainWindow = null;
+    });
 
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    if (process.env.START_MINIMIZED) {
-      mainWindow.minimize();
-    } else {
-      mainWindow.show();
-      mainWindow.focus();
-    }
-  });
+    const menuBuilder = new MenuBuilder(mainWindow);
+    menuBuilder.buildMenu();
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+    mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
+    // @TODO: Use 'ready-to-show' event
+    //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+    mainWindow.webContents.on('did-finish-load', () => {
+      if (!mainWindow) {
+        throw new Error('"mainWindow" is not defined');
+      }
+      if (process.env.START_MINIMIZED) {
+        mainWindow.minimize();
+      } else {
+        mainWindow.show();
+        mainWindow.focus();
+      }
+    });
+  }
 };
 
 /**
@@ -97,6 +102,9 @@ const createWindow = async () => {
  */
 
 app.on('window-all-closed', () => {
+  db.end();
+  signale.log('closed the database connection');
+
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
   if (process.platform !== 'darwin') {

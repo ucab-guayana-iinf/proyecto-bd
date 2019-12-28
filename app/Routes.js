@@ -14,7 +14,6 @@ import {
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
 } from './views';
 
 const Routes = () => {
@@ -75,13 +74,7 @@ const Routes = () => {
         layout={MinimalLayout}
         path="/sign-in"
       />
-      <RouteWithLayout
-        component={NotFoundView}
-        exact
-        layout={MinimalLayout}
-        path="/not-found"
-      />
-      <Redirect to="/not-found" />
+      <Redirect to="/dashboard" />
     </Switch>
   );
 };
