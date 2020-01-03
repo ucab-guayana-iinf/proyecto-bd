@@ -76,7 +76,15 @@ CREATE TABLE `bienes` (
   `origen` varchar(255),
   `codigo_unidad` CODIGO,
   `tipo` varchar(255),
-  PRIMARY KEY (`codigo_bien`)
+  PRIMARY KEY (`codigo_bien`),
+  FOREIGN KEY (`codigo_bien`) REFERENCES `activos_tangibles` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `activos_intangibles` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `edificaciones` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes_naturales` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `componentes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE
+  FOREIGN KEY (`codigo_bien`) REFERENCES `historial_reponsables_de_uso` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `inventarios_x_bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CHECK (`fecha_desincorporacion` > `fecha_incorporacion`)
 );
 
 CREATE TABLE `activos_tangibles` (
@@ -222,19 +230,19 @@ CREATE TABLE `inventarios_x_bienes` (
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
 
-ALTER TABLE `bienes` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `activos_tangibles` (`codigo_bien`);
+ALTER TABLE `bienes` ADD
 
 ALTER TABLE `facturas_activos_tangibles` ADD FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`);
 
-ALTER TABLE `bienes` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `activos_intangibles` (`codigo_bien`);
+ALTER TABLE `bienes` ADD
 
-ALTER TABLE `bienes` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `edificaciones` (`codigo_bien`);
+ALTER TABLE `bienes` ADD
 
-ALTER TABLE `bienes` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `bienes_naturales` (`codigo_bien`);
+ALTER TABLE `bienes` ADD
 
 ALTER TABLE `bienes_naturales` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `fotografias_bienes_naturales` (`numero_bien_natural`);
 
-ALTER TABLE `bienes` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `componentes` (`codigo_bien`);
+ALTER TABLE `bienes` ADD
 
 ALTER TABLE `componentes` ADD FOREIGN KEY (`codigo_componente`) REFERENCES `nombres_componentes` (`codigo_componente`);
 
@@ -254,7 +262,7 @@ ALTER TABLE `formatos` ADD FOREIGN KEY (`numero_formato`) REFERENCES `movilizaci
 
 ALTER TABLE `activos_intangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`);
 
-ALTER TABLE `bienes` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `historial_reponsables_de_uso` (`codigo_bien`);
+ALTER TABLE `bienes` ADD
 
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_sedes` (`anio`);
 
@@ -270,6 +278,6 @@ ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_bie
 
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`semestre`) REFERENCES `inventarios_x_bienes` (`semestre`);
 
-ALTER TABLE `bienes` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `inventarios_x_bienes` (`codigo_bien`);
+ALTER TABLE `bienes` ADD
 
 ALTER TABLE `sedes` ADD FOREIGN KEY (`codigo_sede`) REFERENCES `unidades` (`codigo_sede`);
