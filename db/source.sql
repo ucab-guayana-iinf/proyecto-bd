@@ -143,7 +143,11 @@ CREATE TABLE `fotografias_bienes_naturales` (
 CREATE TABLE `componentes` (
   `codigo_bien` CODIGO,
   `codigo_componente` CODIGO NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`codigo_bien`, `codigo_componente`)
+  PRIMARY KEY (`codigo_bien`, `codigo_componente`),
+  FOREIGN KEY (`codigo_componente`) REFERENCES `nombres_componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_componentes` (`codigo_componente_padre`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_activos_tangibles` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE `nombres_componentes` (
@@ -231,14 +235,6 @@ CREATE TABLE `inventarios_x_bienes` (
   `fecha_realizacion` datetime,
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
-
-ALTER TABLE `componentes` ADD FOREIGN KEY (`codigo_componente`) REFERENCES `nombres_componentes` (`codigo_componente`);
-
-ALTER TABLE `componentes` ADD FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_componentes` (`codigo_componente`);
-
-ALTER TABLE `componentes` ADD FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_componentes` (`codigo_componente_padre`);
-
-ALTER TABLE `componentes` ADD FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_activos_tangibles` (`codigo_componente`);
 
 ALTER TABLE `activos_tangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `componentes_x_activos_tangibles` (`numero_bien_tangible`);
 
