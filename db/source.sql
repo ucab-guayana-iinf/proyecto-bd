@@ -94,7 +94,9 @@ CREATE TABLE `activos_tangibles` (
   `precio` float,
   `plazo_garantia` int,
   `status` STATUS_ACTIVO_TANGIBLE,
-  PRIMARY KEY (`codigo_bien`)
+  PRIMARY KEY (`codigo_bien`),
+  FOREIGN KEY (`codigo_bien`) REFERENCES `componentes_x_activos_tangibles` (`numero_bien_tangible`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_tangibles` (`numero_bien_tangible`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE `facturas_activos_tangibles` (
@@ -236,11 +238,7 @@ CREATE TABLE `inventarios_x_bienes` (
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
 
-ALTER TABLE `activos_tangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `componentes_x_activos_tangibles` (`numero_bien_tangible`);
-
 ALTER TABLE `formatos` ADD FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_tangibles` (`numero_formato`);
-
-ALTER TABLE `activos_tangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_tangibles` (`numero_bien_tangible`);
 
 ALTER TABLE `formatos` ADD FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_intangibles` (`numero_formato`);
 
