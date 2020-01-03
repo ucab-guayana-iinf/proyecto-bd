@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `activos_tangibles` (
   `plazo_garantia` int,
   `status` STATUS_ACTIVO_TANGIBLE,
   PRIMARY KEY (`codigo_bien`),
-  FOREIGN KEY (`codigo_bien`) REFERENCES `activos_tangibles` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_bien`) REFERENCES `componentes_x_activos_tangibles` (`numero_bien_tangible`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_tangibles` (`numero_bien_tangible`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `activos_intangibles` (
   `es_compartido` boolean,
   `status` STATUS_ACTIVO_INTANGIBLE,
   PRIMARY KEY (`codigo_bien`),
-  FOREIGN KEY (`codigo_bien`) REFERENCES `activos_intangibles` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`)
 );
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `edificaciones` (
   `tipo_propiedad` TIPOS_DE_PROPIEDADES,
   `status` STATUS_EDIFICACIONES,
   PRIMARY KEY (`codigo_bien`),
-  FOREIGN KEY (`codigo_bien`) REFERENCES `edificaciones` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `bienes_naturales` (
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `bienes_naturales` (
   `ubicacion` varchar(255),
   `status` STATUS_BIENES_NATURALES,
   PRIMARY KEY (`codigo_bien`),
-  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes_naturales` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_bien`) REFERENCES `fotografias_bienes_naturales` (`numero_bien_natural`)
 );
 
