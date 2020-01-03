@@ -31,7 +31,9 @@ CREATE TABLE `sedes` (
   `codigo_sede` CODIGO,
   `descripcion` varchar(255),
   `direccion` varchar(255),
-  PRIMARY KEY (`codigo_sede`)
+  PRIMARY KEY (`codigo_sede`),
+  FOREIGN KEY (`codigo_sede`) REFERENCES `inventarios_x_sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_sede`) REFERENCES `unidades` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE `ubicaciones` (
@@ -245,7 +247,3 @@ CREATE TABLE `inventarios_x_bienes` (
   `fecha_realizacion` datetime,
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
-
-ALTER TABLE `sedes` ADD FOREIGN KEY (`codigo_sede`) REFERENCES `inventarios_x_sedes` (`codigo_sede`);
-
-ALTER TABLE `sedes` ADD FOREIGN KEY (`codigo_sede`) REFERENCES `unidades` (`codigo_sede`);
