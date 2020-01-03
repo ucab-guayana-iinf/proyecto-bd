@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS `sedes` (
   `codigo_sede` CODIGO,
   `descripcion` varchar(255),
   `direccion` varchar(255),
-  PRIMARY KEY (`codigo_sede`),
-  FOREIGN KEY (`codigo_sede`) REFERENCES `unidades` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
+  PRIMARY KEY (`codigo_sede`)
 );
 
 CREATE TABLE IF NOT EXISTS `ubicaciones` (
@@ -49,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `unidades` (
   `fecha_jefe` datetime,
   `ci_jefe` int,
   PRIMARY KEY (`codigo_unidad`),
+  FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
   FOREIGN KEY (`codigo_unidad`) REFERENCES `empleados` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_unidad`) REFERENCES `bienes` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_unidad`) REFERENCES `formatos` (`unidad_emisora`) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -218,9 +218,6 @@ CREATE TABLE IF NOT EXISTS `inventarios` (
   `fecha_fin` datetime,
   `status` STATUS_INVENTARIO,
   PRIMARY KEY (`anio`, `semestre`),
-  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios_x_sedes` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios_x_empleados` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios_x_bienes` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CHECK (`fecha_fin` > `fecha_inicio`)
 );
 
@@ -229,14 +226,16 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_sedes` (
   `semestre` varchar(255),
   `codigo_sede` CODIGO,
   PRIMARY KEY (`anio`, `semestre`, `codigo_sede`),
-  FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
+  FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (
   `anio` int,
   `semestre` varchar(255),
   `ci_empleado` int,
-  PRIMARY KEY (`anio`, `semestre`, `ci_empleado`)
+  PRIMARY KEY (`anio`, `semestre`, `ci_empleado`),
+  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios_x_bienes` (
@@ -245,5 +244,6 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_bienes` (
   `codigo_bien` CODIGO,
   `ci_empleado` int,
   `fecha_realizacion` datetime,
-  PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
+  PRIMARY KEY (`anio`, `semestre`,'codigo_bien'),
+  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
