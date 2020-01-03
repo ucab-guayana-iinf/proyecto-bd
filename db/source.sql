@@ -37,7 +37,8 @@ CREATE TABLE `sedes` (
 CREATE TABLE `ubicaciones` (
   `direccion` varchar(255),
   `nombre_ciudad` varchar(255),
-  PRIMARY KEY (`direccion`)
+  PRIMARY KEY (`direccion`),
+  FOREIGN KEY (`direccion`) REFERENCES `sedes` (`direccion`) ON DELETE RESTRICT ON UPDATE CASCADE;
 );
 
 CREATE TABLE `unidades` (
@@ -209,8 +210,6 @@ CREATE TABLE `inventarios_x_bienes` (
   `fecha_realizacion` datetime,
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
-
-ALTER TABLE `ubicaciones` ADD FOREIGN KEY (`direccion`) REFERENCES `sedes` (`direccion`);
 
 ALTER TABLE `empleados` ADD FOREIGN KEY (`ci`) REFERENCES `unidades` (`ci_jefe`);
 
