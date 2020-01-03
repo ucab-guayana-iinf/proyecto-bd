@@ -29,9 +29,9 @@ CREATE DOMAIN ESTACIONES AS ENUM(`PRIMAVERA`, `VERANO`, `OTOÑO`, `INVIERNO`);
 CREATE DOMAIN STATUS_INVENTARIO AS ENUM(`EN EJECUCIÓN`, `EN CONCILIACIÓN`, `CERRADO`);
 
 CREATE TABLE IF NOT EXISTS `sedes` (
-  `codigo_sede` CODIGO,
-  `descripcion` varchar(255),
-  `direccion` varchar(255),
+  `codigo_sede` CODIGO NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) UNIQUE NOT NULL,
+  `direccion` varchar(255) NOT NULL,
   PRIMARY KEY (`codigo_sede`)
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `ubicaciones` (
 );
 
 CREATE TABLE IF NOT EXISTS `unidades` (
-  `codigo_unidad` CODIGO,
+  `codigo_unidad` CODIGO NOT NULL AUTO_INCREMENT,
   `codigo_sede` CODIGO,
   `nombre_unidad` varchar(255),
   `fecha_jefe` datetime,
@@ -76,9 +76,9 @@ CREATE TABLE IF NOT EXISTS `bienes` (
 
 CREATE TABLE IF NOT EXISTS `activos_tangibles` (
   `codigo_bien` CODIGO,
-  `proveedor` varchar(255),
-  `numero_factura` int,
-  `precio` float,
+  `proveedor` varchar(255) NOT NULL,
+  `numero_factura` int NOT NULL,
+  `precio` float NOT NULL,
   `plazo_garantia` int,
   `status` STATUS_ACTIVO_TANGIBLE,
   PRIMARY KEY (`codigo_bien`),
@@ -94,39 +94,39 @@ CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` (
 
 CREATE TABLE IF NOT EXISTS `activos_intangibles` (
   `codigo_bien` CODIGO,
-  `fecha_caducidad` datetime,
-  `es_compartido` boolean,
-  `status` STATUS_ACTIVO_INTANGIBLE,
+  `fecha_caducidad` datetime NOT NULL,
+  `es_compartido` boolean NOT NULL DEFAULT false,
+  `status` STATUS_ACTIVO_INTANGIBLE NOT NULL,
   PRIMARY KEY (`codigo_bien`),
   FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `edificaciones` (
   `codigo_bien` CODIGO,
-  `ubicacion` varchar(255),
-  `superficie` float,
-  `tipo_propiedad` TIPOS_DE_PROPIEDADES,
-  `status` STATUS_EDIFICACIONES,
+  `ubicacion` varchar(255) NOT NULL,
+  `superficie` float NOT NULL,
+  `tipo_propiedad` TIPOS_DE_PROPIEDADES NOT NULL,
+  `status` STATUS_EDIFICACIONES NOT NULL,
   PRIMARY KEY (`codigo_bien`),
   FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `bienes_naturales` (
   `codigo_bien` CODIGO,
-  `nombre_cientifico` varchar(255),
-  `nombre_vulgar` varchar(255),
-  `es_frutal` boolean,
-  `periodo_floral` ESTACIONES,
-  `origen` varchar(255),
-  `ubicacion` varchar(255),
-  `status` STATUS_BIENES_NATURALES,
+  `nombre_cientifico` varchar(255) NOT NULL,
+  `nombre_vulgar` varchar(255) NOT NULL,
+  `es_frutal` boolean NOT NULL DEFAULT false,
+  `periodo_floral` ESTACIONES NOT NULL,
+  `origen` varchar(255) NOT NULL,
+  `ubicacion` varchar(255) NOT NULL,
+  `status` STATUS_BIENES_NATURALES NOT NULL,
   PRIMARY KEY (`codigo_bien`),
   FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `fotografias_bienes_naturales` (
   `codigo_bien_natural` CODIGO,
-  `fotografia` base64image,
+  `fotografia` base64image NOT NULL,
   PRIMARY KEY (`codigo_bien_natural`),
   FOREIGN KEY (`codigo_bien_natural`) REFERENCES `bienes_naturales` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -140,14 +140,14 @@ CREATE TABLE IF NOT EXISTS `componentes` (
 
 CREATE TABLE IF NOT EXISTS `nombres_componentes` (
   `codigo_componente` CODIGO,
-  `nombre_componente` varchar(255),
+  `nombre_componente` varchar(255) NOT NULL,
   PRIMARY KEY (`codigo_componente`),
   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `componentes_x_componentes` (
   `codigo_componente` CODIGO,
-  `codigo_componente_padre` CODIGO,
+  `codigo_componente_padre` CODIGO NOT NULL,
   PRIMARY KEY (`codigo_componente`, `codigo_componente_padre`),
   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_componente_padre`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `componentes_x_componentes` (
 
 CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` (
   `codigo_componente` CODIGO,
-  `codigo_bien_tangible` CODIGO,
+  `codigo_bien_tangible` CODIGO NOT NULL,
   PRIMARY KEY (`codigo_componente`, `codigo_bien_tangible`),
   FOREIGN KEY (`codigo_bien_tangible`) REFERENCES `activos_tangibles` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -163,13 +163,13 @@ CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` (
 
 CREATE TABLE IF NOT EXISTS `formatos` (
   `numero_formato` int NOT NULL AUTO_INCREMENT,
-  `codigo_unidad_emisora` CODIGO,
-  `codigo_unidad_receptora` CODIGO,
-  `ficha_responsable_cedente` int,
-  `ficha_responsable_receptor` int,
-  `aprobacion_emisor` boolean,
-  `aprobacion_receptor` boolean,
-  `fecha_formato` datetime,
+  `codigo_unidad_emisora` CODIGO NOT NULL,
+  `codigo_unidad_receptora` CODIGO NOT NULL,
+  `ficha_responsable_cedente` int NOT NULL,
+  `ficha_responsable_receptor` int NOT NULL,
+  `aprobacion_emisor` boolean NOT NULL DEFAULT false,
+  `aprobacion_receptor` boolean NOT NULL DEFAULT false,
+  `fecha_formato` datetime NOT NULL,
   PRIMARY KEY (`numero_formato`),
   FOREIGN KEY (`ficha_responsable_cedente`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/
   FOREIGN KEY (`ficha_responsable_receptor`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `formatos` (
 
 CREATE TABLE IF NOT EXISTS `movilizaciones_tangibles` (
   `numero_formato` int,
-  `codigo_bien_tangible` CODIGO,
+  `codigo_bien_tangible` CODIGO NOT NULL,
   PRIMARY KEY (`numero_formato`, `codigo_bien_tangible`),
   FOREIGN KEY (`codigo_bien_tangible`) REFERENCES `activos_tangibles` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`numero_formato`) REFERENCES `formatos` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `movilizaciones_tangibles` (
 
 CREATE TABLE IF NOT EXISTS `movilizaciones_intangibles` (
   `numero_formato` int,
-  `codigo_bien_intangible` CODIGO,
+  `codigo_bien_intangible` CODIGO NOT NULL,
   PRIMARY KEY (`numero_formato`, `codigo_bien_intangible`),
   FOREIGN KEY (`codigo_bien_intagible`) REFERENCES `activos_intangibles` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`numero_formato`) REFERENCES `formatos` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -195,22 +195,22 @@ CREATE TABLE IF NOT EXISTS `movilizaciones_intangibles` (
 
 CREATE TABLE IF NOT EXISTS `historial_reponsables_de_uso` (
   `ci` int,
-  `codigo_bien` CODIGO,
+  `codigo_bien` CODIGO NOT NULL,
   PRIMARY KEY (`ci`, `codigo_bien`),
 );
 
 CREATE TABLE IF NOT EXISTS `historial_responsables_primarios` (
   `ci` int,
-  `codigo_unidad` CODIGO,
+  `codigo_unidad` CODIGO NOT NULL,
   PRIMARY KEY (`ci`, `codigo_unidad`),
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios` (
   `anio` int,
   `semestre` varchar(255),
-  `fecha_inicio` datetime,
-  `fecha_fin` datetime,
-  `status` STATUS_INVENTARIO,
+  `fecha_inicio` datetime NOT NULL,
+  `fecha_fin` datetime NOT NULL,
+  `status` STATUS_INVENTARIO NOT NULL,
   `ci_lider_inventario` int,
   PRIMARY KEY (`anio`, `semestre`),
   FOREIGN KEY (`ci_lider_inventario`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -219,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `inventarios` (
 CREATE TABLE IF NOT EXISTS `inventarios_x_sedes` (
   `anio` int,
   `semestre` varchar(255),
-  `codigo_sede` CODIGO,
+  `codigo_sede` CODIGO NOT NULL,
   PRIMARY KEY (`anio`, `semestre`, `codigo_sede`),
   FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_sedes` (
 CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (
   `anio` int,
   `semestre` varchar(255),
-  `ci_empleado` int,
+  `ci_empleado` int NOT NULL,
   PRIMARY KEY (`anio`, `semestre`, `ci_empleado`),
   FOREIGN KEY (`ci_empleado`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE
