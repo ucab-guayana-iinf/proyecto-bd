@@ -27,7 +27,7 @@ CREATE DOMAIN ESTACIONES AS ENUM(`PRIMAVERA`, `VERANO`, `OTOÑO`, `INVIERNO`);
 /* dominios inventario */
 CREATE DOMAIN STATUS_INVENTARIO AS ENUM(`EN EJECUCIÓN`, `EN CONCILIACIÓN`, `CERRADO`);
 
-CREATE TABLE `sedes` (
+CREATE TABLE IF NOT EXISTS `sedes` (
   `codigo_sede` CODIGO,
   `descripcion` varchar(255),
   `direccion` varchar(255),
@@ -36,14 +36,14 @@ CREATE TABLE `sedes` (
   FOREIGN KEY (`codigo_sede`) REFERENCES `unidades` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE `ubicaciones` (
+CREATE TABLE IF NOT EXISTS `ubicaciones` (
   `direccion` varchar(255),
   `nombre_ciudad` varchar(255),
   PRIMARY KEY (`direccion`),
   FOREIGN KEY (`direccion`) REFERENCES `sedes` (`direccion`) ON DELETE RESTRICT ON UPDATE CASCADE;
 );
 
-CREATE TABLE `unidades` (
+CREATE TABLE IF NOT EXISTS `unidades` (
   `codigo_unidad` CODIGO,
   `codigo_sede` CODIGO,
   `nombre_unidad` varchar(255),
@@ -58,7 +58,7 @@ CREATE TABLE `unidades` (
   FOREIGN KEY (`codigo_unidad`) REFERENCES `historial_responsables_primarios` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE `empleados` (
+CREATE TABLE IF NOT EXISTS `empleados` (
   `ci` int,
   `nombre_completo` varchar(255),
   `codigo_unidad` CODIGO,
@@ -70,7 +70,7 @@ CREATE TABLE `empleados` (
   FOREIGN KEY (`ci`) REFERENCES `inventarios_x_empleados` (`ci_empleado`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE `bienes` (
+CREATE TABLE IF NOT EXISTS `bienes` (
   `codigo_bien` CODIGO,
   `descripcion` varchar(255),
   `fecha_incorporacion` datetime,
@@ -89,7 +89,7 @@ CREATE TABLE `bienes` (
   CHECK (`fecha_desincorporacion` > `fecha_incorporacion`)
 );
 
-CREATE TABLE `activos_tangibles` (
+CREATE TABLE IF NOT EXISTS `activos_tangibles` (
   `codigo_bien` CODIGO,
   `proveedor` varchar(255),
   `numero_factura` int,
@@ -101,14 +101,14 @@ CREATE TABLE `activos_tangibles` (
   FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_tangibles` (`numero_bien_tangible`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE `facturas_activos_tangibles` (
+CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` (
   `numero_factura` int,
   `numero_orden` int,
   PRIMARY KEY (`numero_factura`),
   FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE `activos_intangibles` (
+CREATE TABLE IF NOT EXISTS `activos_intangibles` (
   `codigo_bien` CODIGO,
   `fecha_caducidad` datetime,
   `es_compartido` boolean,
@@ -117,7 +117,7 @@ CREATE TABLE `activos_intangibles` (
   FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`)
 );
 
-CREATE TABLE `edificaciones` (
+CREATE TABLE IF NOT EXISTS `edificaciones` (
   `codigo_bien` CODIGO,
   `ubicacion` varchar(255),
   `superficie` float,
@@ -126,7 +126,7 @@ CREATE TABLE `edificaciones` (
   PRIMARY KEY (`codigo_bien`)
 );
 
-CREATE TABLE `bienes_naturales` (
+CREATE TABLE IF NOT EXISTS `bienes_naturales` (
   `codigo_bien` CODIGO,
   `nombre_cientifico` varchar(255),
   `nombre_vulgar` varchar(255),
@@ -139,13 +139,13 @@ CREATE TABLE `bienes_naturales` (
   FOREIGN KEY (`codigo_bien`) REFERENCES `fotografias_bienes_naturales` (`numero_bien_natural`)
 );
 
-CREATE TABLE `fotografias_bienes_naturales` (
+CREATE TABLE IF NOT EXISTS `fotografias_bienes_naturales` (
   `codigo_bien_natural` CODIGO,
   `fotografia` base64image,
   PRIMARY KEY (`codigo_bien_natural`)
 );
 
-CREATE TABLE `componentes` (
+CREATE TABLE IF NOT EXISTS `componentes` (
   `codigo_bien` CODIGO,
   `codigo_componente` CODIGO NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`codigo_bien`, `codigo_componente`),
@@ -155,25 +155,25 @@ CREATE TABLE `componentes` (
   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_activos_tangibles` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-CREATE TABLE `nombres_componentes` (
+CREATE TABLE IF NOT EXISTS `nombres_componentes` (
   `codigo_componente` CODIGO,
   `nombre_componente` varchar(255),
   PRIMARY KEY (`codigo_componente`)
 );
 
-CREATE TABLE `componentes_x_componentes` (
+CREATE TABLE IF NOT EXISTS `componentes_x_componentes` (
   `codigo_componente` CODIGO,
   `codigo_componente_padre` CODIGO,
   PRIMARY KEY (`codigo_componente`, `codigo_componente_padre`)
 );
 
-CREATE TABLE `componentes_x_activos_tangibles` (
+CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` (
   `codigo_componente` CODIGO,
   `codigo_bien_tangible` CODIGO,
   PRIMARY KEY (`codigo_componente`, `codigo_bien_tangible`)
 );
 
-CREATE TABLE `formatos` (
+CREATE TABLE IF NOT EXISTS `formatos` (
   `numero_formato` int NOT NULL AUTO_INCREMENT,
   `unidad_emisora` varchar(255) /*CODIGO*/,
   `unidad_receptora` varchar(255) /*CODIGO*/,
@@ -188,31 +188,31 @@ CREATE TABLE `formatos` (
 
 );
 
-CREATE TABLE `movilizaciones_tangibles` (
+CREATE TABLE IF NOT EXISTS `movilizaciones_tangibles` (
   `numero_formato` int,
   `codigo_bien_tangible` CODIGO,
   PRIMARY KEY (`numero_formato`, `codigo_bien_tangible`)
 );
 
-CREATE TABLE `movilizaciones_intangibles` (
+CREATE TABLE IF NOT EXISTS `movilizaciones_intangibles` (
   `numero_formato` int,
   `codigo_bien_intangible` CODIGO,
   PRIMARY KEY (`numero_formato`, `codigo_bien_intangible`)
 );
 
-CREATE TABLE `historial_reponsables_de_uso` (
+CREATE TABLE IF NOT EXISTS `historial_reponsables_de_uso` (
   `ci` int,
   `codigo_bien` CODIGO,
   PRIMARY KEY (`ci`, `codigo_bien`)
 );
 
-CREATE TABLE `historial_responsables_primarios` (
+CREATE TABLE IF NOT EXISTS `historial_responsables_primarios` (
   `ci` int,
   `codigo_unidad` CODIGO,
   PRIMARY KEY (`ci`, `codigo_unidad`)
 );
 
-CREATE TABLE `inventarios` (
+CREATE TABLE IF NOT EXISTS `inventarios` (
   `anio` int,
   `semestre` varchar(255),
   `fecha_inicio` datetime,
@@ -225,21 +225,21 @@ CREATE TABLE `inventarios` (
   CHECK (`fecha_fin` > `fecha_inicio`)
 );
 
-CREATE TABLE `inventarios_x_sedes` (
+CREATE TABLE IF NOT EXISTS `inventarios_x_sedes` (
   `anio` int,
   `semestre` varchar(255),
   `codigo_sede` CODIGO,
   PRIMARY KEY (`anio`, `semestre`, `codigo_sede`)
 );
 
-CREATE TABLE `inventarios_x_empleados` (
+CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (
   `anio` int,
   `semestre` varchar(255),
   `ci_empleado` int,
   PRIMARY KEY (`anio`, `semestre`, `ci_empleado`)
 );
 
-CREATE TABLE `inventarios_x_bienes` (
+CREATE TABLE IF NOT EXISTS `inventarios_x_bienes` (
   `anio` int,
   `semestre` int,
   `codigo_bien` CODIGO,
