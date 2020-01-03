@@ -101,6 +101,7 @@ CREATE TABLE `facturas_activos_tangibles` (
   `numero_factura` int,
   `numero_orden` int,
   PRIMARY KEY (`numero_factura`)
+  FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE `activos_intangibles` (
@@ -229,8 +230,6 @@ CREATE TABLE `inventarios_x_bienes` (
   `fecha_realizacion` datetime,
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
-
-ALTER TABLE `facturas_activos_tangibles` ADD FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`);
 
 ALTER TABLE `bienes_naturales` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `fotografias_bienes_naturales` (`numero_bien_natural`);
 
