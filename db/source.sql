@@ -216,7 +216,11 @@ CREATE TABLE `inventarios` (
   `fecha_inicio` datetime,
   `fecha_fin` datetime,
   `status` STATUS_INVENTARIO,
-  PRIMARY KEY (`anio`, `semestre`)
+  PRIMARY KEY (`anio`, `semestre`),
+  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios_x_sedes` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios_x_empleados` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios_x_bienes` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CHECK (`fecha_fin` > `fecha_inicio`)
 );
 
 CREATE TABLE `inventarios_x_sedes` (
@@ -242,18 +246,6 @@ CREATE TABLE `inventarios_x_bienes` (
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
 
-ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_sedes` (`anio`);
-
-ALTER TABLE `inventarios` ADD FOREIGN KEY (`semestre`) REFERENCES `inventarios_x_sedes` (`semestre`);
-
 ALTER TABLE `sedes` ADD FOREIGN KEY (`codigo_sede`) REFERENCES `inventarios_x_sedes` (`codigo_sede`);
-
-ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_empleados` (`anio`);
-
-ALTER TABLE `inventarios` ADD FOREIGN KEY (`semestre`) REFERENCES `inventarios_x_empleados` (`semestre`);
-
-ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_bienes` (`anio`);
-
-ALTER TABLE `inventarios` ADD FOREIGN KEY (`semestre`) REFERENCES `inventarios_x_bienes` (`semestre`);
 
 ALTER TABLE `sedes` ADD FOREIGN KEY (`codigo_sede`) REFERENCES `unidades` (`codigo_sede`);
