@@ -78,7 +78,6 @@ CREATE TABLE IF NOT EXISTS `bienes` (
   `codigo_unidad` CODIGO,
   `tipo` varchar(255),
   PRIMARY KEY (`codigo_bien`),
-  FOREIGN KEY (`codigo_bien`) REFERENCES `componentes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE
   FOREIGN KEY (`codigo_bien`) REFERENCES `historial_reponsables_de_uso` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_bien`) REFERENCES `inventarios_x_bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CHECK (`fecha_desincorporacion` > `fecha_incorporacion`)
@@ -148,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `componentes` (
   `codigo_bien` CODIGO,
   `codigo_componente` CODIGO NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`codigo_bien`, `codigo_componente`),
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE
   FOREIGN KEY (`codigo_componente`) REFERENCES `nombres_componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes_x_componentes` (`codigo_componente_padre`) ON DELETE RESTRICT ON UPDATE CASCADE,
