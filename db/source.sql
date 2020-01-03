@@ -2,6 +2,7 @@
 
 /*LISTO 1) CLAVES PRIMARIAS
 /*LISTO 2) DOMINIOS Y USO DE ELLOS EN EL SQL
+/*LISTO 3) CLAVES FORANEAS
 
 
 /* Creacion de la base de datos */
@@ -48,7 +49,8 @@ CREATE TABLE IF NOT EXISTS `unidades` (
   `fecha_jefe` datetime,
   `ci_jefe` int,
   PRIMARY KEY (`codigo_unidad`),
-  FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
+  FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`ci_jefe`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `empleados` (
@@ -56,11 +58,6 @@ CREATE TABLE IF NOT EXISTS `empleados` (
   `nombre_completo` varchar(255),
   `codigo_unidad` CODIGO,
   PRIMARY KEY (`ci`),
-  FOREIGN KEY (`ci`) REFERENCES `unidades` (`ci_jefe`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`ci`) REFERENCES `formatos` (`ficha_responsable_cedente`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`ci`) REFERENCES `formatos` (`ficha_responsable_receptor`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`ci`) REFERENCES `historial_reponsables_de_uso` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`ci`) REFERENCES `inventarios_x_empleados` (`ci_empleado`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -74,8 +71,6 @@ CREATE TABLE IF NOT EXISTS `bienes` (
   `tipo` varchar(255),
   PRIMARY KEY (`codigo_bien`),
   FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_bien`) REFERENCES `historial_reponsables_de_uso` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_bien`) REFERENCES `inventarios_x_bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CHECK (`fecha_desincorporacion` > `fecha_incorporacion`)
 );
 
@@ -87,9 +82,7 @@ CREATE TABLE IF NOT EXISTS `activos_tangibles` (
   `plazo_garantia` int,
   `status` STATUS_ACTIVO_TANGIBLE,
   PRIMARY KEY (`codigo_bien`),
-  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_bien`) REFERENCES `componentes_x_activos_tangibles` (`numero_bien_tangible`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_tangibles` (`numero_bien_tangible`) ON DELETE RESTRICT ON UPDATE CASCADE
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` (
@@ -105,8 +98,7 @@ CREATE TABLE IF NOT EXISTS `activos_intangibles` (
   `es_compartido` boolean,
   `status` STATUS_ACTIVO_INTANGIBLE,
   PRIMARY KEY (`codigo_bien`),
-  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`)
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `edificaciones` (
@@ -150,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `nombres_componentes` (
   `codigo_componente` CODIGO,
   `nombre_componente` varchar(255),
   PRIMARY KEY (`codigo_componente`),
-  FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `componentes_x_componentes` (
@@ -158,13 +150,14 @@ CREATE TABLE IF NOT EXISTS `componentes_x_componentes` (
   `codigo_componente_padre` CODIGO,
   PRIMARY KEY (`codigo_componente`, `codigo_componente_padre`),
   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_componente_padre`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_componente_padre`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` (
   `codigo_componente` CODIGO,
   `codigo_bien_tangible` CODIGO,
   PRIMARY KEY (`codigo_componente`, `codigo_bien_tangible`),
+  FOREIGN KEY (`codigo_bien_tangible`) REFERENCES `activos_tangibles` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -178,36 +171,42 @@ CREATE TABLE IF NOT EXISTS `formatos` (
   `aprobacion_receptor` boolean,
   `fecha_formato` datetime,
   PRIMARY KEY (`numero_formato`),
-  FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`ficha_responsable_cedente`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/
+  FOREIGN KEY (`ficha_responsable_receptor`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/
+  FOREIGN KEY (`unidad_emisora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `movilizaciones_tangibles` (
   `numero_formato` int,
   `codigo_bien_tangible` CODIGO,
   PRIMARY KEY (`numero_formato`, `codigo_bien_tangible`),
-  FOREIGN KEY (`numero_formato`) REFERENCES `formatos` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien_tangible`) REFERENCES `activos_tangibles` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`numero_formato`) REFERENCES `formatos` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `movilizaciones_intangibles` (
   `numero_formato` int,
   `codigo_bien_intangible` CODIGO,
   PRIMARY KEY (`numero_formato`, `codigo_bien_intangible`),
+  FOREIGN KEY (`codigo_bien_intagible`) REFERENCES `activos_intangibles` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`numero_formato`) REFERENCES `formatos` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `historial_reponsables_de_uso` (
   `ci` int,
   `codigo_bien` CODIGO,
-  PRIMARY KEY (`ci`, `codigo_bien`)
+  PRIMARY KEY (`ci`, `codigo_bien`),
+  FOREIGN KEY (`ci`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `historial_responsables_primarios` (
   `ci` int,
   `codigo_unidad` CODIGO,
   PRIMARY KEY (`ci`, `codigo_unidad`),
-  FOREIGN KEY (`ci_jefe`) REFERENCES `historial_responsables_primarios` (`ci`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  FOREIGN KEY (`codigo_unidad`) REFERENCES `historial_responsables_primarios` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  FOREIGN KEY (`ci_jefe`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios` (
@@ -216,8 +215,9 @@ CREATE TABLE IF NOT EXISTS `inventarios` (
   `fecha_inicio` datetime,
   `fecha_fin` datetime,
   `status` STATUS_INVENTARIO,
+  `ci_lider_inventario` int,
   PRIMARY KEY (`anio`, `semestre`),
-  CHECK (`fecha_fin` > `fecha_inicio`)
+  FOREIGN KEY (`ci_lider_inventario`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios_x_sedes` (
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_sedes` (
   `codigo_sede` CODIGO,
   PRIMARY KEY (`anio`, `semestre`, `codigo_sede`),
   FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (
@@ -234,7 +234,8 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (
   `semestre` varchar(255),
   `ci_empleado` int,
   PRIMARY KEY (`anio`, `semestre`, `ci_empleado`),
-  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`ci_empleado`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios_x_bienes` (
@@ -243,6 +244,7 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_bienes` (
   `codigo_bien` CODIGO,
   `ci_empleado` int,
   `fecha_realizacion` datetime,
-  PRIMARY KEY (`anio`, `semestre`,'codigo_bien'),
+  PRIMARY KEY (`anio`, `semestre`, `codigo_bien`),
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
