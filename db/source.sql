@@ -86,6 +86,10 @@ CREATE TABLE IF NOT EXISTS `bienes` (
   FOREIGN KEY (`codigo_bien`) REFERENCES `componentes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE
   FOREIGN KEY (`codigo_bien`) REFERENCES `historial_reponsables_de_uso` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_bien`) REFERENCES `inventarios_x_bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `activos_tangiles` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `activos_intangiles` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `edificaciones` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_bien`) REFERENCES `bienes_naturales` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE,
   CHECK (`fecha_desincorporacion` > `fecha_incorporacion`)
 );
 
