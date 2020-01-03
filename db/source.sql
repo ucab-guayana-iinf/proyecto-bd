@@ -210,18 +210,6 @@ CREATE TABLE `inventarios_x_bienes` (
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
 
-/* VERIFICAR SI EXISTE ESTA TABLA
-CREATE TABLE `reportes_x_bienes` (
-  `anio` int,
-  `semestre` int,
-  `codigo_reporte` int,
-  `numero_bien_tangible` int,
-  `numero_bien_intangible` int,
-  `numero_bien_natural` int,
-  `detalle_bien` varchar(255),
-  PRIMARY KEY (`anio`, `semestre`, `codigo_reporte`, `numero_bien_tangible`, `numero_bien_intangible`, `numero_bien_natural`, `detalle_bien`)
-);*/
-
 ALTER TABLE `ubicaciones` ADD FOREIGN KEY (`direccion`) REFERENCES `sedes` (`direccion`);
 
 ALTER TABLE `empleados` ADD FOREIGN KEY (`ci`) REFERENCES `unidades` (`ci_jefe`);
