@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `sedes` (
   `descripcion` varchar(255),
   `direccion` varchar(255),
   PRIMARY KEY (`codigo_sede`),
-  FOREIGN KEY (`codigo_sede`) REFERENCES `inventarios_x_sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_sede`) REFERENCES `unidades` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -229,7 +228,8 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_sedes` (
   `anio` int,
   `semestre` varchar(255),
   `codigo_sede` CODIGO,
-  PRIMARY KEY (`anio`, `semestre`, `codigo_sede`)
+  PRIMARY KEY (`anio`, `semestre`, `codigo_sede`),
+  FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (
