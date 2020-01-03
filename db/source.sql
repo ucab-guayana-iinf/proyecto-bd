@@ -54,7 +54,12 @@ CREATE TABLE `empleados` (
   `ci` int,
   `nombre_completo` varchar(255),
   `codigo_unidad` CODIGO,
-  PRIMARY KEY (`ci`)
+  PRIMARY KEY (`ci`),
+  FOREIGN KEY (`ci`) REFERENCES `unidades` (`ci_jefe`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`ci`) REFERENCES `formatos` (`ficha_responsable_cedente`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`ci`) REFERENCES `formatos` (`ficha_responsable_receptor`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`ci`) REFERENCES `historial_reponsables_de_uso` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`ci`) REFERENCES `inventarios_x_empleados` (`ci_empleado`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE `bienes` (
@@ -211,8 +216,6 @@ CREATE TABLE `inventarios_x_bienes` (
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
 
-ALTER TABLE `empleados` ADD FOREIGN KEY (`ci`) REFERENCES `unidades` (`ci_jefe`);
-
 ALTER TABLE `unidades` ADD FOREIGN KEY (`codigo_unidad`) REFERENCES `empleados` (`codigo_unidad`);
 
 ALTER TABLE `unidades` ADD FOREIGN KEY (`codigo_unidad`) REFERENCES `bienes` (`codigo_unidad`);
@@ -245,10 +248,6 @@ ALTER TABLE `unidades` ADD FOREIGN KEY (`codigo_unidad`) REFERENCES `formatos` (
 
 ALTER TABLE `unidades` ADD FOREIGN KEY (`codigo_unidad`) REFERENCES `formatos` (`unidad_receptora`);
 
-ALTER TABLE `empleados` ADD FOREIGN KEY (`ci`) REFERENCES `formatos` (`ficha_responsable_cedente`);
-
-ALTER TABLE `empleados` ADD FOREIGN KEY (`ci`) REFERENCES `formatos` (`ficha_responsable_receptor`);
-
 ALTER TABLE `formatos` ADD FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_tangibles` (`numero_formato`);
 
 ALTER TABLE `activos_tangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_tangibles` (`numero_bien_tangible`);
@@ -256,8 +255,6 @@ ALTER TABLE `activos_tangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `movi
 ALTER TABLE `formatos` ADD FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_intangibles` (`numero_formato`);
 
 ALTER TABLE `activos_intangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`);
-
-ALTER TABLE `empleados` ADD FOREIGN KEY (`ci`) REFERENCES `historial_reponsables_de_uso` (`ci`);
 
 ALTER TABLE `bienes` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `historial_reponsables_de_uso` (`codigo_bien`);
 
@@ -274,8 +271,6 @@ ALTER TABLE `sedes` ADD FOREIGN KEY (`codigo_sede`) REFERENCES `inventarios_x_se
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_empleados` (`anio`);
 
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`semestre`) REFERENCES `inventarios_x_empleados` (`semestre`);
-
-ALTER TABLE `empleados` ADD FOREIGN KEY (`ci`) REFERENCES `inventarios_x_empleados` (`ci_empleado`);
 
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_bienes` (`anio`);
 
