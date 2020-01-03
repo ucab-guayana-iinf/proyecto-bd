@@ -163,8 +163,8 @@ CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` (
 
 CREATE TABLE IF NOT EXISTS `formatos` (
   `numero_formato` int NOT NULL AUTO_INCREMENT,
-  `unidad_emisora` varchar(255) /*CODIGO*/,
-  `unidad_receptora` varchar(255) /*CODIGO*/,
+  `codigo_unidad_emisora` CODIGO,
+  `codigo_unidad_receptora` CODIGO,
   `ficha_responsable_cedente` int,
   `ficha_responsable_receptor` int,
   `aprobacion_emisor` boolean,
@@ -173,8 +173,8 @@ CREATE TABLE IF NOT EXISTS `formatos` (
   PRIMARY KEY (`numero_formato`),
   FOREIGN KEY (`ficha_responsable_cedente`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/
   FOREIGN KEY (`ficha_responsable_receptor`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/
-  FOREIGN KEY (`unidad_emisora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
+  FOREIGN KEY (`codigo_unidad_emisora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `movilizaciones_tangibles` (
