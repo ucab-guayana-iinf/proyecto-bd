@@ -51,8 +51,6 @@ CREATE TABLE IF NOT EXISTS `unidades` (
   FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
   FOREIGN KEY (`codigo_unidad`) REFERENCES `empleados` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_unidad`) REFERENCES `bienes` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_unidad`) REFERENCES `formatos` (`unidad_emisora`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_unidad`) REFERENCES `formatos` (`unidad_receptora`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`ci_jefe`) REFERENCES `historial_responsables_primarios` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`codigo_unidad`) REFERENCES `historial_responsables_primarios` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -182,6 +180,8 @@ CREATE TABLE IF NOT EXISTS `formatos` (
   `aprobacion_receptor` boolean,
   `fecha_formato` datetime,
   PRIMARY KEY (`numero_formato`),
+  FOREIGN KEY (`codigo_unidad`) REFERENCES `unideades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_tangibles` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_intangibles` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE
 
