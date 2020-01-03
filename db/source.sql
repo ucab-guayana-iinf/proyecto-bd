@@ -111,7 +111,8 @@ CREATE TABLE `activos_intangibles` (
   `fecha_caducidad` datetime,
   `es_compartido` boolean,
   `status` STATUS_ACTIVO_INTANGIBLE,
-  PRIMARY KEY (`codigo_bien`)
+  PRIMARY KEY (`codigo_bien`),
+  FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`)
 );
 
 CREATE TABLE `edificaciones` (
@@ -240,8 +241,6 @@ CREATE TABLE `inventarios_x_bienes` (
   `fecha_realizacion` datetime,
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
-
-ALTER TABLE `activos_intangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`);
 
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_sedes` (`anio`);
 
