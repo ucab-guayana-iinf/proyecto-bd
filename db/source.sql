@@ -230,19 +230,9 @@ CREATE TABLE `inventarios_x_bienes` (
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
 
-ALTER TABLE `bienes` ADD
-
 ALTER TABLE `facturas_activos_tangibles` ADD FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`);
 
-ALTER TABLE `bienes` ADD
-
-ALTER TABLE `bienes` ADD
-
-ALTER TABLE `bienes` ADD
-
 ALTER TABLE `bienes_naturales` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `fotografias_bienes_naturales` (`numero_bien_natural`);
-
-ALTER TABLE `bienes` ADD
 
 ALTER TABLE `componentes` ADD FOREIGN KEY (`codigo_componente`) REFERENCES `nombres_componentes` (`codigo_componente`);
 
@@ -262,8 +252,6 @@ ALTER TABLE `formatos` ADD FOREIGN KEY (`numero_formato`) REFERENCES `movilizaci
 
 ALTER TABLE `activos_intangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`);
 
-ALTER TABLE `bienes` ADD
-
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_sedes` (`anio`);
 
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`semestre`) REFERENCES `inventarios_x_sedes` (`semestre`);
@@ -277,7 +265,5 @@ ALTER TABLE `inventarios` ADD FOREIGN KEY (`semestre`) REFERENCES `inventarios_x
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`anio`) REFERENCES `inventarios_x_bienes` (`anio`);
 
 ALTER TABLE `inventarios` ADD FOREIGN KEY (`semestre`) REFERENCES `inventarios_x_bienes` (`semestre`);
-
-ALTER TABLE `bienes` ADD
 
 ALTER TABLE `sedes` ADD FOREIGN KEY (`codigo_sede`) REFERENCES `unidades` (`codigo_sede`);
