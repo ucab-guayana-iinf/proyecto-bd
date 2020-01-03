@@ -179,7 +179,10 @@ CREATE TABLE `formatos` (
   `aprobacion_emisor` boolean,
   `aprobacion_receptor` boolean,
   `fecha_formato` datetime,
-  PRIMARY KEY (`numero_formato`)
+  PRIMARY KEY (`numero_formato`),
+  FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_tangibles` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_intangibles` (`numero_formato`) ON DELETE RESTRICT ON UPDATE CASCADE
+
 );
 
 CREATE TABLE `movilizaciones_tangibles` (
@@ -237,10 +240,6 @@ CREATE TABLE `inventarios_x_bienes` (
   `fecha_realizacion` datetime,
   PRIMARY KEY (`anio`, `semestre`,'codigo_bien')
 );
-
-ALTER TABLE `formatos` ADD FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_tangibles` (`numero_formato`);
-
-ALTER TABLE `formatos` ADD FOREIGN KEY (`numero_formato`) REFERENCES `movilizaciones_intangibles` (`numero_formato`);
 
 ALTER TABLE `activos_intangibles` ADD FOREIGN KEY (`codigo_bien`) REFERENCES `movilizaciones_intangibles` (`numero_bien_intangible`);
 
