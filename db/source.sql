@@ -49,8 +49,6 @@ CREATE TABLE IF NOT EXISTS `unidades` (
   `ci_jefe` int,
   PRIMARY KEY (`codigo_unidad`),
   FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE
-  FOREIGN KEY (`ci_jefe`) REFERENCES `historial_responsables_primarios` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  FOREIGN KEY (`codigo_unidad`) REFERENCES `historial_responsables_primarios` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `empleados` (
@@ -207,7 +205,9 @@ CREATE TABLE IF NOT EXISTS `historial_reponsables_de_uso` (
 CREATE TABLE IF NOT EXISTS `historial_responsables_primarios` (
   `ci` int,
   `codigo_unidad` CODIGO,
-  PRIMARY KEY (`ci`, `codigo_unidad`)
+  PRIMARY KEY (`ci`, `codigo_unidad`),
+  FOREIGN KEY (`ci_jefe`) REFERENCES `historial_responsables_primarios` (`ci`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  FOREIGN KEY (`codigo_unidad`) REFERENCES `historial_responsables_primarios` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS `inventarios` (
