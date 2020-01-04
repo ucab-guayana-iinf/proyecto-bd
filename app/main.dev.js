@@ -50,6 +50,7 @@ const createWindow = async () => {
       signale.success('Connection to DB stablished')      
     }
   });
+
   await setupDatabase(db);
 
   if (
