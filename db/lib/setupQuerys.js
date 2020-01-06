@@ -15,5 +15,5 @@ module.exports = [
   {
     description: 'usar la base de datos',
     query: `USE ${dbName}`,
-  }
+  },
 ];

@@ -1,10 +1,12 @@
-const v = s => {
+const v = (s) => {
   if (typeof s === 'string') {
     return `'${s}'`;
   }
   if (typeof s === 'number') {
     return s;
   }
+
+  return null;
 };
 
 const spread = (arr = []) => `
@@ -21,4 +23,26 @@ const spread = (arr = []) => `
   })}
 `;
 
-module.exports = { spread };
+/* expects array of
+  [
+    { attribute, value }
+  ]
+
+  returns:
+
+  attribute=value, attribute=value...
+*/
+const updateSpread = (arr = []) => `
+  ${arr.map(({ attribute, value }, index) => {
+    if (index === arr.length) {
+      return `${attribute}=${v(value)}`;
+    }
+
+    return `${attribute}=${v(value)}, `;
+  })}
+`;
+
+module.exports = {
+  spread,
+  updateSpread,
+};
