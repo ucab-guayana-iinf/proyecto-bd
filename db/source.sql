@@ -9,13 +9,13 @@
 /*
   -- dominios
 
-    -- dominios activos tangibles 
+    -- dominios activos tangibles
       -- STATUS_ACTIVO_TANGIBLE = ENUM('EN PROCESO DE REGISTRO', 'ACTIVO', 'DAÑADO', 'OBSOLETO', 'EN PREPARACIÓN', 'DESINCORPORADO');
 
     -- dominios activos intangibles
       -- STATUS_ACTIVO_INTANGIBLE = ENUM('EN PROCESO DE REGISTRO', 'VIGENTE', 'VENCIDA', 'DESINCORPORADO');
 
-    -- dominios edificaciones 
+    -- dominios edificaciones
       -- STATUS_EDIFICACIONES = ENUM('EN PROCESO DE REGISTRO', 'EN CONSTRUCCIÓN', 'HABITADA', 'DESHABITADA', 'DESINCORPORADO');
       -- TIPOS_DE_PROPIEDADES = ENUM('PROPIA', 'COMODATO');
 
@@ -28,26 +28,27 @@
 */
 
 ---- bonito
+-- CREATE TABLE IF NOT EXISTS `ubicaciones` (
+--   `codigo_ubicacion` INT NOT NULL AUTO_INCREMENT.
+--   `direccion` VARCHAR(255) UNIQUE NOT NULL,
+--   `nombre_ciudad` VARCHAR(255),
+--   PRIMARY KEY (`codigo_ubicacion`),
+-- ) ENGINE = InnoDB;
+---- en linea
+CREATE TABLE IF NOT EXISTS `ubicaciones` ( `codigo_ubicacion` INT NOT NULL AUTO_INCREMENT, `direccion` VARCHAR(255) UNIQUE NOT NULL, `nombre_ciudad` VARCHAR(255), PRIMARY KEY (`codigo_ubicacion`) ) ENGINE = InnoDB;
+
+---- bonito
 -- CREATE TABLE IF NOT EXISTS sedes (
 --   `codigo_sede` INT NOT NULL AUTO_INCREMENT,
 --   `descripcion` VARCHAR(255) UNIQUE NOT NULL,
---   `direccion` VARCHAR(255) UNIQUE NOT NULL,
+--   `codigo_ubicacion` INT NOT NULL,
 --   PRIMARY KEY (`codigo_sede`)
+--   FOREIGN KEY (`codigo_ubicacion`) REFERENCES `ubicaciones` (`codigo_ubicacion`) ON DELETE RESTRICT ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `sedes` ( `codigo_sede` INT NOT NULL AUTO_INCREMENT, `descripcion` VARCHAR(255) UNIQUE NOT NULL, `direccion` VARCHAR(255) UNIQUE NOT NULL, PRIMARY KEY (`codigo_sede`) ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `sedes` ( `codigo_sede` INT NOT NULL AUTO_INCREMENT, `descripcion` VARCHAR(255) UNIQUE NOT NULL, `codigo_ubicacion` INT NOT NULL, PRIMARY KEY (`codigo_sede`), FOREIGN KEY (`codigo_ubicacion`) REFERENCES `ubicaciones` (`codigo_ubicacion`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
--- CREATE TABLE IF NOT EXISTS `ubicaciones` (
---   `direccion` VARCHAR(255) UNIQUE NOT NULL,
---   `nombre_ciudad` VARCHAR(255),
---   PRIMARY KEY (`direccion`),
---   FOREIGN KEY (`direccion`) REFERENCES `sedes` (`direccion`) ON DELETE RESTRICT ON UPDATE CASCADE
--- ) ENGINE = InnoDB;
----- en linea
-CREATE TABLE IF NOT EXISTS `ubicaciones` ( `direccion` VARCHAR(255) UNIQUE NOT NULL, `nombre_ciudad` VARCHAR(255), PRIMARY KEY (`direccion`), FOREIGN KEY (`direccion`) REFERENCES `sedes` (`direccion`) ) ENGINE = InnoDB;
-
----- bonito 
 -- CREATE TABLE IF NOT EXISTS `unidades` (
 --   `codigo_unidad` INT NOT NULL AUTO_INCREMENT,
 --   `codigo_sede` INT NOT NULL AUTO_INCREMENT,
@@ -322,4 +323,3 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (`anio` INT,`semestre` VARC
 -- ) ENGINE = InnoDB;
 ---- en linea
 CREATE TABLE IF NOT EXISTS `inventarios_x_bienes` ( `anio` INT, `semestre` VARCHAR(255), `codigo_bien` INT, `ci_empleado` INT, `fecha_realizacion` DATETIME, PRIMARY KEY (`anio`, `semestre`, `codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
-
