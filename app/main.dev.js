@@ -45,9 +45,8 @@ const createWindow = async () => {
     if (err) {
       const error = new Error('Error connecting to database');
       signale.error(error);
-      reject(error);
     } else {
-      signale.success('Connection to DB stablished')      
+      signale.success('Connection to DB stablished')
     }
   });
 
@@ -94,6 +93,13 @@ const createWindow = async () => {
         mainWindow.show();
         mainWindow.focus();
       }
+
+    });
+
+    mainWindow.webContents.on('did-fail-load', () => {
+      console.log('did-fail-load');
+      mainWindow.loadURL(`file://${__dirname}/app.html`);
+      // REDIRECT TO FIRST WEBPAGE AGAIN
     });
   }
 };

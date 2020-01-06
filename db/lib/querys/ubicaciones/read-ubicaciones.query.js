@@ -1,5 +1,5 @@
 const promisifyQuery = require('../../promisifyQuery');
-const getConnection = require('../getConnection');
+const getConnection = require('../../getConnection');
 const tableName = require('./index');
 
 const readUbicaciones = async () => {

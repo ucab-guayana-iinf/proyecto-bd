@@ -1,6 +1,6 @@
 const promisifyQuery = require('../../promisifyQuery');
 const spread = require('../../../utils');
-const getConnection = require('../getConnection');
+const getConnection = require('../../getConnection');
 const tableName = require('./index');
 
 // params expects:

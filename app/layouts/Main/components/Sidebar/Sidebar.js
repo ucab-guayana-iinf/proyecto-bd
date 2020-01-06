@@ -11,6 +11,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LocationIcon from '@material-ui/icons/LocationOn';
 
 import { Profile, SidebarNav } from './components';
 
@@ -37,12 +38,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// https://material-ui.com/es/components/material-icons/
+
 const Sidebar = props => {
   const { open, variant, onClose, className, ...rest } = props;
 
   const classes = useStyles();
 
   const pages = [
+    {
+      title: 'Ubicaciones',
+      href: '/ubicaciones',
+      icon: <LocationIcon />
+    },
+
+    // --- demo
     {
       title: 'Dashboard',
       href: '/dashboard',
@@ -78,9 +88,10 @@ const Sidebar = props => {
       href: '/account',
       icon: <AccountBoxIcon />
     },
+    // NOTE: NO VOLARLO
     {
-      title: 'Settings',
-      href: '/settings',
+      title: 'Configuración',
+      href: '/configuracion',
       icon: <SettingsIcon />
     }
   ];
