@@ -24,8 +24,10 @@ const setupDatabase = (db) => new Promise(async (resolve, reject) => {
 
   // run source.sql
   signale.log('running source.sql');
+  const sourcePath = path.join(process.cwd(), '/db/source.sql');
+  console.log(sourcePath);
   const rl = readline.createInterface({
-    input: fs.createReadStream(path.join(__dirname, '..', 'source.sql')),
+    input: fs.createReadStream(sourcePath),
     terminal: false,
   });
 
@@ -42,7 +44,7 @@ const setupDatabase = (db) => new Promise(async (resolve, reject) => {
           signale.fatal(`X ERROR - QUERY: \n${query}`);
           signale.fatal(err);
           return;
-        } 
+        }
         signale.success(`QUERY: \n${query}`);
       });
     }
