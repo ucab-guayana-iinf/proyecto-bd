@@ -12,10 +12,10 @@ const v = (s) => {
 const spread = (arr = []) => `
   ${arr.map((value, index) => {
     if (index === 0) {
-      return `(${v(value)} `;
+      return `(${v(value)}, `;
     }
 
-    if (index === arr.length) {
+    if (index === arr.length - 1) {
       return `${v(value)})`;
     }
 
@@ -23,26 +23,76 @@ const spread = (arr = []) => `
   })}
 `;
 
-/* expects array of
-  [
-    { attribute, value }
-  ]
 
-  returns:
+// expects object and spreads:
+// (key=value, key=value...)
+const spreadObj = (obj = {}, keys = []) => {
+  let output = '';
 
-  attribute=value, attribute=value...
-*/
-const updateSpread = (arr = []) => `
-  ${arr.map(({ attribute, value }, index) => {
-    if (index === arr.length) {
-      return `${attribute}=${v(value)}`;
+  Object.keys(obj).filter(key => keys.includes(key)).forEach((key, index, arr) => {
+    const value = obj[key];
+
+    if (index === arr.length - 1) {
+      output += `\`${key}\` = ${v(value)}`;
+      return;
     }
 
-    return `${attribute}=${v(value)}, `;
-  })}
-`;
+    output += `\`${key}\` = ${v(value)}, `;
+    return;
+  });
+
+  return output;
+}
+
+// expects object and spreads it's keys
+const spreadObjKeys = (obj = {}, keys = []) => {
+  let output = '';
+
+  Object.keys(obj).filter(key => keys.includes(key)).forEach((key, index, arr) => {
+    if (index === 0) {
+      output += `(${key}, `;
+      return;
+    }
+
+    if (index === arr.length - 1) {
+      output += `${key})`;
+      return;
+    }
+
+    output += `${key}, `;
+    return;
+  });
+
+  return output;
+};
+
+// expects object and spreads it's values
+const spreadObjValues = (obj = {}, keys = []) => {
+  let output = '';
+
+  Object.keys(obj).filter(key => keys.includes(key)).forEach((key, index, arr) => {
+    const value = obj[key];
+
+    if (index === 0) {
+      output += `(${v(value)}, `;
+      return;
+    }
+
+    if (index === arr.length - 1) {
+      output += `${v(value)})`;
+      return;
+    }
+
+    output += `${v(value)}, `;
+    return;
+  });
+
+  return output;
+}
 
 module.exports = {
   spread,
-  updateSpread,
+  spreadObj,
+  spreadObjKeys,
+  spreadObjValues,
 };

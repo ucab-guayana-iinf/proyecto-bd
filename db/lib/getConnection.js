@@ -1,15 +1,14 @@
 const signale = require('signale');
-const db = require('./index');
+const setupDatabase = require('./setupDatabase');
 
 const getConnection = async () => {
   try {
-    await db.connect();
+    const connection = await setupDatabase(false);
+    return connection;
   } catch (error) {
     signale.fatal(error);
     return null;
   }
-
-  return db;
 };
 
 module.exports = getConnection;
