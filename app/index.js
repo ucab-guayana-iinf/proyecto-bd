@@ -3,6 +3,7 @@ import { Router } from 'react-router-dom';
 import { render } from 'react-dom';
 import { createBrowserHistory } from 'history';
 import { Chart } from 'react-chartjs-2';
+import { SnackbarProvider } from 'notistack';
 // import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/styles';
 import validate from 'validate.js';
@@ -33,11 +34,13 @@ validate.validators = {
 export default class App extends Component {
   render() {
     return (
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={3}>
           <Router history={browserHistory}>
             <Routes />
           </Router>
-        </ThemeProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
     );
   }
 }
