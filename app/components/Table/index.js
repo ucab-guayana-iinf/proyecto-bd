@@ -13,6 +13,7 @@ const Table = (props) => {
     onUpdate, // (index, data)
     onDelete, // (index, data)
     refreshData,
+    selection,
   } = props;
   const [data, setData] = useState(initialData);
 
@@ -64,6 +65,29 @@ const Table = (props) => {
       icons={tableIcons}
       localization={localization}
       editable={{ onRowAdd, onRowUpdate, onRowDelete }}
+      options={{selection: selection}}
+      actions={[
+        {
+          tooltip: 'Remove All Selected Users',
+          icon: tableIcons.Delete,
+          onClick: (evt, oldData) =>
+            oldData.forEach((item) =>
+              new Promise(resolve => {
+                setTimeout(() => {
+                  resolve();
+                  setState(prevState => {
+                    const data = [...prevState.data];
+                    data.splice(data.indexOf(item), 1);
+                    const updatedData = { ...prevState, data };
+                    onDelete(updatedData);
+                    return updatedData;
+                  });
+                }, 600);
+              }),
+              // alert('Data: ' + oldData + '/n End.')
+            )
+        }
+      ]}
     />
   );
 }
@@ -75,6 +99,7 @@ Table.propTypes = {
   onEdit: PropTypes.any,
   onAdd: PropTypes.any,
   onDelete: PropTypes.any,
+  selection: PropTypes.bool,
 };
 
 Table.defaultProps = {
@@ -83,6 +108,7 @@ Table.defaultProps = {
   onEdit: () => {},
   onAdd: () => {},
   onDelete: () => {},
+  selection: false,
 };
 
 export default Table;
