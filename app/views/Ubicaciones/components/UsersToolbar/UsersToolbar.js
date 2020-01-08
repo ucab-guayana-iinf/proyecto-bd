@@ -40,24 +40,6 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <span className={classes.spacer} />
-        <Button
-          color="secondary"
-          style={{ marginRight: 10 }}
-        >
-          Eliminar
-        </Button>
-        <Button
-          color="primary"
-          variant="contained"
-        >
-          Agregar
-        </Button>
-      </div>
-      <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          placeholder="Search user"
-        />
       </div>
     </div>
   );
