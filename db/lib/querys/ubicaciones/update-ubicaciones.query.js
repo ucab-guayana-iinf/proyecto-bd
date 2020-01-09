@@ -2,6 +2,7 @@ const getConnection = require('../../getConnection');
 const promisifyQuery = require('../../promisifyQuery');
 const {
   spreadObj,
+  validateInput,
  } = require('../../../utils');
 
 /*
@@ -17,15 +18,20 @@ const attributes = [
   'nombre_ciudad',
 ];
 
-const updateUbicaciones = async (params) => {
+const updateUbicaciones = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
     condition,
     value,
+    data,
   } = params;
 
-  const values = spreadObj(params, attributes);
+  if (!validateInput(data, attributes, onError)) {
+    return null;
+  }
+
+  const values = spreadObj(data, attributes);
 
   let QUERY = `UPDATE ubicaciones SET ${values} WHERE ${condition}${value}`;
 

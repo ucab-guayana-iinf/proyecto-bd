@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import Snackbar from '@material-ui/core/Snackbar';
-import { withSnackbar } from 'notistack';
 import { Table } from '../../components';
 import ciudadesVzla from '../../ciudadesVzla';
 import {
@@ -43,42 +41,35 @@ const headers = [
 ];
 const Ubicaciones = (props) => {
   const classes = useStyles();
-  const [data, setData] = useState([]);
   const { enqueueSnackbar } = props;
-
-  const setupData = async () => {
-    const data = await readUbicaciones();
-    console.log(data);
-    setData(data);
-  };
-
-  const onError = (error) => {
-    enqueueSnackbar(error);
-  };
-
-  useEffect(() => {
-    (async() => {
-      await setupData();
-    })();
-  }, []);
 
   return (
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
           title="Ubicaciones"
-          data={data}
           headers={headers}
-          refreshData={setupData}
-          selection
-          onAdd={(data) => {
-            createUbicaciones({...data, nombre_ciudad: data.ciudad || 'Abejales' }, onError);
+          data={readUbicaciones}
+          onAdd={(data, onError) => {
+            createUbicaciones({
+              data: {
+                ...data,
+                nombre_ciudad: data.nombre_ciudad || 'Abejales'
+              },
+            }, onError);
           }}
-          onUpdate={(data) => {
-            updateUbicaciones({ value: data.codigo_ubicacion }, onError);
+          onUpdate={(data, onError) => {
+            updateUbicaciones({
+              data,
+              value: data.codigo_ubicacion,
+            },
+            onError);
           }}
-          onDelete={(data) => {
-            deleteUbicaciones({ value: data.codigo_ubicacion }, onError);
+          onDelete={(data, onError) => {
+            deleteUbicaciones({
+              data,
+              value: data.codigo_ubicacion
+            }, onError);
           }}
         />
       </div>
@@ -86,4 +77,4 @@ const Ubicaciones = (props) => {
   );
 };
 
-export default withSnackbar(Ubicaciones);
+export default Ubicaciones;

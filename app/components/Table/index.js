@@ -1,5 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import MaterialTable, { Column } from 'material-table';
+import { withSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import tableIcons from './icons';
 import localization from './localization';
@@ -8,26 +9,35 @@ const Table = (props) => {
   const {
     title,
     headers,
-    data: initialData,
-    onAdd, // (index, data)
-    onUpdate, // (index, data)
-    onDelete, // (index, data)
-    refreshData,
+    data: getData, // async func to get the data
+    onAdd, // (data)
+    onUpdate, // (data)
+    onDelete, // (data)
+    enqueueSnackbar,
     selection,
   } = props;
-  const [data, setData] = useState(initialData);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setData(initialData);
-  }, [initialData]);
+  const data = (query) => new Promise(async (resolve, reject) => {
+    const data = await getData();
+    setIsLoading(false);
+    resolve({
+      data,
+      page: query.page,
+      totalCount: data.length,
+    });
+  });
+
+  const onError = (error) => {
+    enqueueSnackbar(error);
+  };
 
   const onRowAdd = newData => (
     new Promise(resolve => {
+      setIsLoading(true);
       setTimeout(() => {
-        const updatedData = [...data];
-        updatedData.push(newData);
-        onAdd(newData, data.indexOf(newData));
-        refreshData();
+        onAdd(newData, onError);
+        setIsLoading(false);
         resolve();
       }, 200);
     })
@@ -35,11 +45,10 @@ const Table = (props) => {
 
   const onRowUpdate = (newData, oldData) => (
     new Promise(resolve => {
+      setIsLoading(true);
       setTimeout(() => {
-        const index = data.indexOf(oldData);
-        data[index] = newData;
-        onUpdate(newData, data.indexOf(newData))
-        refreshData();
+        onUpdate(newData, onError);
+        setIsLoading(false);
         resolve();
       }, 200);
     })
@@ -47,22 +56,22 @@ const Table = (props) => {
 
   const onRowDelete = oldData => (
     new Promise(resolve => {
+      setIsLoading(true);
       setTimeout(() => {
-        const index = data.indexOf(oldData);
-        data.splice(index, 1);
-        onDelete(oldData, index);
-        refreshData();
-        resolve();
+        onDelete(oldData, onError);
+        setIsLoading(false);
+        resolve(data);
       }, 200);
     })
   );
 
   return (
     <MaterialTable
-      title={title}
       data={data}
+      title={title}
       columns={headers}
       icons={tableIcons}
+      isLoading={isLoading}
       localization={localization}
       editable={{ onRowAdd, onRowUpdate, onRowDelete }}
       options={{ selection }}
@@ -84,16 +93,17 @@ Table.propTypes = {
   onEdit: PropTypes.any,
   onAdd: PropTypes.any,
   onDelete: PropTypes.any,
-  selection: PropTypes.bool,
+  enqueueSnackbar: PropTypes.any,
 };
 
 Table.defaultProps = {
   title: '',
   data: [],
+  enqueueSnackbar: () => {},
   onEdit: () => {},
   onAdd: () => {},
   onDelete: () => {},
   selection: false,
 };
 
-export default Table;
+export default withSnackbar(Table);

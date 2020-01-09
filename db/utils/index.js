@@ -5,6 +5,8 @@ const {
   spreadObj,
   spreadObjKeys,
   spreadObjValues,
+  getKeys,
+  validateInput,
 } = require('./spread-sql-values/spread-sql-values.utils');
 
 module.exports = {
@@ -14,4 +16,6 @@ module.exports = {
   spreadObj,
   spreadObjKeys,
   spreadObjValues,
+  getKeys,
+  validateInput,
 };
