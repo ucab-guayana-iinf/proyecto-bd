@@ -12,9 +12,9 @@ const deleteBienes = async (params, onError = () => {}) => {
   let QUERY = `DELETE FROM bienes WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `DELETE FROM bienes WHERE ci=${value}`;
+    QUERY = `DELETE FROM bienes WHERE codigo_bien=${value}`;
   }
-  
+
   console.log(QUERY);
 
   try {
