@@ -6,13 +6,20 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   'ci',
-   'nombre_completo',
+   'codigo_bien'
+   'descripcion',
+   'fecha_incorporacion',
+   'fecha_desincorporacion',
+   'origen',
+   'codigo_unidad',
+   'tipo',
+ ];
+ const neededAttributes = [
+   'descripcion',
    'codigo_unidad',
  ];
- const neededAttributes = attributes;
 
-const updateEmpleados = async (params, onError = () => {}) => {
+const updateBienes = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -27,10 +34,10 @@ const updateEmpleados = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE empleados SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE bienes SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE empleados SET ${values} WHERE ci=${value}`;
+    QUERY = `UPDATE bienes SET ${values} WHERE codigo_bien=${value}`;
   }
 
   console.log(QUERY);
@@ -44,4 +51,4 @@ const updateEmpleados = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateEmpleados;
+module.exports = updateBienes;
