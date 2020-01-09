@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `sedes` ( `codigo_sede` INT NOT NULL AUTO_INCREMENT, 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `unidades` (
 --   `codigo_unidad` INT NOT NULL AUTO_INCREMENT,
---   `codigo_sede` INT NOT NULL AUTO_INCREMENT,
+--   `codigo_sede` INT NOT NULL,
 --   `nombre_unidad` VARCHAR(255),
 --   `fecha_jefe` DATETIME,
 --   `ci_jefe` INT,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `sedes` ( `codigo_sede` INT NOT NULL AUTO_INCREMENT, 
 --   FOREIGN KEY (`ci_jefe`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `unidades` ( `codigo_unidad` INT NOT NULL AUTO_INCREMENT, `codigo_sede` INT NOT NULL, `nombre_unidad` VARCHAR(255), `fecha_jefe` DATETIME, `ci_jefe` INT, PRIMARY KEY (`codigo_unidad`), FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `unidades` ( `codigo_unidad` INT NOT NULL, `codigo_sede` INT NOT NULL, `nombre_unidad` VARCHAR(255), `fecha_jefe` DATETIME, `ci_jefe` INT, PRIMARY KEY (`codigo_unidad`), FOREIGN KEY (`codigo_sede`) REFERENCES `sedes` (`codigo_sede`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `empleados` (
