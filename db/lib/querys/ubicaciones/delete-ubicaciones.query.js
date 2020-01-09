@@ -22,7 +22,7 @@ const promisifyQuery = require('../../promisifyQuery');
   });
 */
 
-const deleteUbicaciones = async (params) => {
+const deleteUbicaciones = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {

@@ -15,10 +15,11 @@ const attributes = [
   'nombre_ciudad',
 ];
 
-const createUbicaciones = async (params, onError) => {
+const createUbicaciones = async (params, onError = () => {}) => {
+  const { data } = params;
   const db = await getConnection();
-  const columns = spreadObjKeys(params, attributes);
-  const values = spreadObjValues(params, attributes);
+  const columns = spreadObjKeys(data, attributes);
+  const values = spreadObjValues(data, attributes);
   const QUERY = `INSERT INTO ubicaciones ${columns} VALUES ${values};`;
   console.log(QUERY);
 
