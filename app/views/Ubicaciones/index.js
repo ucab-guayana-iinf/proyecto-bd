@@ -69,6 +69,7 @@ const Ubicaciones = (props) => {
           data={data}
           headers={headers}
           refreshData={setupData}
+          selection
           onAdd={(data) => {
             createUbicaciones({...data, nombre_ciudad: data.ciudad || 'Abejales' }, onError);
           }}

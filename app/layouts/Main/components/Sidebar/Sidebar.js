@@ -51,6 +51,11 @@ const Sidebar = props => {
       href: '/ubicaciones',
       icon: <LocationIcon />
     },
+    {
+      title: 'Unidades',
+      href: '/unidades',
+      icon: <LocationIcon />
+    },
 
     // --- demo
     {

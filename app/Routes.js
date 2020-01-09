@@ -15,6 +15,7 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   Ubicaciones as UbicacionesView,
+  Unidades as UnidadesView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -29,6 +30,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/ubicaciones"
+      />
+      <RouteWithLayout
+        component={UnidadesView}
+        exact
+        layout={MainLayout}
+        path="/unidades"
       />
       <RouteWithLayout
         component={DashboardView}

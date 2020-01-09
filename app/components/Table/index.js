@@ -65,28 +65,14 @@ const Table = (props) => {
       icons={tableIcons}
       localization={localization}
       editable={{ onRowAdd, onRowUpdate, onRowDelete }}
-      options={{selection: selection}}
-      actions={[
-        {
-          tooltip: 'Remove All Selected Users',
-          icon: tableIcons.Delete,
-          onClick: (evt, oldData) =>
-            oldData.forEach((item) =>
-              new Promise(resolve => {
-                setTimeout(() => {
-                  resolve();
-                  setState(prevState => {
-                    const data = [...prevState.data];
-                    data.splice(data.indexOf(item), 1);
-                    const updatedData = { ...prevState, data };
-                    onDelete(updatedData);
-                    return updatedData;
-                  });
-                }, 600);
-              }),
-              // alert('Data: ' + oldData + '/n End.')
-            )
-        }
+      options={{selection}}
+      actions={
+        selection
+        && [{
+            tooltip: 'Remove All Selected Users',
+            icon: tableIcons.Delete,
+            onClick: (evt, oldData) => oldData.forEach((item) => onRowDelete(item))
+          }
       ]}
     />
   );
