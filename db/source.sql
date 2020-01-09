@@ -78,19 +78,19 @@ ALTER TABLE `empleados` ADD FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` 
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `bienes` (
---   `codigo_bien` INT,
+--   `codigo_bien` INT NOT NULL AUTO_INCREMENT,
 --   `descripcion` VARCHAR(255),
 --   `fecha_incorporacion` DATETIME,
 --   `fecha_desincorporacion` DATETIME,
---   `origen` VARCHAR(255),
+--   `origen` VARCHAR(255) DEFAULT 'No definido',
 --   `codigo_unidad` INT,
---   `tipo` VARCHAR(255),
+--   `tipo` VARCHAR(255) DEFAULT 'No definido',
 --   PRIMARY KEY (`codigo_bien`),
 --   FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE,
 --   CHECK (`fecha_desincorporacion` > `fecha_incorporacion`)
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `bienes` ( `codigo_bien` INT, `descripcion` VARCHAR(255), `fecha_incorporacion` DATETIME, `fecha_desincorporacion` DATETIME, `origen` VARCHAR(255), `codigo_unidad` INT, `tipo` VARCHAR(255), PRIMARY KEY (`codigo_bien`), FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE, CHECK (`fecha_desincorporacion` > `fecha_incorporacion`) ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `bienes` ( `codigo_bien` INT NOT NULL AUTO_INCREMENT, `descripcion` VARCHAR(255), `fecha_incorporacion` DATETIME, `fecha_desincorporacion` DATETIME, `origen` VARCHAR(255) DEFAULT 'No definido', `codigo_unidad` INT, `tipo` VARCHAR(255) DEFAULT 'No definido', PRIMARY KEY (`codigo_bien`), FOREIGN KEY (`codigo_unidad`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE, CHECK (`fecha_desincorporacion` > `fecha_incorporacion`) ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `activos_tangibles` (
