@@ -14,12 +14,22 @@ import {
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
+  Ubicaciones as UbicacionesView,
 } from './views';
+
+// TODO: o le buscan iconos alusivos al nombre de la vista
+//       o se le borran los iconos a todo..
 
 const Routes = () => {
   return (
     <Switch>
-      <Redirect exact from="/" to="/dashboard" />
+      <Redirect exact from="/" to="/ubicaciones" />
+      <RouteWithLayout
+        component={UbicacionesView}
+        exact
+        layout={MainLayout}
+        path="/ubicaciones"
+      />
       <RouteWithLayout
         component={DashboardView}
         exact
@@ -60,7 +70,7 @@ const Routes = () => {
         component={SettingsView}
         exact
         layout={MainLayout}
-        path="/settings"
+        path="/configuracion"
       />
       <RouteWithLayout
         component={SignUpView}
@@ -74,7 +84,7 @@ const Routes = () => {
         layout={MinimalLayout}
         path="/sign-in"
       />
-      <Redirect to="/dashboard" />
+      <Redirect to="/ubicaciones" />
     </Switch>
   );
 };

@@ -6,8 +6,6 @@ import { Notifications, Password } from './components';
 
 import restartDatabase from '../../../db/lib/restartDatabase';
 
-console.log(restartDatabase);
-
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(4),
