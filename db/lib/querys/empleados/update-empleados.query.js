@@ -5,9 +5,6 @@ const {
   validateInput,
  } = require('../../../utils');
 
- const attributes = [];
- const neededAttributes = [];
-
  const attributes = [
    'ci',
    'nombre_completo',
@@ -29,7 +26,7 @@ const updateEmpleados = async (params, onError = () => {}) => {
   }
 
   const values = spreadObj(data, attributes);
-  
+
   let QUERY = `UPDATE empleados SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
