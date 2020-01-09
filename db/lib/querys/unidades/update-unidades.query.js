@@ -34,9 +34,9 @@ const updateUnidades = async (params, onError = () => {}) => {
   let QUERY = `UPDATE unidades SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE unidades SET ${values} WHERE codigo_sede=${value}`;
+    QUERY = `UPDATE unidades SET ${values} WHERE codigo_unidad=${value}`;
   }
-  
+
   console.log(QUERY);
 
   try {
