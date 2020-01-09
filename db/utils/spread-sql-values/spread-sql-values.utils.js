@@ -66,6 +66,10 @@ const spreadObjKeys = (obj = {}, keys = []) => {
   return output;
 };
 
+const getKeys = (obj = {}, keys = []) => {
+  return Object.keys(obj).filter(key => keys.includes(key));
+};
+
 // expects object and spreads it's values
 const spreadObjValues = (obj = {}, keys = []) => {
   let output = '';
@@ -91,9 +95,22 @@ const spreadObjValues = (obj = {}, keys = []) => {
   return output;
 }
 
+const validateInput = (data, neededAttributes, onError) => {
+  const keys = getKeys(data, neededAttributes);
+  const validString = /^(?!\s*$).+/gi;
+  if (!neededAttributes.every(key => keys.includes(key) && data[key].match(validString))) {
+    onError('Debe llenar todos los campos');
+    return false;
+  }
+  return true;
+};
+
+
 module.exports = {
   spread,
   spreadObj,
   spreadObjKeys,
   spreadObjValues,
+  getKeys,
+  validateInput,
 };

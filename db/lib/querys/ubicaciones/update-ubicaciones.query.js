@@ -2,6 +2,7 @@ const getConnection = require('../../getConnection');
 const promisifyQuery = require('../../promisifyQuery');
 const {
   spreadObj,
+  validateInput,
  } = require('../../../utils');
 
 /*
@@ -25,6 +26,10 @@ const updateUbicaciones = async (params, onError = () => {}) => {
     value,
     data,
   } = params;
+
+  if (!validateInput(data, attributes, onError)) {
+    return null;
+  }
 
   const values = spreadObj(data, attributes);
 

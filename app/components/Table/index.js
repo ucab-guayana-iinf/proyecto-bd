@@ -9,10 +9,10 @@ const Table = (props) => {
   const {
     title,
     headers,
-    data: getData,
-    onAdd, // (index, data)
-    onUpdate, // (index, data)
-    onDelete, // (index, data)
+    data: getData, // async func to get the data
+    onAdd, // (data)
+    onUpdate, // (data)
+    onDelete, // (data)
     enqueueSnackbar,
   } = props;
   const [isLoading, setIsLoading] = useState(true);
@@ -27,17 +27,15 @@ const Table = (props) => {
     });
   });
 
-  const onError = ({ message }) => {
+  const onError = (error) => {
     enqueueSnackbar(error);
   };
 
   const onRowAdd = newData => (
     new Promise(resolve => {
       setIsLoading(true);
-
       setTimeout(() => {
         onAdd(newData, onError);
-        // refreshData();
         setIsLoading(false);
         resolve();
       }, 200);
@@ -49,7 +47,6 @@ const Table = (props) => {
       setIsLoading(true);
       setTimeout(() => {
         onUpdate(newData, onError);
-        // refreshData();
         setIsLoading(false);
         resolve();
       }, 200);
@@ -61,7 +58,6 @@ const Table = (props) => {
       setIsLoading(true);
       setTimeout(() => {
         onDelete(oldData, onError);
-        // refreshData();
         setIsLoading(false);
         resolve(data);
       }, 200);

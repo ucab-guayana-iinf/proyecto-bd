@@ -3,6 +3,7 @@ const getConnection = require('../../getConnection');
 const {
   spreadObjKeys,
   spreadObjValues,
+  validateInput,
 } = require('../../../utils');
 
 // params expects:
@@ -20,6 +21,11 @@ const createUbicaciones = async (params, onError = () => {}) => {
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
   const values = spreadObjValues(data, attributes);
+
+  if (!validateInput(data, attributes, onError)) {
+    return null;
+  }
+
   const QUERY = `INSERT INTO ubicaciones ${columns} VALUES ${values};`;
   console.log(QUERY);
 
