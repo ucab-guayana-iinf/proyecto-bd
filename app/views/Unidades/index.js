@@ -70,6 +70,7 @@ const Unidades = (props) => {
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
+          title="Unidades"
           data={data}
           headers={headers}
           selection

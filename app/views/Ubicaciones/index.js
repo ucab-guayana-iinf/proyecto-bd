@@ -66,6 +66,7 @@ const Ubicaciones = (props) => {
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
+          title="Ubicaciones"
           data={data}
           headers={headers}
           refreshData={setupData}

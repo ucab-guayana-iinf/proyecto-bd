@@ -65,15 +65,14 @@ const Table = (props) => {
       icons={tableIcons}
       localization={localization}
       editable={{ onRowAdd, onRowUpdate, onRowDelete }}
-      options={{selection}}
+      options={{ selection }}
       actions={
-        selection
-        && [{
-            tooltip: 'Remove All Selected Users',
-            icon: tableIcons.Delete,
-            onClick: (evt, oldData) => oldData.forEach((item) => onRowDelete(item))
-          }
-      ]}
+        selection && [{
+          tooltip: `Eliminar '${title}' seleccionadas`,
+          icon: tableIcons.Delete,
+          onClick: (evt, oldData) => oldData.forEach((item) => onRowDelete(item))
+        }]
+      }
     />
   );
 }
