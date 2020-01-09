@@ -1,4 +1,3 @@
-const tableName = require('./index');
 const getConnection = require('../../getConnection');
 const promisifyQuery = require('../../promisifyQuery');
 
@@ -23,7 +22,7 @@ const promisifyQuery = require('../../promisifyQuery');
   });
 */
 
-const deleteUbicaciones = async (params) => {
+const deleteUbicaciones = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -31,14 +30,21 @@ const deleteUbicaciones = async (params) => {
     value,
   } = params;
 
-  let QUERY = `DELETE FROM ${tableName} WHERE ${condition}${value}`;
+  let QUERY = `DELETE FROM ubicaciones WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `DELETE FROM ${tableName} WHERE codigo_ubicacion=${value}`;
+    QUERY = `DELETE FROM ubicaciones WHERE codigo_ubicacion=${value}`;
   }
 
-  const response = await promisifyQuery(db, QUERY);
-  return response;
+  console.log(QUERY);
+
+  try {
+    const response = await promisifyQuery(db, QUERY);
+    return response;
+  } catch (error) {
+    onError(error.message);
+    return null;
+  }
 };
 
 module.exports = deleteUbicaciones;

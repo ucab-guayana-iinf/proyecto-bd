@@ -12,7 +12,7 @@
  */
 import { app, BrowserWindow } from 'electron';
 import signale from 'signale';
-import db from '../db/lib/index';
+// import db from '../db/lib/index';
 import setupDatabase from '../db/lib/setupDatabase';
 import MenuBuilder from './menu';
 
@@ -41,17 +41,15 @@ const installExtensions = async () => {
 };
 
 const createWindow = async () => {
-  await db.connect((err) => {
-    if (err) {
-      const error = new Error('Error connecting to database');
-      signale.error(error);
-      reject(error);
-    } else {
-      signale.success('Connection to DB stablished')      
-    }
-  });
-
-  await setupDatabase(db);
+  // await db.connect((err) => {
+  //   if (err) {
+  //     const error = new Error('Error connecting to database');
+  //     signale.error(error);
+  //   } else {
+  //     signale.success('Connection to DB stablished')
+  //   }
+  // });
+  await setupDatabase(true);
 
   if (
     process.env.DEV_DB !== 1 && (
@@ -94,6 +92,13 @@ const createWindow = async () => {
         mainWindow.show();
         mainWindow.focus();
       }
+
+    });
+
+    mainWindow.webContents.on('did-fail-load', () => {
+      console.log('did-fail-load');
+      mainWindow.loadURL(`file://${__dirname}/app.html`);
+      // REDIRECT TO FIRST WEBPAGE AGAIN
     });
   }
 };
