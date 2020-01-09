@@ -119,14 +119,14 @@ CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` ( `numero_factura` INT N
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `activos_intangibles` (
 --   `codigo_bien` INT,
---   `fecha_caducidad` DATETIME NOT NULL,
---   `es_compartido` BOOLEAN NOT NULL DEFAULT false,
---   `status` ENUM('EN PROCESO DE REGISTRO', 'VIGENTE', 'VENCIDA', 'DESINCORPORADO') NOT NULL,
+--   `fecha_caducidad` DATETIME NOT NULL DEFAULT,
+--   `es_compartido` BOOLEAN DEFAULT false,
+--   `status` ENUM('EN PROCESO DE REGISTRO', 'VIGENTE', 'VENCIDA', 'DESINCORPORADO') DEFAULT 'EN PROCESO DE REGISTRO',
 --   PRIMARY KEY (`codigo_bien`),
 --   FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `activos_intangibles` ( `codigo_bien` INT, `fecha_caducidad` DATETIME NOT NULL, `es_compartido` BOOLEAN NOT NULL DEFAULT false, `status` ENUM('EN PROCESO DE REGISTRO', 'VIGENTE', 'VENCIDA', 'DESINCORPORADO') NOT NULL, PRIMARY KEY (`codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `activos_intangibles` ( `codigo_bien` INT, `fecha_caducidad` DATETIME NOT NULL, `es_compartido` BOOLEAN DEFAULT false, `status` ENUM('EN PROCESO DE REGISTRO', 'VIGENTE', 'VENCIDA', 'DESINCORPORADO') DEFAULT 'EN PROCESO DE REGISTRO', PRIMARY KEY (`codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `edificaciones` (

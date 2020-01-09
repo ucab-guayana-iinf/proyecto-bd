@@ -5,21 +5,22 @@ const {
   validateInput,
  } = require('../../../utils');
 
+// `codigo_bien` INT,
+// `fecha_caducidad` DATETIME NOT NULL,
+// `es_compartido` BOOLEAN NOT NULL DEFAULT false,
+// `status` ENUM('EN PROCESO DE REGISTRO', 'VIGENTE', 'VENCIDA', 'DESINCORPORADO') NOT NULL DEFAULT 'EN PROCESO DE REGISTRO',
+
  const attributes = [
    'codigo_bien',
-   'descripcion',
-   'fecha_incorporacion',
-   'fecha_desincorporacion',
-   'origen',
-   'codigo_unidad',
-   'tipo',
+   'fecha_caducidad',
+   'es_compartido',
+   'status',
  ];
  const neededAttributes = [
-   'descripcion',
-   'codigo_unidad',
+   'fecha_caducidad',
  ];
 
-const updateBienes = async (params, onError = () => {}) => {
+const updateActivosIntangibles = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -34,10 +35,10 @@ const updateBienes = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE bienes SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE activos_intangibles SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE bienes SET ${values} WHERE codigo_bien=${value}`;
+    QUERY = `UPDATE activos_intangibles SET ${values} WHERE codigo_bien=${value}`;
   }
 
   console.log(QUERY);
@@ -51,4 +52,4 @@ const updateBienes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateBienes;
+module.exports = updateActivosIntangibles;
