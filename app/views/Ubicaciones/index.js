@@ -50,6 +50,7 @@ const Ubicaciones = (props) => {
           title="Ubicaciones"
           headers={headers}
           data={readUbicaciones}
+          selection
           onAdd={(data, onError) => {
             createUbicaciones({
               data: {
@@ -57,6 +58,7 @@ const Ubicaciones = (props) => {
                 nombre_ciudad: data.nombre_ciudad || 'Abejales'
               },
             }, onError);
+            console.log('data: ', data)
           }}
           onUpdate={(data, onError) => {
             updateUbicaciones({

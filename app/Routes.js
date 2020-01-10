@@ -15,6 +15,7 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   Ubicaciones as UbicacionesView,
+  Sedes as SedesView,
   Unidades as UnidadesView,
 } from './views';
 
@@ -30,6 +31,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/ubicaciones"
+      />
+      <RouteWithLayout
+        component={SedesView}
+        exact
+        layout={MainLayout}
+        path="/sedes"
       />
       <RouteWithLayout
         component={UnidadesView}
