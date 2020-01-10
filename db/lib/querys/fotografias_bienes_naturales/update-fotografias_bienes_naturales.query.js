@@ -6,25 +6,15 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   `codigo_bien`,
-   `nombre_cientifico`,
-   `nombre_vulgar`,
-   `es_frutal`,
-   `periodo_floral`,
-   `origen`,
-   `ubicacion`,
-   `status`,
+   'codigo_bien_natural`,
+   `fotografia`,
  ];
  const neededAttributes = [
-   'codigo_bien',
-   `nombre_cientifico`,
-   `nombre_vulgar`,
-   `periodo_floral`,
-   `origen`,
-   `ubicacion`,
+   'codigo_bien_natural`,
+   `fotografia`,
  ];
 
-const updateBienesNaturales = async (params, onError = () => {}) => {
+const updateFotografiasBienesNaturales = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -39,10 +29,10 @@ const updateBienesNaturales = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE edificaciones SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE fotografias_bienes_naturales SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE edificaciones SET ${values} WHERE codigo_bien=${value}`;
+    QUERY = `UPDATE fotografias_bienes_naturales SET ${values} WHERE codigo_bien_natural=${value}`;
   }
 
   console.log(QUERY);
@@ -56,4 +46,4 @@ const updateBienesNaturales = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateBienesNaturales;
+module.exports = updateFotografiasBienesNaturales;
