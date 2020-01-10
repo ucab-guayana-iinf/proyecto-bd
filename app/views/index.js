@@ -11,3 +11,5 @@ export { default as Ubicaciones } from './Ubicaciones';
 export { default as Sedes } from './Sedes';
 export { default as Unidades } from './Unidades';
 export { default as Empleados } from './Empleados';
+export { default as Bienes } from './Bienes';
+export { default as Tangibles } from './Activos_Tangibles';

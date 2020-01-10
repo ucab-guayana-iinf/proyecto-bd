@@ -18,6 +18,8 @@ import {
   Sedes as SedesView,
   Unidades as UnidadesView,
   Empleados as EmpleadosView,
+  Bienes as BienesView,
+  Tangibles as TangiblesView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -50,6 +52,18 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/empleados"
+      />
+      <RouteWithLayout
+        component={BienesView}
+        exact
+        layout={MainLayout}
+        path="/bienes"
+      />
+      <RouteWithLayout
+        component={TangiblesView}
+        exact
+        layout={MainLayout}
+        path="/activos-tangibles"
       />
       <RouteWithLayout
         component={DashboardView}

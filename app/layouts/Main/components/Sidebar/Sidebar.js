@@ -66,6 +66,16 @@ const Sidebar = props => {
       href: '/empleados',
       icon: <LocationIcon />
     },
+    {
+      title: 'Bienes',
+      href: '/bienes',
+      icon: <LocationIcon />
+    },
+    {
+      title: 'Activos Tangibles',
+      href: '/activos-tangibles',
+      icon: <LocationIcon />
+    },
 
     // --- demo
     {

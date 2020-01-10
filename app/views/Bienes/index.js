@@ -4,10 +4,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Table } from '../../components';
 import {
-  createEmpleados,
-  readEmpleados,
-  updateEmpleados,
-  deleteEmpleados,
+  createBienes,
+  readBienes,
+  updateBienes,
+  deleteBienes,
   readUnidades,
 } from '../../../db/lib/querys';
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Empleados = (props) => {
+const Bienes = (props) => {
   const classes = useStyles();
   const [unidades, setUnidades] = useState([]);
   const { enqueueSnackbar } = props;
@@ -33,8 +33,11 @@ const Empleados = (props) => {
   }, []);
 
   const headers = [
-    { title: 'CI', field: 'ci', type: 'numeric', editable: 'never' },
-    { title: 'Nombre', field: 'nombre_completo' },
+    { title: 'Código Bien', field: 'codigo_bien', type: 'numeric' },
+    { title: 'Descripción', field: 'descripcion' },
+    { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', editable: 'never' },
+    { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', editable: 'never' },
+    { title: 'Origen', field: 'origen' },
     { title: 'Unidad', field: 'codigo_unidad', editComponent: (props) => {
       return (
         <Select
@@ -51,35 +54,38 @@ const Empleados = (props) => {
         </Select>
       );
     }},
+    { title: 'Tipo', field: 'tipo' },
   ];
 
   return (
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
-          title="Empleados"
+          title="Bienes"
           headers={headers}
-          data={readEmpleados}
+          data={readBienes}
           selection
           onAdd={(data, onError) => {
-            createEmpleados({
+            createBienes({
               data: {
                 ...data,
-                codigo_unidad: data.codigo_unidad || ''
+                fecha_incorporacion: null,
+                fecha_desincorporacion: null,
+                codigo_unidad: data.codigo_unidad || 0
               },
             }, onError)
           }}
           onUpdate={(data, onError) => {
-            updateEmpleados({
+            updateBienes({
               data,
-              value: data.ci,
+              value: data.codigo_bien,
             },
             onError);
           }}
           onDelete={(data, onError) => {
-            deleteEmpleados({
+            deleteBienes({
               data,
-              value: data.ci
+              value: data.codigo_bien
             }, onError)
           }}
         />
@@ -88,4 +94,4 @@ const Empleados = (props) => {
   );
 };
 
-export default Empleados;
+export default Bienes;

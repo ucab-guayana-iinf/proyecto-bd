@@ -4,11 +4,11 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Table } from '../../components';
 import {
-  createEmpleados,
-  readEmpleados,
-  updateEmpleados,
-  deleteEmpleados,
-  readUnidades,
+  createActivosTangibles,
+  updateActivosTangibles,
+  readActivosTangibles,
+  deleteActivosTangibles,
+  readBienes,
 } from '../../../db/lib/querys';
 
 const useStyles = makeStyles(theme => ({
@@ -20,22 +20,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Empleados = (props) => {
+const Tangibles = (props) => {
   const classes = useStyles();
-  const [unidades, setUnidades] = useState([]);
+  const [bienes, setBienes] = useState([]);
   const { enqueueSnackbar } = props;
 
   useEffect(() => {
     (async() => {
-      const _unidades = await readUnidades();
-      setUnidades(_unidades);
+      const _bienes = await readBienes();
+      setBienes(_bienes);
     })()
   }, []);
 
   const headers = [
-    { title: 'CI', field: 'ci', type: 'numeric', editable: 'never' },
-    { title: 'Nombre', field: 'nombre_completo' },
-    { title: 'Unidad', field: 'codigo_unidad', editComponent: (props) => {
+    { title: 'Código Bien', field: 'codigo_bien', editComponent: (props) => {
       return (
         <Select
           labelId="demo-simple-select-label"
@@ -43,43 +41,48 @@ const Empleados = (props) => {
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          {unidades.map((unidad) => (
-            <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
-              {unidad.nombre_unidad}
+          {bienes.map((bien) => (
+            <MenuItem key={bien.codigo_bien} value={bien.codigo_bien}>
+              {bien.descripcion}
             </MenuItem>
           ))}
         </Select>
       );
     }},
+    { title: 'Proveedor', field: 'proveedor' },
+    { title: 'Número de Factura', field: 'numero_factura', type: 'numeric' },
+    { title: 'Precio', field: 'precio', type: 'numeric' },
+    { title: 'Plazo de Garantía', field: 'plazo_garantia', type: 'numeric' },
+    { title: 'Status', field: 'status' },
   ];
 
   return (
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
-          title="Empleados"
+          title="Tangibles"
           headers={headers}
-          data={readEmpleados}
+          data={readActivosTangibles}
           selection
           onAdd={(data, onError) => {
-            createEmpleados({
+            createActivosTangibles({
               data: {
                 ...data,
-                codigo_unidad: data.codigo_unidad || ''
+                codigo_bien: data.codigo_bien || ''
               },
             }, onError)
           }}
           onUpdate={(data, onError) => {
-            updateEmpleados({
+            updateActivosTangibles({
               data,
-              value: data.ci,
+              value: data.codigo_bien,
             },
             onError);
           }}
           onDelete={(data, onError) => {
-            deleteEmpleados({
+            deleteActivosTangibles({
               data,
-              value: data.ci
+              value: data.codigo_bien
             }, onError)
           }}
         />
@@ -88,4 +91,4 @@ const Empleados = (props) => {
   );
 };
 
-export default Empleados;
+export default Tangibles;
