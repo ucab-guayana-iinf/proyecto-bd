@@ -7,28 +7,26 @@ const {
 } = require('../../../utils');
 
 // `codigo_bien` INT,
-// `descripcion` VARCHAR(255),
-// `fecha_incorporacion` DATETIME,
-// `fecha_desincorporacion` DATETIME,
-// `origen` VARCHAR(255),
-// `codigo_unidad` INT,
-// `tipo` VARCHAR(255),
+// `ubicacion` VARCHAR(255) NOT NULL,
+// `superficie` float NOT NULL,
+// `tipo_propiedad` ENUM('PROPIA', 'COMODATO') NOT NULL,
+// `status` ENUM('EN PROCESO DE REGISTRO', 'EN CONSTRUCCIÓN', 'HABITADA', 'DESHABITADA', 'DESINCORPORADO') NOT NULL,
 
 const attributes = [
-  'codigo_bien',
-  'descripcion',
-  'fecha_incorporacion',
-  'fecha_desincorporacion',
-  'origen',
-  'codigo_unidad',
-  'tipo',
+  `codigo_bien`,
+  `ubicacion`,
+  `superficie`,
+  `tipo_propiedad`,
+  `status`,
 ];
 const neededAttributes = [
-  'descripcion',
-  'codigo_unidad',
+  'codigo_bien',
+  'ubicacion',
+  'superficie',
+  `tipo_propiedad`,
 ];
 
-const createBienes = async (params, onError = () => {}) => {
+const createEdificaciones = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -38,7 +36,7 @@ const createBienes = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO bienes ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO edificaciones ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -50,4 +48,4 @@ const createBienes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createBienes;
+module.exports = createEdificaciones;

@@ -6,17 +6,17 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   'codigo_bien',
-   'descripcion',
-   'fecha_incorporacion',
-   'fecha_desincorporacion',
-   'origen',
-   'codigo_unidad',
-   'tipo',
+   `codigo_bien`,
+   `ubicacion`,
+   `superficie`,
+   `tipo_propiedad`,
+   `status`,
  ];
  const neededAttributes = [
-   'descripcion',
-   'codigo_unidad',
+   'codigo_bien',
+   'ubicacion',
+   'superficie',
+   `tipo_propiedad`,
  ];
 
 const updateBienes = async (params, onError = () => {}) => {
@@ -34,10 +34,10 @@ const updateBienes = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE bienes SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE edificaciones SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE bienes SET ${values} WHERE codigo_bien=${value}`;
+    QUERY = `UPDATE edificaciones SET ${values} WHERE codigo_bien=${value}`;
   }
 
   console.log(QUERY);
