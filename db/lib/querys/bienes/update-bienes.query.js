@@ -6,7 +6,7 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   'codigo_bien'
+   'codigo_bien',
    'descripcion',
    'fecha_incorporacion',
    'fecha_desincorporacion',

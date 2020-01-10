@@ -6,29 +6,17 @@ const {
   validateInput,
 } = require('../../../utils');
 
-// `codigo_bien` INT,
-// `descripcion` VARCHAR(255),
-// `fecha_incorporacion` DATETIME,
-// `fecha_desincorporacion` DATETIME,
-// `origen` VARCHAR(255),
-// `codigo_unidad` INT,
-// `tipo` VARCHAR(255),
-
 const attributes = [
   'codigo_bien',
-  'descripcion',
-  'fecha_incorporacion',
-  'fecha_desincorporacion',
-  'origen',
-  'codigo_unidad',
-  'tipo',
+  'fecha_caducidad',
+  'es_compartido',
+  'status',
 ];
 const neededAttributes = [
-  'descripcion',
-  'codigo_unidad',
+  'fecha_caducidad',
 ];
 
-const createBienes = async (params, onError = () => {}) => {
+const createActivosIntangibles = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -38,7 +26,7 @@ const createBienes = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO bienes ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO activos_intangibles ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -50,4 +38,4 @@ const createBienes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createBienes;
+module.exports = createActivosIntangibles;

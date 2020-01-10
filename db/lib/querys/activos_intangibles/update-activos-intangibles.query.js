@@ -5,17 +5,22 @@ const {
   validateInput,
  } = require('../../../utils');
 
+// `codigo_bien` INT,
+// `fecha_caducidad` DATETIME NOT NULL,
+// `es_compartido` BOOLEAN NOT NULL DEFAULT false,
+// `status` ENUM('EN PROCESO DE REGISTRO', 'VIGENTE', 'VENCIDA', 'DESINCORPORADO') NOT NULL DEFAULT 'EN PROCESO DE REGISTRO',
+
  const attributes = [
    'codigo_bien',
-   'numero_factura',
+   'fecha_caducidad',
+   'es_compartido',
    'status',
  ];
  const neededAttributes = [
-   'codigo_bien',
-   'numero_factura',
+   'fecha_caducidad',
  ];
 
-const updateActivosTangibles = async (params, onError = () => {}) => {
+const updateActivosIntangibles = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -30,10 +35,10 @@ const updateActivosTangibles = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE activos_tangibles SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE activos_intangibles SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE activos_tangibles SET ${values} WHERE codigo_bien=${value}`;
+    QUERY = `UPDATE activos_intangibles SET ${values} WHERE codigo_bien=${value}`;
   }
 
   console.log(QUERY);
@@ -47,4 +52,4 @@ const updateActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateActivosTangibles;
+module.exports = updateActivosIntangibles;
