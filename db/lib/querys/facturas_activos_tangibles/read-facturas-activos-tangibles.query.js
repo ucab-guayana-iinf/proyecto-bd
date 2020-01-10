@@ -1,12 +1,16 @@
 const promisifyQuery = require('../../promisifyQuery');
 const getConnection = require('../../getConnection');
+const {
+  mysqlDatetimeToJS,
+} = require('../../../utils');
 
-const readSedes = async (onError = () => {}) => {
+const readFacturasActivosTangibles = async (onError = () => {}) => {
   const db = await getConnection();
-  const QUERY = `SELECT * FROM sedes`;
+  const QUERY = `SELECT * FROM facturas_activos_tangibles`;
 
   try {
     const response = await promisifyQuery(db, QUERY);
+
     return response;
   } catch (error) {
     onError(error.message);
@@ -14,4 +18,4 @@ const readSedes = async (onError = () => {}) => {
   }
 };
 
-module.exports = readSedes;
+module.exports = readFacturasActivosTangibles;

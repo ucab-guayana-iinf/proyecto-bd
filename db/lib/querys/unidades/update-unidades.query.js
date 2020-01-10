@@ -5,20 +5,18 @@ const {
   validateInput,
  } = require('../../../utils');
 
-/*
-  params expects:
-    [
-      'descripcion',
-      'nombre_ciudad',
-    ]
-*/
+ const attributes = [
+   'codigo_sede', // int
+   'nombre_unidad', // string
+   'fecha_jefe', // mysql datetime
+   'ci_jefe' // int
+ ];
+ const neededAttributes = [
+   'codigo_sede',
+   'nombre_unidad',
+ ];
 
-const attributes = [
-  'descripcion',
-  'codigo_ubicacion',
-];
-
-const updateSedes = async (params, onError = () => {}) => {
+const updateUnidades = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -33,10 +31,10 @@ const updateSedes = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE sedes SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE unidades SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE sedes SET ${values} WHERE codigo_ubicacion=${value}`;
+    QUERY = `UPDATE unidades SET ${values} WHERE codigo_unidad=${value}`;
   }
 
   console.log(QUERY);
@@ -50,4 +48,4 @@ const updateSedes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateSedes;
+module.exports = updateUnidades;

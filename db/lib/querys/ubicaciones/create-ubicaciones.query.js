@@ -8,9 +8,10 @@ const {
 
 // params expects:
 // {
-//   descripcion: string
-//   direccion: id
+//   direccion: string
+//   nombre_ciudad: id
 // }
+
 const attributes = [
   'direccion',
   'nombre_ciudad',

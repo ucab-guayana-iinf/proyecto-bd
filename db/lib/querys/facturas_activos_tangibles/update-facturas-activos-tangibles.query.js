@@ -5,20 +5,20 @@ const {
   validateInput,
  } = require('../../../utils');
 
-/*
-  params expects:
-    [
-      'descripcion',
-      'nombre_ciudad',
-    ]
-*/
+ const attributes = [
+   'numero_factura',
+   'numero_orden',
+   'proveedor',
+   'precio_compra',
+   'plazo_garantia'
+ ];
+ const neededAttributes = [
+   'numero_factura',
+   'proveedor',
+   'precio_compra',
+ ];
 
-const attributes = [
-  'descripcion',
-  'codigo_ubicacion',
-];
-
-const updateSedes = async (params, onError = () => {}) => {
+const updateActivosTangibles = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -27,16 +27,16 @@ const updateSedes = async (params, onError = () => {}) => {
     data,
   } = params;
 
-  if (!validateInput(data, attributes, onError)) {
+  if (!validateInput(data, neededAttributes, onError)) {
     return null;
   }
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE sedes SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE activos_tangibles SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE sedes SET ${values} WHERE codigo_ubicacion=${value}`;
+    QUERY = `UPDATE activos_tangibles SET ${values} WHERE numero_factura=${value}`;
   }
 
   console.log(QUERY);
@@ -50,4 +50,4 @@ const updateSedes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateSedes;
+module.exports = updateActivosTangibles;

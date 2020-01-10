@@ -1,7 +1,7 @@
 const getConnection = require('../../getConnection');
 const promisifyQuery = require('../../promisifyQuery');
 
-const deleteSedes = async (params, onError = () => {}) => {
+const deleteActivosTangibles = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -9,10 +9,10 @@ const deleteSedes = async (params, onError = () => {}) => {
     value,
   } = params;
 
-  let QUERY = `DELETE FROM sedes WHERE ${condition}${value}`;
+  let QUERY = `DELETE FROM activos_tangibles WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `DELETE FROM sedes WHERE codigo_sede=${value}`;
+    QUERY = `DELETE FROM activos_tangibles WHERE codigo_bien=${value}`;
   }
 
   console.log(QUERY);
@@ -26,4 +26,4 @@ const deleteSedes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = deleteSedes;
+module.exports = deleteActivosTangibles;

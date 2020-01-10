@@ -5,20 +5,16 @@ const {
   validateInput,
  } = require('../../../utils');
 
-/*
-  params expects:
-    [
-      'descripcion',
-      'nombre_ciudad',
-    ]
-*/
+ const attributes = [
+   `codigo_componente`,
+   `nombre_componente`,
+ ];
+ const neededAttributes = [
+   `codigo_componente`,
+   `nombre_componente`,
+ ];
 
-const attributes = [
-  'descripcion',
-  'codigo_ubicacion',
-];
-
-const updateSedes = async (params, onError = () => {}) => {
+const updateNombresComponentes = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -27,16 +23,16 @@ const updateSedes = async (params, onError = () => {}) => {
     data,
   } = params;
 
-  if (!validateInput(data, attributes, onError)) {
+  if (!validateInput(data, neededAttributes, onError)) {
     return null;
   }
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE sedes SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE nombres_componentes SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE sedes SET ${values} WHERE codigo_ubicacion=${value}`;
+    QUERY = `UPDATE nombres_componentes SET ${values} WHERE codigo_componente=${value}`;
   }
 
   console.log(QUERY);
@@ -50,4 +46,4 @@ const updateSedes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateSedes;
+module.exports = updateNombresComponentes;

@@ -6,28 +6,36 @@ const {
   validateInput,
 } = require('../../../utils');
 
-// params expects:
-// {
-//   descripcion: string
-//   codigo_ubicacion: id
-// }
-
 const attributes = [
-  'descripcion',
-  'codigo_ubicacion',
+  `codigo_bien`,
+  `nombre_cientifico`,
+  `nombre_vulgar`,
+  `es_frutal`,
+  `periodo_floral`,
+  `origen`,
+  `ubicacion`,
+  `status`,
+];
+const neededAttributes = [
+  'codigo_bien',
+  `nombre_cientifico`,
+  `nombre_vulgar`,
+  `periodo_floral`,
+  `origen`,
+  `ubicacion`,
 ];
 
-const createSedes = async (params, onError = () => {}) => {
+const createBienesNaturales = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
   const values = spreadObjValues(data, attributes);
 
-  if (!validateInput(data, attributes, onError)) {
+  if (!validateInput(data, neededAttributes, onError)) {
     return null;
   }
 
-  const QUERY = `INSERT INTO sedes ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO bienes_naturales ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -39,4 +47,4 @@ const createSedes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createSedes;
+module.exports = createBienesNaturales;
