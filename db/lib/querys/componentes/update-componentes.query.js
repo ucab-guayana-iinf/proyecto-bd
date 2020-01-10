@@ -6,11 +6,11 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   `codigo_bien_natural`,
+   'codigo_bien_natural`,
    `fotografia`,
  ];
  const neededAttributes = [
-   `codigo_bien_natural`,
+   'codigo_bien_natural`,
    `fotografia`,
  ];
 
