@@ -7,16 +7,25 @@ const {
 } = require('../../../utils');
 
 const attributes = [
-  'codigo_bien',
-  'numero_factura',
-  'status',
+  `codigo_bien`,
+  `nombre_cientifico`,
+  `nombre_vulgar`,
+  `es_frutal`,
+  `periodo_floral`,
+  `origen`,
+  `ubicacion`,
+  `status`,
 ];
 const neededAttributes = [
   'codigo_bien',
-  'numero_factura',
+  `nombre_cientifico`,
+  `nombre_vulgar`,
+  `periodo_floral`,
+  `origen`,
+  `ubicacion`,
 ];
 
-const createActivosTangibles = async (params, onError = () => {}) => {
+const createBienesNaturales = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -26,7 +35,7 @@ const createActivosTangibles = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO activos_tangibles ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO bienes_naturales ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -38,4 +47,4 @@ const createActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createActivosTangibles;
+module.exports = createBienesNaturales;

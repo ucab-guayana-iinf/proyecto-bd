@@ -7,16 +7,19 @@ const {
 } = require('../../../utils');
 
 const attributes = [
-  'codigo_bien',
   'numero_factura',
-  'status',
+  'numero_orden',
+  'proveedor',
+  'precio_compra',
+  'plazo_garantia'
 ];
 const neededAttributes = [
-  'codigo_bien',
   'numero_factura',
+  'proveedor',
+  'precio_compra',
 ];
 
-const createActivosTangibles = async (params, onError = () => {}) => {
+const createFacturasActivosTangibles = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -26,7 +29,7 @@ const createActivosTangibles = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO activos_tangibles ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO facturas_activos_tangibles ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -38,4 +41,4 @@ const createActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createActivosTangibles;
+module.exports = createFacturasActivosTangibles;
