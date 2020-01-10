@@ -7,16 +7,15 @@ const {
 } = require('../../../utils');
 
 const attributes = [
-  'codigo_bien',
-  'numero_factura',
-  'status',
+  `codigo_bien`,
+  `codigo_componente`,
 ];
 const neededAttributes = [
-  'codigo_bien',
-  'numero_factura',
+  `codigo_bien`,
+  `codigo_componente`,
 ];
 
-const createActivosTangibles = async (params, onError = () => {}) => {
+const createComponentes = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -26,7 +25,7 @@ const createActivosTangibles = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO activos_tangibles ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO componentes ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -38,4 +37,4 @@ const createActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createActivosTangibles;
+module.exports = createComponentes;

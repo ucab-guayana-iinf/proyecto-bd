@@ -6,13 +6,16 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   'codigo_bien',
    'numero_factura',
-   'status',
+   'numero_orden',
+   'proveedor',
+   'precio_compra',
+   'plazo_garantia'
  ];
  const neededAttributes = [
-   'codigo_bien',
    'numero_factura',
+   'proveedor',
+   'precio_compra',
  ];
 
 const updateActivosTangibles = async (params, onError = () => {}) => {
@@ -33,7 +36,7 @@ const updateActivosTangibles = async (params, onError = () => {}) => {
   let QUERY = `UPDATE activos_tangibles SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE activos_tangibles SET ${values} WHERE codigo_bien=${value}`;
+    QUERY = `UPDATE activos_tangibles SET ${values} WHERE numero_factura=${value}`;
   }
 
   console.log(QUERY);

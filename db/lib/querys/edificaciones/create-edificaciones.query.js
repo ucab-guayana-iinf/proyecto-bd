@@ -6,17 +6,27 @@ const {
   validateInput,
 } = require('../../../utils');
 
+// `codigo_bien` INT,
+// `ubicacion` VARCHAR(255) NOT NULL,
+// `superficie` float NOT NULL,
+// `tipo_propiedad` ENUM('PROPIA', 'COMODATO') NOT NULL,
+// `status` ENUM('EN PROCESO DE REGISTRO', 'EN CONSTRUCCIÓN', 'HABITADA', 'DESHABITADA', 'DESINCORPORADO') NOT NULL,
+
 const attributes = [
-  'codigo_bien',
-  'numero_factura',
-  'status',
+  `codigo_bien`,
+  `ubicacion`,
+  `superficie`,
+  `tipo_propiedad`,
+  `status`,
 ];
 const neededAttributes = [
   'codigo_bien',
-  'numero_factura',
+  'ubicacion',
+  'superficie',
+  `tipo_propiedad`,
 ];
 
-const createActivosTangibles = async (params, onError = () => {}) => {
+const createEdificaciones = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -26,7 +36,7 @@ const createActivosTangibles = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO activos_tangibles ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO edificaciones ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -38,4 +48,4 @@ const createActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createActivosTangibles;
+module.exports = createEdificaciones;
