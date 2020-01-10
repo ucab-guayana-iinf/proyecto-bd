@@ -1,8 +1,3 @@
-/*  DEFINITIVO */
-/*  LISTO 1) CLAVES PRIMARIAS; */
-/*  LISTO 2) DOMINIOS Y USO DE ELLOS EN EL SQL; */
-/*  LISTO 3) CLAVES FORANEAS; */
-
 -- Creacion de la base de datos
 --   la realiza la aplicación
 
@@ -106,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `activos_tangibles` ( `codigo_bien` INT, `numero_fact
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` (
 --   `numero_factura` INT UNIQUE NOT NULL,
---   `numero_orden` INT,
+--   `numero_orden` INT AUTO_INCREMENT,
 --   `proveedor` VARCHAR(255) NOT NULL,
 --   `precio_compra` float NOT NULL,
 --   `plazo_garantia` INT DEFAULT 0,
@@ -114,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `activos_tangibles` ( `codigo_bien` INT, `numero_fact
 --   FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`) ON DELETE RESTRICT ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` ( `numero_factura` INT NOT NULL, `numero_orden` INT, `proveedor` VARCHAR(255) NOT NULL, `precio_compra` float NOT NULL, `plazo_garantia` INT DEFAULT 0, PRIMARY KEY (`numero_factura`), FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` ( `numero_factura` INT NOT NULL, `numero_orden` INT AUTO_INCREMENT, `proveedor` VARCHAR(255) NOT NULL, `precio_compra` float NOT NULL, `plazo_garantia` INT DEFAULT 0, PRIMARY KEY (`numero_factura`), FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `activos_intangibles` (
