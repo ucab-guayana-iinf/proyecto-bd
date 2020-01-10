@@ -12,7 +12,14 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LocationIcon from '@material-ui/icons/LocationOn';
-
+import PinDropIcon from '@material-ui/icons/PinDrop';
+import DomainIcon from '@material-ui/icons/Domain';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import ApartmentIcon from '@material-ui/icons/Apartment';
+import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import { Profile, SidebarNav } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +35,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    paddingTop: '6px',
   },
   divider: {
     margin: theme.spacing(2, 0)
@@ -49,76 +57,48 @@ const Sidebar = props => {
     {
       title: 'Ubicaciones',
       href: '/ubicaciones',
-      icon: <LocationIcon />
+      icon: <PinDropIcon />
     },
     {
       title: 'Sedes',
       href: '/sedes',
-      icon: <LocationIcon />
+      icon: <LocationCityIcon />
     },
     {
       title: 'Unidades',
       href: '/unidades',
-      icon: <LocationIcon />
+      icon: <ApartmentIcon />
     },
     {
       title: 'Empleados',
       href: '/empleados',
-      icon: <LocationIcon />
+      icon: <SupervisedUserCircleIcon />
     },
     {
       title: 'Bienes',
       href: '/bienes',
-      icon: <LocationIcon />
+      icon: <MenuBookIcon />
     },
     {
       title: 'Activos Tangibles',
       href: '/activos-tangibles',
-      icon: <LocationIcon />
+      icon: <AttachFileIcon />
     },
     {
       title: 'Activos Intangibles',
       href: '/activos-intangibles',
-      icon: <LocationIcon />
-    },
-
-    // --- demo
-    {
-      title: 'Dashboard',
-      href: '/dashboard',
       icon: <DashboardIcon />
     },
     {
-      title: 'Users',
-      href: '/users',
-      icon: <PeopleIcon />
+      title: 'Edificaciones',
+      href: '/edificaciones',
+      icon: <DomainIcon />
     },
     {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />
+      title: 'Bienes Naturales',
+      href: '/bienes-naturales',
+      icon: <NaturePeopleIcon />
     },
-    {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
-    },
-    {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
-    },
-    {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />
-    },
-    {
-      title: 'Account',
-      href: '/account',
-      icon: <AccountBoxIcon />
-    },
-    // NOTE: NO VOLARLO
     {
       title: 'Configuración',
       href: '/configuracion',
@@ -138,8 +118,7 @@ const Sidebar = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >
-        <Profile />
-        <Divider className={classes.divider} />
+        <Divider className={classes.divider} style={{ marginTop: 0 }}/>
         <SidebarNav
           className={classes.nav}
           pages={pages}
