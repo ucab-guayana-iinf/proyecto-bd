@@ -4,12 +4,11 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Table } from '../../components';
 import {
-  createUnidades,
-  readUnidades,
-  updateUnidades,
-  deleteUnidades,
-  readSedes,
+  createEmpleados,
   readEmpleados,
+  updateEmpleados,
+  deleteEmpleados,
+  readUnidades,
 } from '../../../db/lib/querys';
 
 const useStyles = makeStyles(theme => ({
@@ -21,24 +20,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Unidades = (props) => {
+const Empleados = (props) => {
   const classes = useStyles();
-  const [sedes, setSedes] = useState([]);
-  const [empleados, setEmpleados] = useState([]);
+  const [unidades, setUnidades] = useState([]);
   const { enqueueSnackbar } = props;
 
   useEffect(() => {
     (async() => {
-      const _sedes = await readSedes();
-      const _empleados = await readEmpleados();
-      setSedes(_sedes);
-      setEmpleados(_empleados);
+      const _unidades = await readUnidades();
+      readUnidades(_unidades);
     })()
   }, []);
 
   const headers = [
-    { title: 'Código Unidad', field: 'codigo_unidad', type: 'numeric', editable: 'never' },
-    { title: 'Sede', field: 'codigo_sede', editComponent: (props) => {
+    { title: 'CI', field: 'ci', type: 'numeric', editable: 'never' },
+    { title: 'Nombre', field: 'nombre_completo' },
+    { title: 'Dirección', field: 'codigo_unidad', editComponent: (props) => {
       return (
         <Select
           labelId="demo-simple-select-label"
@@ -46,47 +43,43 @@ const Unidades = (props) => {
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          {sedes.map((sede) => (
-            <MenuItem key={sede.codigo_sede} value={sede.codigo_sede}>
-              {sede.descripcion}
+          {unidades.map((unidad) => (
+            <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
+              {unidad.nombre_unidad}
             </MenuItem>
           ))}
         </Select>
       );
     }},
-    { title: 'Nombre Unidad', field: 'nombre_unidad' },
-    { title: 'Jefe', field: 'ci_jefe', type: 'numeric' },
-    { title: 'Fecha', field: 'fecha_jefe', editable: 'never' },
   ];
 
   return (
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
-          title="Unidades"
+          title="Empleados"
           headers={headers}
-          data={readUnidades}
+          data={readEmpleados}
           selection
           onAdd={(data, onError) => {
-            createUnidades({
+            createEmpleados({
               data: {
                 ...data,
-                fecha_jefe: null,
-                codigo_sede: data.codigo_sede || ''
+                codigo_unidad: data.codigo_unidad || ''
               },
             }, onError)
           }}
           onUpdate={(data, onError) => {
-            updateUnidades({
+            updateEmpleados({
               data,
-              value: data.codigo_unidad,
+              value: data.ci,
             },
             onError);
           }}
           onDelete={(data, onError) => {
-            deleteUnidades({
+            deleteEmpleados({
               data,
-              value: data.codigo_unidad
+              value: data.ci
             }, onError)
           }}
         />
@@ -95,4 +88,4 @@ const Unidades = (props) => {
   );
 };
 
-export default Unidades;
+export default Empleados;

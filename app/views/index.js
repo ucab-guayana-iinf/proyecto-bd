@@ -10,3 +10,4 @@ export { default as UserList } from './UserList';
 export { default as Ubicaciones } from './Ubicaciones';
 export { default as Sedes } from './Sedes';
 export { default as Unidades } from './Unidades';
+export { default as Empleados } from './Empleados';

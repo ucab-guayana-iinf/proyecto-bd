@@ -17,6 +17,7 @@ import {
   Ubicaciones as UbicacionesView,
   Sedes as SedesView,
   Unidades as UnidadesView,
+  Empleados as EmpleadosView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -43,6 +44,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/unidades"
+      />
+      <RouteWithLayout
+        component={EmpleadosView}
+        exact
+        layout={MainLayout}
+        path="/empleados"
       />
       <RouteWithLayout
         component={DashboardView}
