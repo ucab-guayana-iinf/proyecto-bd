@@ -134,12 +134,12 @@ CREATE TABLE IF NOT EXISTS `activos_intangibles` ( `codigo_bien` INT, `fecha_cad
 --   `ubicacion` VARCHAR(255) NOT NULL,
 --   `superficie` float NOT NULL,
 --   `tipo_propiedad` ENUM('PROPIA', 'COMODATO') NOT NULL,
---   `status` ENUM('EN PROCESO DE REGISTRO', 'EN CONSTRUCCIÓN', 'HABITADA', 'DESHABITADA', 'DESINCORPORADO') NOT NULL,
+--   `status` ENUM('EN PROCESO DE REGISTRO', 'EN CONSTRUCCIÓN', 'HABITADA', 'DESHABITADA', 'DESINCORPORADO') DEFAULT 'EN PROCESO DE REGISTRO',
 --   PRIMARY KEY (`codigo_bien`),
 --   FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `edificaciones` ( `codigo_bien` INT, `ubicacion` VARCHAR(255) NOT NULL, `superficie` float NOT NULL, `tipo_propiedad` ENUM('PROPIA', 'COMODATO') NOT NULL, `status` ENUM('EN PROCESO DE REGISTRO', 'EN CONSTRUCCIÓN', 'HABITADA', 'DESHABITADA', 'DESINCORPORADO') NOT NULL, PRIMARY KEY (`codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `edificaciones` ( `codigo_bien` INT, `ubicacion` VARCHAR(255) NOT NULL, `superficie` float NOT NULL, `tipo_propiedad` ENUM('PROPIA', 'COMODATO') NOT NULL, `status` ENUM('EN PROCESO DE REGISTRO', 'EN CONSTRUCCIÓN', 'HABITADA', 'DESHABITADA', 'DESINCORPORADO') DEFAULT 'EN PROCESO DE REGISTRO', PRIMARY KEY (`codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `bienes_naturales` (
