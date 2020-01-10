@@ -76,6 +76,11 @@ const Sidebar = props => {
       href: '/activos-tangibles',
       icon: <LocationIcon />
     },
+    {
+      title: 'Activos Intangibles',
+      href: '/activos-intangibles',
+      icon: <LocationIcon />
+    },
 
     // --- demo
     {

@@ -20,6 +20,7 @@ import {
   Empleados as EmpleadosView,
   Bienes as BienesView,
   Tangibles as TangiblesView,
+  Intangibles as IntangiblesView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -64,6 +65,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/activos-tangibles"
+      />
+      <RouteWithLayout
+        component={IntangiblesView}
+        exact
+        layout={MainLayout}
+        path="/activos-intangibles"
       />
       <RouteWithLayout
         component={DashboardView}

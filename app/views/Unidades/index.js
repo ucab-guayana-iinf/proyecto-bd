@@ -55,7 +55,22 @@ const Unidades = (props) => {
       );
     }},
     { title: 'Nombre Unidad', field: 'nombre_unidad' },
-    { title: 'Jefe', field: 'ci_jefe', type: 'numeric' },
+    { title: 'Jefe', field: 'ci_jefe', editComponent: (props) => {
+      return (
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={props.value || ''}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          {empleados.map((empleado) => (
+            <MenuItem key={empleado.ci} value={empleado.ci}>
+              {empleado.ci}
+            </MenuItem>
+          ))}
+        </Select>
+      );
+    }},
     { title: 'Fecha', field: 'fecha_jefe', editable: 'never' },
   ];
 
@@ -72,7 +87,8 @@ const Unidades = (props) => {
               data: {
                 ...data,
                 fecha_jefe: null,
-                codigo_sede: data.codigo_sede || ''
+                codigo_sede: data.codigo_sede || '',
+                ci_jefe: data.ci_jefe || null
               },
             }, onError)
           }}

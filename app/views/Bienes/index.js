@@ -10,6 +10,7 @@ import {
   deleteBienes,
   readUnidades,
 } from '../../../db/lib/querys';
+import { jsDatetimeToMysql } from '../../../db/utils';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,10 +34,10 @@ const Bienes = (props) => {
   }, []);
 
   const headers = [
-    { title: 'Código Bien', field: 'codigo_bien', type: 'numeric' },
+    { title: 'Código Bien', field: 'codigo_bien', type: 'numeric', editable: 'never' },
     { title: 'Descripción', field: 'descripcion' },
-    { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', editable: 'never' },
-    { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', editable: 'never' },
+    { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', type: 'date' },
+    { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', type: 'date' },
     { title: 'Origen', field: 'origen' },
     { title: 'Unidad', field: 'codigo_unidad', editComponent: (props) => {
       return (
@@ -69,8 +70,8 @@ const Bienes = (props) => {
             createBienes({
               data: {
                 ...data,
-                fecha_incorporacion: null,
-                fecha_desincorporacion: null,
+                fecha_incorporacion: jsDatetimeToMysql(data.fecha_incorporacion) || null,
+                fecha_desincorporacion: jsDatetimeToMysql(data.fecha_desincorporacion) || null,
                 codigo_unidad: data.codigo_unidad || 0
               },
             }, onError)

@@ -13,3 +13,4 @@ export { default as Unidades } from './Unidades';
 export { default as Empleados } from './Empleados';
 export { default as Bienes } from './Bienes';
 export { default as Tangibles } from './Activos_Tangibles';
+export { default as Intangibles } from './Activos_Intangibles';

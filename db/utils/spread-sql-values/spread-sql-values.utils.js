@@ -2,7 +2,7 @@ const v = (s) => {
   if (typeof s === 'string') {
     return `'${s}'`;
   }
-  if (typeof s === 'number') {
+  if (typeof s === 'number' || typeof s === 'boolean') {
     return s;
   }
 

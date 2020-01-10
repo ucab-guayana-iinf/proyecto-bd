@@ -36,7 +36,7 @@ const updateSedes = async (params, onError = () => {}) => {
   let QUERY = `UPDATE sedes SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE sedes SET ${values} WHERE codigo_ubicacion=${value}`;
+    QUERY = `UPDATE sedes SET ${values} WHERE codigo_sedes=${value}`;
   }
 
   console.log(QUERY);

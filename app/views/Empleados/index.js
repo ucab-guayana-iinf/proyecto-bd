@@ -33,7 +33,7 @@ const Empleados = (props) => {
   }, []);
 
   const headers = [
-    { title: 'CI', field: 'ci', type: 'numeric', editable: 'never' },
+    { title: 'CI', field: 'ci', type: 'numeric', editable: 'onAdd' },
     { title: 'Nombre', field: 'nombre_completo' },
     { title: 'Unidad', field: 'codigo_unidad', editComponent: (props) => {
       return (
