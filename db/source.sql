@@ -145,12 +145,12 @@ CREATE TABLE IF NOT EXISTS `edificaciones` ( `codigo_bien` INT, `ubicacion` VARC
 --   `periodo_floral` ENUM('PRIMAVERA', 'VERANO', 'OTOÑO', 'INVIERNO') NOT NULL,
 --   `origen` VARCHAR(255) NOT NULL,
 --   `ubicacion` VARCHAR(255) NOT NULL,
---   `status` ENUM('EN PROCESO DE REGISTRO', 'PLANTADO', 'ENFERMO', 'EXTINTO') NOT NULL,
+--   `status` ENUM('EN PROCESO DE REGISTRO', 'PLANTADO', 'ENFERMO', 'EXTINTO') DEFAULT 'EN PROCESO DE REGISTRO',
 --   PRIMARY KEY (`codigo_bien`),
 --   FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `bienes_naturales` ( `codigo_bien` INT, `nombre_cientifico` VARCHAR(255) NOT NULL, `nombre_vulgar` VARCHAR(255) NOT NULL, `es_frutal` boolean NOT NULL DEFAULT false, `periodo_floral` ENUM('PRIMAVERA', 'VERANO', 'OTOÑO', 'INVIERNO') NOT NULL, `origen` VARCHAR(255) NOT NULL, `ubicacion` VARCHAR(255) NOT NULL, `status` ENUM('EN PROCESO DE REGISTRO', 'PLANTADO', 'ENFERMO', 'EXTINTO') NOT NULL, PRIMARY KEY (`codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `bienes_naturales` ( `codigo_bien` INT, `nombre_cientifico` VARCHAR(255) NOT NULL, `nombre_vulgar` VARCHAR(255) NOT NULL, `es_frutal` boolean NOT NULL DEFAULT false, `periodo_floral` ENUM('PRIMAVERA', 'VERANO', 'OTOÑO', 'INVIERNO') NOT NULL, `origen` VARCHAR(255) NOT NULL, `ubicacion` VARCHAR(255) NOT NULL, `status` ENUM('EN PROCESO DE REGISTRO', 'PLANTADO', 'ENFERMO', 'EXTINTO') DEFAULT 'EN PROCESO DE REGISTRO', PRIMARY KEY (`codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `fotografias_bienes_naturales` (
