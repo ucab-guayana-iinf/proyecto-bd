@@ -1,11 +1,11 @@
-const createEdificaciones = require('./create-edificaciones.query');
-const updateEdificaciones = require('./update-edificaciones.query');
-const readEdificaciones = require('./read-edificaciones.query');
-const deleteEdificaciones = require('./delete-edificaciones.query');
+const createBienesNaturales = require('./create-bienes_naturales.query');
+const updateBienesNaturales = require('./update-bienes_naturales.query');
+const readBienesNaturales = require('./read-bienes_naturales.query');
+const deleteBienesNaturales = require('./delete-bienes_naturales.query');
 
 module.exports = {
-  createEdificaciones,
-  updateEdificaciones,
-  readEdificaciones,
-  deleteEdificaciones,
+  createBienesNaturales,
+  updateBienesNaturales,
+  readBienesNaturales,
+  deleteBienesNaturales,
 };

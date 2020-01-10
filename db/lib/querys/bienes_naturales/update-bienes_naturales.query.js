@@ -7,19 +7,24 @@ const {
 
  const attributes = [
    `codigo_bien`,
+   `nombre_cientifico`,
+   `nombre_vulgar`,
+   `es_frutal`,
+   `periodo_floral`,
+   `origen`,
    `ubicacion`,
-   `superficie`,
-   `tipo_propiedad`,
    `status`,
  ];
  const neededAttributes = [
    'codigo_bien',
-   'ubicacion',
-   'superficie',
-   `tipo_propiedad`,
+   `nombre_cientifico`,
+   `nombre_vulgar`,
+   `periodo_floral`,
+   `origen`,
+   `ubicacion`,
  ];
 
-const updateBienes = async (params, onError = () => {}) => {
+const updateBienesNaturales = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -51,4 +56,4 @@ const updateBienes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateBienes;
+module.exports = updateBienesNaturales;
