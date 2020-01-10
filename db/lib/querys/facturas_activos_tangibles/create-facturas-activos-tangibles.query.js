@@ -7,10 +7,16 @@ const {
 } = require('../../../utils');
 
 const attributes = [
+  'numero_factura',
   'numero_orden',
+  'proveedor',
+  'precio_compra',
+  'plazo_garantia'
 ];
 const neededAttributes = [
-  'numero_orden',
+  'numero_factura',
+  'proveedor',
+  'precio_compra',
 ];
 
 const createFacturasActivosTangibles = async (params, onError = () => {}) => {

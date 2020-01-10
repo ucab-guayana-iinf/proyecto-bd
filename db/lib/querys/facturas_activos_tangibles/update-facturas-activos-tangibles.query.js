@@ -5,13 +5,17 @@ const {
   validateInput,
  } = require('../../../utils');
 
- // `numero_orden` INT,
-
  const attributes = [
+   'numero_factura',
    'numero_orden',
+   'proveedor',
+   'precio_compra',
+   'plazo_garantia'
  ];
  const neededAttributes = [
-   'numero_orden',
+   'numero_factura',
+   'proveedor',
+   'precio_compra',
  ];
 
 const updateActivosTangibles = async (params, onError = () => {}) => {
