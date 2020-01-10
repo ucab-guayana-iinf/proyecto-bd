@@ -28,7 +28,12 @@ const ActivosIntangibles = (props) => {
   const classes = useStyles();
   const [bienes, setBienes] = useState([]);
   const { enqueueSnackbar } = props;
-  const status = ['EN PROCESO DE REGISTRO', 'VIGENTE', 'VENCIDA', 'DESINCORPORADO'];
+  const status = [
+    'EN PROCESO DE REGISTRO',
+    'VIGENTE',
+    'VENCIDA',
+    'DESINCORPORADO'
+  ];
 
   useEffect(() => {
     (async() => {

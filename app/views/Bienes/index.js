@@ -25,6 +25,12 @@ const Bienes = (props) => {
   const classes = useStyles();
   const [unidades, setUnidades] = useState([]);
   const { enqueueSnackbar } = props;
+  const tiposBienes = [
+    'ACTIVO TANGIBLE',
+    'ACTIVO INTANGIBLE',
+    'EDIFICACION',
+    'BIEN NATURAL',
+  ];
 
   useEffect(() => {
     (async() => {
@@ -55,7 +61,22 @@ const Bienes = (props) => {
         </Select>
       );
     }},
-    { title: 'Tipo', field: 'tipo' },
+    { title: 'Tipo', field: 'tipo', editComponent: (props) => {
+      return (
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={props.value || ''}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          {tiposBienes.map((tipoBien) => (
+            <MenuItem key={tipoBien} value={tipoBien}>
+              {tipoBien}
+            </MenuItem>
+          ))}
+        </Select>
+      );
+    }},
   ];
 
   return (
@@ -72,7 +93,8 @@ const Bienes = (props) => {
                 ...data,
                 fecha_incorporacion: jsDatetimeToMysql(data.fecha_incorporacion) || null,
                 fecha_desincorporacion: jsDatetimeToMysql(data.fecha_desincorporacion) || null,
-                codigo_unidad: data.codigo_unidad || 0
+                codigo_unidad: data.codigo_unidad || 0,
+                status: data.tipo || ''
               },
             }, onError)
           }}
