@@ -1,11 +1,11 @@
-const createFotografiaBienesNaturales = require('./create-fotografias_bienes_naturales.query');
-const updateFotografiasBienesNaturales = require('./update-fotografias_bienes_naturales.query');
-const readFotogrfiasBienesNaturales = require('./read-fotografias_bienes_naturales.query');
-const deleteFotografiasBienesNaturales = require('./delete-fotografias_bienes_naturales.query');
+const createComponentes = require('./create-componentes.query');
+const updateComponentes = require('./update-componentes.query');
+const readComponentes = require('./read-componentes.query');
+const deleteComponentes = require('./delete-componentes.query');
 
 module.exports = {
-  createBienesNaturales,
-  updateFotografiasBienesNaturales,
-  readFotogrfiasBienesNaturales,
-  deleteFotografiasBienesNaturales,
+  createComponentes,
+  updateComponentes,
+  readComponentes,
+  deleteComponentes,
 };

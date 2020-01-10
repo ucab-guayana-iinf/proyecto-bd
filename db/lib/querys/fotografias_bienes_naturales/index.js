@@ -4,7 +4,7 @@ const readFotogrfiasBienesNaturales = require('./read-fotografias_bienes_natural
 const deleteFotografiasBienesNaturales = require('./delete-fotografias_bienes_naturales.query');
 
 module.exports = {
-  createBienesNaturales,
+  createFotografiaBienesNaturales,
   updateFotografiasBienesNaturales,
   readFotogrfiasBienesNaturales,
   deleteFotografiasBienesNaturales,
