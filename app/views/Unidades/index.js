@@ -39,41 +39,59 @@ const Unidades = (props) => {
 
   const headers = [
     { title: 'Código Unidad', field: 'codigo_unidad', type: 'numeric', editable: 'never', cellStyle: { width: '170px' } },
-    { title: 'Sede', field: 'codigo_sede', cellStyle: { width: '-webkit-fill-available' }, editComponent: (props) => {
-      return (
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={props.value || 'POR ASIGNAR'}
-          onChange={(e) => props.onChange(e.target.value)}
-        >
-          {sedes.map((sede) => (
-            <MenuItem key={sede.codigo_sede} value={sede.codigo_sede}>
-              {sede.descripcion}
-            </MenuItem>
-          ))}
-        </Select>
-      );
-    }},
+    { title: 'Sede', field: 'codigo_sede', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        const sede = sedes.find(({ codigo_sede }) => codigo_sede === data.codigo_sede);
+        return (
+          <span>
+            {(sede && sede.descripcion) || ''}
+          </span>
+        );
+      },
+      editComponent: (props) => {
+        return (
+          <Select
+            value={props.value || 'POR ASIGNAR'}
+            onChange={(e) => props.onChange(e.target.value)}
+          >
+            {sedes.map((sede) => (
+              <MenuItem key={sede.codigo_sede} value={sede.codigo_sede}>
+                {sede.descripcion}
+              </MenuItem>
+            ))}
+          </Select>
+        );
+      }
+    },
     { title: 'Nombre Unidad', field: 'nombre_unidad', cellStyle: { width: '-webkit-fill-available' } },
-    { title: 'Jefe', field: 'ci_jefe', cellStyle: { width: '200px' }, editComponent: (props) => {
+    { title: 'Jefe', field: 'ci_jefe', cellStyle: { width: '200px' },
+      render: (data) => {
+        const jefe = empleados.find(({ ci }) => ci === data.ci_jefe);
+        return (
+          <span>
+            {(jefe && `${jefe.ci} - ${jefe.nombre_completo}`) || 'POR ASIGNAR'}
+          </span>
+        );
+      },
+      editComponent: (props) => {
       return (
-        <Select
-          labelId="demo-simple-select-label"
-          value={props.value || 'null'}
-          onChange={(e) => props.onChange(e.target.value)}
-        >
-          <MenuItem key={'POR ASIGNAR'} value={null}>
-            POR ASIGNAR
-          </MenuItem>
-          {empleados.map((empleado) => (
-            <MenuItem key={empleado.ci} value={empleado.ci}>
-              {empleado.ci}
+          <Select
+            value={props.value || ''}
+            placeholder="POR ASIGNAR"
+            onChange={(e) => props.onChange(e.target.value)}
+          >
+            <MenuItem key={'POR ASIGNAR'} value={''}>
+              POR ASIGNAR
             </MenuItem>
-          ))}
-        </Select>
-      );
-    }},
+            {empleados.map((empleado) => (
+              <MenuItem key={empleado.ci} value={empleado.ci}>
+                {empleado.ci} - {empleado.nombre_completo}
+              </MenuItem>
+            ))}
+          </Select>
+        );
+      }
+    },
     { title: 'Fecha', field: 'fecha_jefe', editable: 'never', type: 'date', cellStyle: { width: '200px' } },
   ];
 
