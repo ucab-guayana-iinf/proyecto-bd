@@ -60,11 +60,10 @@ const Unidades = (props) => {
       return (
         <Select
           labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={props.value || 'POR ASIGNAR'}
+          value={props.value || 'null'}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          <MenuItem key={'POR ASIGNAR'} value={'POR ASIGNAR'}>
+          <MenuItem key={'POR ASIGNAR'} value={null}>
             POR ASIGNAR
           </MenuItem>
           {empleados.map((empleado) => (
@@ -87,23 +86,31 @@ const Unidades = (props) => {
           data={readUnidades}
           selection
           onAdd={(data, onError) => {
-            console.log('data.fecha_jefe: ',data.fecha_jefe);
-            createUnidades({
-              data: {
-                ...data,
-                fecha_jefe: jsDatetimeToMysql(data.fecha_jefe) || null,
-                codigo_sede: data.codigo_sede || '',
-                ci_jefe: data.ci_jefe || null
-              },
-            }, onError)
+            if (!data.ci_jefe) {
+              delete data.ci_jefe;
+            }
+            if (!data.fecha_jefe) {
+              delete data.fecha_jefe;
+            } else {
+              data.fecha_jefe = jsDatetimeToMysql(data.fecha_jefe);
+            }
+
+            createUnidades({ data }, onError);
           }}
           onUpdate={(data, onError) => {
+            if (!data.ci_jefe) {
+              delete data.ci_jefe;
+            }
+            if (!data.fecha_jefe) {
+              delete data.fecha_jefe;
+            } else {
+              data.fecha_jefe = jsDatetimeToMysql(data.fecha_jefe);
+            }
+
             updateUnidades({
               data,
               value: data.codigo_unidad,
-              fecha_jefe: jsDatetimeToMysql(data.fecha_jefe) || null,
-            },
-            onError);
+            }, onError);
           }}
           onDelete={(data, onError) => {
             deleteUnidades({
