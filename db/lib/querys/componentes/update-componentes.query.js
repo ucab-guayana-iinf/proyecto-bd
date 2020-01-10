@@ -6,20 +6,19 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   `codigo_bien_natural`,
-   `fotografia`,
+   `codigo_bien`,
+   `codigo_componente`,
  ];
  const neededAttributes = [
-   `codigo_bien_natural`,
-   `fotografia`,
+   `codigo_bien`,
+   `codigo_componente`,
  ];
 
-const updateFotografiasBienesNaturales = async (params, onError = () => {}) => {
+const updateComponentes = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
-    condition,
-    value,
+    conditions,
     data,
   } = params;
 
@@ -29,11 +28,8 @@ const updateFotografiasBienesNaturales = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE fotografias_bienes_naturales SET ${values} WHERE ${condition}${value}`;
-
-  if (!condition) {
-    QUERY = `UPDATE fotografias_bienes_naturales SET ${values} WHERE codigo_bien_natural=${value}`;
-  }
+  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  QUERY = `UPDATE componentes SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);
 
@@ -46,4 +42,4 @@ const updateFotografiasBienesNaturales = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateFotografiasBienesNaturales;
+module.exports = updateComponentes;

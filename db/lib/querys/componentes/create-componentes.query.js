@@ -7,15 +7,15 @@ const {
 } = require('../../../utils');
 
 const attributes = [
-  `codigo_bien_natural`,
-  `fotografia`,
+  `codigo_bien`,
+  `codigo_componente`,
 ];
 const neededAttributes = [
-  `codigo_bien_natural`,
-  `fotografia`,
+  `codigo_bien`,
+  `codigo_componente`,
 ];
 
-const createFotografiaBienesNaturales = async (params, onError = () => {}) => {
+const createComponentes = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -25,7 +25,7 @@ const createFotografiaBienesNaturales = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO fotografias_bienes_naturales ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO componentes ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -37,4 +37,4 @@ const createFotografiaBienesNaturales = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createFotografiaBienesNaturales;
+module.exports = createComponentes;
