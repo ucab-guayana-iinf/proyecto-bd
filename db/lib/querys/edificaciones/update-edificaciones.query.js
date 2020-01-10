@@ -6,8 +6,17 @@ const {
  } = require('../../../utils');
 
  const attributes = [
+   `codigo_bien`,
+   `ubicacion`,
+   `superficie`,
+   `tipo_propiedad`,
+   `status`,
  ];
  const neededAttributes = [
+   'codigo_bien',
+   'ubicacion',
+   'superficie',
+   `tipo_propiedad`,
  ];
 
 const updateBienes = async (params, onError = () => {}) => {
