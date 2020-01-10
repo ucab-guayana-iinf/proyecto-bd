@@ -38,13 +38,13 @@ const Unidades = (props) => {
   }, []);
 
   const headers = [
-    { title: 'Código Unidad', field: 'codigo_unidad', type: 'numeric', editable: 'never' },
-    { title: 'Sede', field: 'codigo_sede', editComponent: (props) => {
+    { title: 'Código Unidad', field: 'codigo_unidad', type: 'numeric', editable: 'never', cellStyle: { width: '170px' } },
+    { title: 'Sede', field: 'codigo_sede', cellStyle: { width: '-webkit-fill-available' }, editComponent: (props) => {
       return (
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={props.value || ''}
+          value={props.value || 'POR ASIGNAR'}
           onChange={(e) => props.onChange(e.target.value)}
         >
           {sedes.map((sede) => (
@@ -55,15 +55,18 @@ const Unidades = (props) => {
         </Select>
       );
     }},
-    { title: 'Nombre Unidad', field: 'nombre_unidad' },
-    { title: 'Jefe', field: 'ci_jefe', editComponent: (props) => {
+    { title: 'Nombre Unidad', field: 'nombre_unidad', cellStyle: { width: '-webkit-fill-available' } },
+    { title: 'Jefe', field: 'ci_jefe', cellStyle: { width: '200px' }, editComponent: (props) => {
       return (
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={props.value || ''}
+          value={props.value || 'POR ASIGNAR'}
           onChange={(e) => props.onChange(e.target.value)}
         >
+          <MenuItem key={'POR ASIGNAR'} value={'POR ASIGNAR'}>
+            POR ASIGNAR
+          </MenuItem>
           {empleados.map((empleado) => (
             <MenuItem key={empleado.ci} value={empleado.ci}>
               {empleado.ci}
@@ -72,7 +75,7 @@ const Unidades = (props) => {
         </Select>
       );
     }},
-    { title: 'Fecha', field: 'fecha_jefe', type: 'date' },
+    { title: 'Fecha', field: 'fecha_jefe', editable: 'never', type: 'date', cellStyle: { width: '200px' } },
   ];
 
   return (
