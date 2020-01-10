@@ -100,16 +100,17 @@ CREATE TABLE IF NOT EXISTS `activos_tangibles` ( `codigo_bien` INT, `numero_fact
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` (
---   `numero_factura` INT UNIQUE NOT NULL,
---   `numero_orden` INT AUTO_INCREMENT,
+--   `numero_factura` INT NOT NULL,
+--   `numero_orden` INT NOT NULL AUTO_INCREMENT,
 --   `proveedor` VARCHAR(255) NOT NULL,
 --   `precio_compra` float NOT NULL,
 --   `plazo_garantia` INT DEFAULT 0,
 --   PRIMARY KEY (`numero_factura`),
+--   KEY (`numero_orden`)
 --   FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`) ON DELETE RESTRICT ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` ( `numero_factura` INT NOT NULL, `numero_orden` INT AUTO_INCREMENT, `proveedor` VARCHAR(255) NOT NULL, `precio_compra` float NOT NULL, `plazo_garantia` INT DEFAULT 0, PRIMARY KEY (`numero_factura`), FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `facturas_activos_tangibles` ( `numero_factura` INT NOT NULL, `numero_orden` INT NOT NULL AUTO_INCREMENT, `proveedor` VARCHAR(255) NOT NULL, `precio_compra` float NOT NULL, `plazo_garantia` INT DEFAULT 0, PRIMARY KEY (`numero_factura`), KEY (`numero_orden`), FOREIGN KEY (`numero_factura`) REFERENCES `activos_tangibles` (`numero_factura`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `activos_intangibles` (
