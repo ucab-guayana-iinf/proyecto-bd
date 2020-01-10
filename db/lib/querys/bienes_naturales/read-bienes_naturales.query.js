@@ -4,9 +4,9 @@ const {
   mysqlDatetimeToJS,
 } = require('../../../utils');
 
-const readEdificaciones = async (onError = () => {}) => {
+const readBienesNaturales = async (onError = () => {}) => {
   const db = await getConnection();
-  const QUERY = `SELECT * FROM edificaciones`;
+  const QUERY = `SELECT * FROM bienes_naturales`;
 
   try {
     const response = await promisifyQuery(db, QUERY);
@@ -18,4 +18,4 @@ const readEdificaciones = async (onError = () => {}) => {
   }
 };
 
-module.exports = readEdificaciones;
+module.exports = readBienesNaturales;
