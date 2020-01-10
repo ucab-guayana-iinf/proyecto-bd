@@ -7,16 +7,13 @@ const {
 } = require('../../../utils');
 
 const attributes = [
-  'proveedor',
+  'codigo_bien',
   'numero_factura',
-  'precio',
-  'plazo_garantia',
   'status',
 ];
 const neededAttributes = [
-  'proveedor',
+  'codigo_bien',
   'numero_factura',
-  'precio',
 ];
 
 const createActivosTangibles = async (params, onError = () => {}) => {

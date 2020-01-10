@@ -5,24 +5,14 @@ const {
   validateInput,
  } = require('../../../utils');
 
- // `codigo_bien` INT,
- // `proveedor` VARCHAR(255) NOT NULL,
- // `numero_factura` INT UNIQUE NOT NULL,
- // `precio` float NOT NULL,
- // `plazo_garantia` INT,
- // `status` ENUM('EN PROCESO DE REGISTRO', 'ACTIVO', 'DAÑADO', 'OBSOLETO', 'EN PREPARACIÓN', 'DESINCORPORADO') NOT NULL,
-
  const attributes = [
-   'proveedor',
+   'codigo_bien',
    'numero_factura',
-   'precio',
-   'plazo_garantia',
    'status',
  ];
  const neededAttributes = [
-   'proveedor',
+   'codigo_bien',
    'numero_factura',
-   'precio',
  ];
 
 const updateActivosTangibles = async (params, onError = () => {}) => {
