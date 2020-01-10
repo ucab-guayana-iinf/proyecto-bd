@@ -11,6 +11,7 @@ import {
   readSedes,
   readEmpleados,
 } from '../../../db/lib/querys';
+import { jsDatetimeToMysql } from '../../../db/utils';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,7 +72,7 @@ const Unidades = (props) => {
         </Select>
       );
     }},
-    { title: 'Fecha', field: 'fecha_jefe', editable: 'never' },
+    { title: 'Fecha', field: 'fecha_jefe', type: 'date' },
   ];
 
   return (
@@ -83,10 +84,11 @@ const Unidades = (props) => {
           data={readUnidades}
           selection
           onAdd={(data, onError) => {
+            console.log('data.fecha_jefe: ',data.fecha_jefe);
             createUnidades({
               data: {
                 ...data,
-                fecha_jefe: null,
+                fecha_jefe: jsDatetimeToMysql(data.fecha_jefe) || null,
                 codigo_sede: data.codigo_sede || '',
                 ci_jefe: data.ci_jefe || null
               },
@@ -96,6 +98,7 @@ const Unidades = (props) => {
             updateUnidades({
               data,
               value: data.codigo_unidad,
+              fecha_jefe: jsDatetimeToMysql(data.fecha_jefe) || null,
             },
             onError);
           }}

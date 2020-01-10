@@ -24,6 +24,14 @@ const Tangibles = (props) => {
   const classes = useStyles();
   const [bienes, setBienes] = useState([]);
   const { enqueueSnackbar } = props;
+  const status = [
+    'EN PROCESO DE REGISTRO',
+    'ACTIVO',
+    'DAÑADO',
+    'OBSOLETO',
+    'EN PREPARACIÓN',
+    'DESINCORPORADO'
+  ];
 
   useEffect(() => {
     (async() => {
@@ -53,7 +61,22 @@ const Tangibles = (props) => {
     { title: 'Número de Factura', field: 'numero_factura', type: 'numeric' },
     { title: 'Precio', field: 'precio', type: 'numeric' },
     { title: 'Plazo de Garantía', field: 'plazo_garantia', type: 'numeric' },
-    { title: 'Status', field: 'status' },
+    { title: 'Status', field: 'status', editComponent: (props) => {
+      return (
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={props.value || ''}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          {status.map((state) => (
+            <MenuItem key={state} value={state}>
+              {state}
+            </MenuItem>
+          ))}
+        </Select>
+      );
+    }},
   ];
 
   return (
@@ -68,7 +91,8 @@ const Tangibles = (props) => {
             createActivosTangibles({
               data: {
                 ...data,
-                codigo_bien: data.codigo_bien || ''
+                codigo_bien: data.codigo_bien || '',
+                status: data.status || ''
               },
             }, onError)
           }}
