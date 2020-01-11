@@ -14,6 +14,7 @@ const Table = (props) => {
     onUpdate, // (data)
     onDelete, // (data)
     enqueueSnackbar,
+    selection,
   } = props;
   const [isLoading, setIsLoading] = useState(true);
 
@@ -73,6 +74,14 @@ const Table = (props) => {
       isLoading={isLoading}
       localization={localization}
       editable={{ onRowAdd, onRowUpdate, onRowDelete }}
+      options={{ selection }}
+      actions={
+        selection && [{
+          tooltip: `Eliminar '${title}' seleccionadas`,
+          icon: tableIcons.Delete,
+          onClick: (evt, oldData) => oldData.forEach((item) => onRowDelete(item))
+        }]
+      }
     />
   );
 }
@@ -94,6 +103,7 @@ Table.defaultProps = {
   onEdit: () => {},
   onAdd: () => {},
   onDelete: () => {},
+  selection: false,
 };
 
 export default withSnackbar(Table);

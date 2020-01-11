@@ -51,6 +51,41 @@ const Sidebar = props => {
       href: '/ubicaciones',
       icon: <LocationIcon />
     },
+    {
+      title: 'Sedes',
+      href: '/sedes',
+      icon: <LocationIcon />
+    },
+    {
+      title: 'Unidades',
+      href: '/unidades',
+      icon: <LocationIcon />
+    },
+    {
+      title: 'Empleados',
+      href: '/empleados',
+      icon: <LocationIcon />
+    },
+    {
+      title: 'Bienes',
+      href: '/bienes',
+      icon: <LocationIcon />
+    },
+    {
+      title: 'Activos Tangibles',
+      href: '/activos-tangibles',
+      icon: <LocationIcon />
+    },
+    {
+      title: 'Activos Intangibles',
+      href: '/activos-intangibles',
+      icon: <LocationIcon />
+    },
+    {
+      title: 'Facturas',
+      href: '/facturas',
+      icon: <LocationIcon />
+    },
 
     // --- demo
     {

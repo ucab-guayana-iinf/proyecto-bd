@@ -2,7 +2,7 @@ const v = (s) => {
   if (typeof s === 'string') {
     return `'${s}'`;
   }
-  if (typeof s === 'number') {
+  if (typeof s === 'number' || typeof s === 'boolean') {
     return s;
   }
 
@@ -98,7 +98,7 @@ const spreadObjValues = (obj = {}, keys = []) => {
 const validateInput = (data, neededAttributes, onError) => {
   const keys = getKeys(data, neededAttributes);
   const validString = /^(?!\s*$).+/gi;
-  if (!neededAttributes.every(key => keys.includes(key) && data[key].match(validString))) {
+  if (!neededAttributes.every(key => keys.includes(key) && String(data[key]).match(validString))) {
     onError('Debe llenar todos los campos');
     return false;
   }
