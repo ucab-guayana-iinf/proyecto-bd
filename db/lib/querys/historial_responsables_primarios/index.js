@@ -1,11 +1,11 @@
-const createHistorialResponsableDeUso = require('./create-historial_responsable_de_uso.query');
-const updateHistorialResponsableDeUso = require('./update-historial_responsable_de_uso.query');
-const readHistorialResponsableDeUso = require('./read-historial_responsable_de_uso.query');
-const deleteHistorialResponsableDeUso = require('./delete-historial_responsable_de_uso.query');
+const createHistorialResponsablesPrimarios = require('./create-historial_responsables_primarios.query');
+const updateHistorialResponsablesPrimarios = require('./update-historial_responsables_primarios.query');
+const readHistorialResponsablesPrimarios = require('./read-historial_responsables_primarios.query');
+const deleteHistorialResponsablesPrimarios = require('./delete-historial_responsables_primarios.query');
 
 module.exports = {
-  createHistorialResponsableDeUso,
-  updateHistorialResponsableDeUso,
-  readHistorialResponsableDeUso,
-  deleteHistorialResponsableDeUso,
+  createHistorialResponsablesPrimarios,
+  updateHistorialResponsablesPrimarios,
+  readHistorialResponsablesPrimarios,
+  deleteHistorialResponsablesPrimarios,
 };
