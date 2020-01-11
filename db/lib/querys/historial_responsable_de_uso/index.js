@@ -1,11 +1,11 @@
-const createMovilizacionesTangibles = require('./create-movilizaciones_tangibles.query');
-const updateMovilizacionesTangibles = require('./update-movilizaciones_tangibles.query');
-const readMovilizacionesTangibles = require('./read-movilizaciones_tangibles.query');
-const deleteMovilizacionesTangibles = require('./delete-movilizaciones_tangibles.query');
+const createHistorialResponsableDeUso = require('./create-historial_responsable_de_uso.query');
+const updateHistorialResponsableDeUso = require('./update-historial_responsable_de_uso.query');
+const readHistorialResponsableDeUso = require('./read-historial_responsable_de_uso.query');
+const deleteHistorialResponsableDeUso = require('./delete-historial_responsable_de_uso.query');
 
 module.exports = {
-  createMovilizacionesTangibles,
-  updateMovilizacionesTangibles,
-  readMovilizacionesTangibles,
-  deleteMovilizacionesTangibles,
+  createHistorialResponsableDeUso,
+  updateHistorialResponsableDeUso,
+  readHistorialResponsableDeUso,
+  deleteHistorialResponsableDeUso,
 };
