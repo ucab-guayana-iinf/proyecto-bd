@@ -40,6 +40,9 @@ const localization = {
     previousTooltip: 'Anterior',
     nextTooltip: 'Siguiente',
     lastTooltip: 'Última página'
+  },
+  header: {
+    actions: 'Acciones'
   }
 };
 
