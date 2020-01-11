@@ -15,3 +15,4 @@ export { default as Bienes } from './Bienes';
 export { default as Tangibles } from './Activos_Tangibles';
 export { default as Intangibles } from './Activos_Intangibles';
 export { default as Facturas } from './Facturas';
+export { default as Edificaciones } from './Edificaciones';

@@ -22,6 +22,7 @@ import {
   Tangibles as TangiblesView,
   Intangibles as IntangiblesView,
   Facturas as FacturasView,
+  Edificaciones as EdificacionesView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -78,6 +79,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/facturas"
+      />
+      <RouteWithLayout
+        component={EdificacionesView}
+        exact
+        layout={MainLayout}
+        path="/edificaciones"
       />
       <RouteWithLayout
         component={DashboardView}
