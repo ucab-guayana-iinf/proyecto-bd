@@ -60,7 +60,7 @@ const ActivosIntangibles = (props) => {
       );
     }},
     { title: 'Fecha de Caducidad', field: 'fecha_caducidad', type: 'date' },
-    { title: 'Es Compartido', field: 'es_compartido', editComponent: (props) => {
+    { title: 'Compartido', field: 'es_compartido', editComponent: (props) => {
         return (
           <FormGroup>
             <FormControlLabel

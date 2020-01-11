@@ -9,8 +9,8 @@ const { createActivosIntangibles, readActivosIntangibles, updateActivosIntangibl
 const { createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones } = require('./edificaciones');
 const { createBienesNaturales, readBienesNaturales, updateBienesNaturales, deleteBienesNaturales } = require('./bienes_naturales');
 const { createFotografiasBienesNaturales, readFotografiasBienesNaturales, updateFotografiasBienesNaturales, deleteFotografiasBienesNaturales } = require('./fotografias_bienes_naturales');
-const { createCommponentes, readCommponentes, updateCommponentes, deleteCommponentes } = require('./componentes');
-const { createNombresCommponentes, readNombresCommponentes, updateNombresCommponentes, deleteNombresCommponentes } = require('./nombres_componentes');
+const { createComponentes, readComponentes, updateComponentes, deleteComponentes } = require('./componentes');
+const { createNombresComponentes, readNombresComponentes, updateNombresComponentes, deleteNombresComponentes } = require('./nombres_componentes');
 
 module.exports = {
   createUbicaciones, readUbicaciones, updateUbicaciones, deleteUbicaciones,
@@ -24,6 +24,6 @@ module.exports = {
   createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones,
   createBienesNaturales, readBienesNaturales, updateBienesNaturales, deleteBienesNaturales,
   createFotografiasBienesNaturales, readFotografiasBienesNaturales, updateFotografiasBienesNaturales, deleteFotografiasBienesNaturales,
-  createCommponentes, readCommponentes, updateCommponentes, deleteCommponentes,
-  createNombresCommponentes, readNombresCommponentes, updateNombresCommponentes, deleteNombresCommponentes,
+  createComponentes, readComponentes, updateComponentes, deleteComponentes,
+  createNombresComponentes, readNombresComponentes, updateNombresComponentes, deleteNombresComponentes,
 };

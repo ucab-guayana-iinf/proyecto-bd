@@ -109,6 +109,11 @@ const Sidebar = props => {
       icon: <NaturePeopleIcon />
     },
     {
+      title: 'Componentes',
+      href: '/componentes',
+      icon: <NaturePeopleIcon />
+    },
+    {
       title: 'Configuración',
       href: '/configuracion',
       icon: <SettingsIcon />

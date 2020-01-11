@@ -4,11 +4,11 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Table } from '../../components';
 import {
-  createFacturasActivosTangibles,
-  readFacturasActivosTangibles,
-  updateFacturasActivosTangibles,
-  deleteFacturasActivosTangibles,
-  readActivosTangibles,
+  createComponentes,
+  readComponentes,
+  updateComponentes,
+  deleteComponentes,
+  readBienes,
 } from '../../../db/lib/querys';
 
 const useStyles = makeStyles(theme => ({
@@ -20,20 +20,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Facturas = (props) => {
+const Componentes = (props) => {
   const classes = useStyles();
-  const [activos, setActivos] = useState([]);
+  const [bienes, setBienes] = useState([]);
   const { enqueueSnackbar } = props;
 
   useEffect(() => {
     (async() => {
-      const _activos = await readActivosTangibles();
-      setActivos(_activos);
+      const _bienes = await readBienes();
+      setBienes(_bienes);
     })()
   }, []);
 
   const headers = [
-    { title: 'Número de Factura', field: 'numero_factura', editable: 'onAdd', editComponent: (props) => {
+    { title: 'Código Bien', field: 'codigo_bien', editComponent: (props) => {
       return (
         <Select
           labelId="demo-simple-select-label"
@@ -41,47 +41,44 @@ const Facturas = (props) => {
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          {activos.map((activo) => (
-            <MenuItem key={activo.numero_factura} value={activo.numero_factura}>
-              {activo.numero_factura}
+          {bienes.map((bien) => (
+            <MenuItem key={bien.codigo_bien} value={bien.codigo_bien}>
+              {bien.descripcion}
             </MenuItem>
           ))}
         </Select>
       );
     }},
-    { title: 'Número de Orden', field: 'numero_orden', type: 'numeric', editable: 'never' },
-    { title: 'Proveedor', field: 'proveedor' },
-    { title: 'Precio de Compra', field: 'precio_compra', type: 'numeric' },
-    { title: 'Plazo de Garantía', field: 'plazo_garantia', type: 'numeric' },
+    { title: 'Código Componente', field: 'codigo_componente', type: 'numeric', editable: 'never', cellStyle: { width: '150px'} },
   ];
 
   return (
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
-          title="Facturas Activos Tangibles"
+          title="Componentes"
           headers={headers}
-          data={readFacturasActivosTangibles}
+          data={readComponentes}
           selection
           onAdd={(data, onError) => {
-            createFacturasActivosTangibles({
+            createComponentes({
               data: {
                 ...data,
-                numero_factura: data.numero_factura || ''
+                codigo_bien: data.codigo_bien || ''
               },
             }, onError)
           }}
           onUpdate={(data, onError) => {
-            updateFacturasActivosTangibles({
+            updateComponentes({
               data,
-              value: data.numero_factura,
+              value: data.codigo_componente,
             },
             onError);
           }}
           onDelete={(data, onError) => {
-            deleteFacturasActivosTangibles({
+            deleteComponentes({
               data,
-              value: data.numero_factura
+              value: data.codigo_bien
             }, onError)
           }}
         />
@@ -90,4 +87,4 @@ const Facturas = (props) => {
   );
 };
 
-export default Facturas;
+export default Componentes;
