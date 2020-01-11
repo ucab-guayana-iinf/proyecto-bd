@@ -6,15 +6,15 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   `codigo_bien`,
-   `codigo_componente`,
- ];
- const neededAttributes = [
-   `codigo_bien`,
-   `codigo_componente`,
- ];
+  `codigo_componente`,
+  `codigo_componente_padre`,
+];
+const neededAttributes = [
+  `codigo_componente`,
+  `codigo_componente_padre`,
+];
 
-const updateComponentes = async (params, onError = () => {}) => {
+const updateComponentesxComponentes = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -29,7 +29,7 @@ const updateComponentes = async (params, onError = () => {}) => {
   const values = spreadObj(data, attributes);
 
   const conditionsValues = spreadObj(conditions).replace(',', 'AND');
-  QUERY = `UPDATE componentes SET ${values} WHERE ${conditionsValues}`;
+  QUERY = `UPDATE componentes_x_componentes SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);
 
@@ -42,4 +42,4 @@ const updateComponentes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateComponentes;
+module.exports = updateComponentesxComponentes;

@@ -1,11 +1,11 @@
-const createComponentes = require('./create-componentes.query');
-const updateComponentes = require('./update-componentes.query');
-const readComponentes = require('./read-componentes.query');
-const deleteComponentes = require('./delete-componentes.query');
+const createComponentesxComponentes = require('./create-componentes_x_componentes.query');
+const updateComponentesxComponentes = require('./update-componentes_x_componentes.query');
+const readComponentesxComponentes = require('./read-componentes_x_componentes.query');
+const delteComponentesxComponentes = require('./delete-componentes_x_componentes.query');
 
 module.exports = {
-  createComponentes,
-  updateComponentes,
-  readComponentes,
-  deleteComponentes,
+  createComponentesxComponentes,
+  updateComponentesxComponentes,
+  readComponentesxComponentes,
+  delteComponentesxComponentes,
 };
