@@ -21,6 +21,12 @@ import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
+import SettingsInputCompositeIcon from '@material-ui/icons/SettingsInputComposite';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import HistoryIcon from '@material-ui/icons/History';
+import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
 import { Profile, SidebarNav } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -111,12 +117,61 @@ const Sidebar = props => {
     {
       title: 'Componentes',
       href: '/componentes',
-      icon: <NaturePeopleIcon />
+      icon: <SettingsInputCompositeIcon />
+    },
+    {
+      title: 'Nombre Componentes',
+      href: '/nombre-componentes',
+      icon: <SortByAlphaIcon/>
+    },
+    {
+      title: 'Formatos',
+      href: '/formatos',
+      icon: <ListAltIcon/>
+    },
+    {
+      title: 'Movilizaciones',
+      href: '/movilizaciones',
+      icon: <LocalShippingIcon />,
+      items: [
+        {
+          title: 'Tangibles',
+          href: '/movilizaciones-tangibles',
+          icon: <LocalShippingIcon />,
+        },
+        {
+          title: 'Intangibles',
+          href: '/movilizaciones-intangibles',
+          icon: <LocalShippingIcon />,
+        }
+      ],
+    },
+    {
+      title: 'Historial',
+      href: '/historial',
+      icon: <HistoryIcon/>,
+      items: [
+        {
+          title: 'Responsables primarios',
+          href: '/responsables-primarios',
+          icon: <LocalShippingIcon />,
+        },
+        {
+          title: 'Responsables de uso',
+          href: '/responsables-uso',
+          icon: <LocalShippingIcon />,
+        }
+      ],
+    },
+    {
+      title: 'Inventario',
+      href: '/inventario',
+      icon: <MoveToInboxIcon/>,
     },
     {
       title: 'Configuración',
       href: '/configuracion',
-      icon: <SettingsIcon />
+      icon: <SettingsIcon />,
     }
   ];
 
