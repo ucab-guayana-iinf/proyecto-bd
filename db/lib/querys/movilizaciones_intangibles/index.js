@@ -1,11 +1,11 @@
-const createMovilizacionesTangibles = require('./create-movilizaciones_tangibles.query');
-const updateMovilizacionesTangibles = require('./update-movilizaciones_tangibles.query');
-const readMovilizacionesTangibles = require('./read-movilizaciones_tangibles.query');
-const deleteMovilizacionesTangibles = require('./delete-movilizaciones_tangibles.query');
+const createMovilizacionesIntangibles = require('./create-movilizaciones_intangibles.query');
+const updateMovilizacionesIntangibles = require('./update-movilizaciones_intangibles.query');
+const readMovilizacionesIntangibles = require('./read-movilizaciones_intangibles.query');
+const deleteMovilizacionesIntangibles = require('./delete-movilizaciones_intangibles.query');
 
 module.exports = {
-  createMovilizacionesTangibles,
-  updateMovilizacionesTangibles,
-  readMovilizacionesTangibles,
-  deleteMovilizacionesTangibles,
+  createMovilizacionesIntangibles,
+  updateMovilizacionesIntangibles,
+  readMovilizacionesIntangibles,
+  deleteMovilizacionesIntangibles,
 };
