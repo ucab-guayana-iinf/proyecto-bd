@@ -12,7 +12,8 @@ const { createComponentes, readComponentes, updateComponentes, deleteComponentes
 const { createNombresComponentes, readNombresComponentes, updateNombresComponentes, deleteNombresComponentes } = require('./nombres_componentes');
 const { createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones } = require('./edificaciones');
 const { createComponentesxComponentes, readComponentesxComponentes, updateComponentesxComponentes, deleteComponentesxComponentes } = require('./componentes_x_componentes');
-
+const { createFormatos, readFormatos, updateFormatos, deleteFormatos } = require('./formatos');
+const { createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovilizacionesTangibles, deleteMovilizacionesTangibles } = require('./movilizaciones_tangibles');
 
 module.exports = {
   createUbicaciones, readUbicaciones, updateUbicaciones, deleteUbicaciones,
@@ -29,4 +30,7 @@ module.exports = {
   createNombresComponentes, readNombresComponentes, updateNombresComponentes, deleteNombresComponentes,
   createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones,
   createComponentesxComponentes, readComponentesxComponentes, updateComponentesxComponentes, deleteComponentesxComponentes,
+  createFormatos, readFormatos, updateFormatos, deleteFormatos,
+  createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovilizacionesTangibles, deleteMovilizacionesTangibles,
+  
 };
