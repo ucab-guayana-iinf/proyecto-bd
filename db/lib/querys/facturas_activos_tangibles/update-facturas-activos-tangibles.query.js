@@ -18,7 +18,7 @@ const {
    'precio_compra',
  ];
 
-const updateActivosTangibles = async (params, onError = () => {}) => {
+const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -33,10 +33,10 @@ const updateActivosTangibles = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE activos_tangibles SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE facturas_activos_tangibles SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE activos_tangibles SET ${values} WHERE numero_factura=${value}`;
+    QUERY = `UPDATE facturas_activos_tangibles SET ${values} WHERE numero_factura=${value}`;
   }
 
   console.log(QUERY);
@@ -50,4 +50,4 @@ const updateActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateActivosTangibles;
+module.exports = updateFacturasActivosTangibles;
