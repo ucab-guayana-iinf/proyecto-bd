@@ -4,7 +4,7 @@ const {
   mysqlDatetimeToJS,
 } = require('../../../utils');
 
-const reaadComponentesxComponentes = async (onError = () => {}) => {
+const readComponentesxComponentes = async (onError = () => {}) => {
   const db = await getConnection();
   const QUERY = `SELECT * FROM componentes_x_componentes`;
 
@@ -18,4 +18,4 @@ const reaadComponentesxComponentes = async (onError = () => {}) => {
   }
 };
 
-module.exports = reaadComponentesxComponentes;
+module.exports = readComponentesxComponentes;
