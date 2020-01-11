@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import PeopleIcon from '@material-ui/icons/People';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
@@ -90,14 +91,12 @@ const Sidebar = props => {
     {
       title: 'Activos Intangibles',
       href: '/activos-intangibles',
-      icon: <LocationIcon />
+      icon: <DashboardIcon />
     },
     {
-      title: 'Facturas',
+      title: 'Facturas Activos Tangibles',
       href: '/facturas',
-      icon: <LocationIcon />
-    },
-      icon: <DashboardIcon />
+      icon: <ReceiptIcon />
     },
     {
       title: 'Edificaciones',
