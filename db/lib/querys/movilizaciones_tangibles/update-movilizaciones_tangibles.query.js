@@ -6,15 +6,15 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   `codigo_bien`,
-   `codigo_componente`,
- ];
- const neededAttributes = [
-   `codigo_bien`,
-   `codigo_componente`,
- ];
+  `numero_formato`,
+  `codigo_bien_tangible`,
+];
+const neededAttributes = [
+  `numero_formato`,
+  `codigo_bien_tangible`,
+];
 
-const updateComponentes = async (params, onError = () => {}) => {
+const updateMovilizacionesTangibles = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -29,7 +29,7 @@ const updateComponentes = async (params, onError = () => {}) => {
   const values = spreadObj(data, attributes);
 
   const conditionsValues = spreadObj(conditions).replace(',', 'AND');
-  QUERY = `UPDATE componentes SET ${values} WHERE ${conditionsValues}`;
+  QUERY = `UPDATE movilizaciones_tangibles SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);
 
@@ -42,4 +42,4 @@ const updateComponentes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateComponentes;
+module.exports = updateMovilizacionesTangibles;

@@ -1,11 +1,11 @@
-const createComponentes = require('./create-componentes.query');
-const updateComponentes = require('./update-componentes.query');
-const readComponentes = require('./read-componentes.query');
-const deleteComponentes = require('./delete-componentes.query');
+const createMovilizacionesTangibles = require('./create-movilizaciones_tangibles.query');
+const updateMovilizacionesTangibles = require('./update-movilizaciones_tangibles.query');
+const readMovilizacionesTangibles = require('./read-movilizaciones_tangibles.query');
+const deleteMovilizacionesTangibles = require('./delete-movilizaciones_tangibles.query');
 
 module.exports = {
-  createComponentes,
-  updateComponentes,
-  readComponentes,
-  deleteComponentes,
+  createMovilizacionesTangibles,
+  updateMovilizacionesTangibles,
+  readMovilizacionesTangibles,
+  deleteMovilizacionesTangibles,
 };
