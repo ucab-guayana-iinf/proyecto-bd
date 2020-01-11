@@ -1,11 +1,11 @@
-const createBienes = require('./create-bienes.query');
-const updateBienes = require('./update-bienes.query');
-const readBienes = require('./read-bienes.query');
-const deleteBienes = require('./delete-bienes.query');
+const createFormatos = require('./create-formatos.query');
+const updateFormatos = require('./update-formatos.query');
+const readFormatos = require('./read-formatos.query');
+const deleteFormatos = require('./delete-formatos.query');
 
 module.exports = {
-  createBienes,
-  updateBienes,
-  readBienes,
-  deleteBienes,
+  createFormatos,
+  updateFormatos,
+  readFormatos,
+  deleteFormatos,
 };
