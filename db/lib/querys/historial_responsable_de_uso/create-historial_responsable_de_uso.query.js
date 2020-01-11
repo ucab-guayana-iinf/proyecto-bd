@@ -7,14 +7,15 @@ const {
 } = require('../../../utils');
 
 const attributes = [
+  `ci`,
   `codigo_bien`,
-  `codigo_componente`,
 ];
 const neededAttributes = [
+  `ci`,
   `codigo_bien`,
 ];
 
-const createComponentes = async (params, onError = () => {}) => {
+const createHistorialResponsableDeUso = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -24,7 +25,7 @@ const createComponentes = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO componentes ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO historial_responsable_de_uso ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -36,4 +37,4 @@ const createComponentes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createComponentes;
+module.exports = createHistorialResponsableDeUso;

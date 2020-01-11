@@ -7,14 +7,15 @@ const {
 } = require('../../../utils');
 
 const attributes = [
-  `codigo_bien`,
   `codigo_componente`,
+  `codigo_componente_padre`,
 ];
 const neededAttributes = [
-  `codigo_bien`,
+  `codigo_componente`,
+  `codigo_componente_padre`,
 ];
 
-const createComponentes = async (params, onError = () => {}) => {
+const createComponentesxComponentes = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -24,7 +25,7 @@ const createComponentes = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO componentes ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO componentes_x_componentes ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -36,4 +37,4 @@ const createComponentes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createComponentes;
+module.exports = createComponentesxComponentes;
