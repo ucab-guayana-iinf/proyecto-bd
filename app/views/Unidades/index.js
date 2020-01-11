@@ -66,7 +66,7 @@ const Unidades = (props) => {
         >
           {empleados.map((empleado) => (
             <MenuItem key={empleado.ci} value={empleado.ci}>
-              {empleado.ci}
+              {empleado.nombre_completo}
             </MenuItem>
           ))}
         </Select>
@@ -84,11 +84,10 @@ const Unidades = (props) => {
           data={readUnidades}
           selection
           onAdd={(data, onError) => {
-            console.log('data.fecha_jefe: ',data.fecha_jefe);
             createUnidades({
               data: {
                 ...data,
-                fecha_jefe: jsDatetimeToMysql(data.fecha_jefe) || null,
+                fecha_jefe:( data.fecha_jefe && data.ci_jefe ? jsDatetimeToMysql(data.fecha_jefe) : null),
                 codigo_sede: data.codigo_sede || '',
                 ci_jefe: data.ci_jefe || null
               },
@@ -98,7 +97,6 @@ const Unidades = (props) => {
             updateUnidades({
               data,
               value: data.codigo_unidad,
-              fecha_jefe: jsDatetimeToMysql(data.fecha_jefe) || null,
             },
             onError);
           }}

@@ -57,10 +57,7 @@ const Tangibles = (props) => {
         </Select>
       );
     }},
-    { title: 'Proveedor', field: 'proveedor' },
-    { title: 'Número de Factura', field: 'numero_factura', type: 'numeric' },
-    { title: 'Precio', field: 'precio', type: 'numeric' },
-    { title: 'Plazo de Garantía', field: 'plazo_garantia', type: 'numeric' },
+    { title: 'Número de Factura', field: 'numero_factura', type: 'numeric', editable: 'onAdd' },
     { title: 'Status', field: 'status', editComponent: (props) => {
       return (
         <Select
@@ -83,7 +80,7 @@ const Tangibles = (props) => {
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
-          title="Tangibles"
+          title="Activos Tangibles"
           headers={headers}
           data={readActivosTangibles}
           selection

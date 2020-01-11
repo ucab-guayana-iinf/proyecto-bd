@@ -96,7 +96,7 @@ const ActivosIntangibles = (props) => {
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
-          title="ActivosIntangibles"
+          title="Activos Intangibles"
           headers={headers}
           data={readActivosIntangibles}
           selection

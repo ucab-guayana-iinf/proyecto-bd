@@ -81,6 +81,11 @@ const Sidebar = props => {
       href: '/activos-intangibles',
       icon: <LocationIcon />
     },
+    {
+      title: 'Facturas',
+      href: '/facturas',
+      icon: <LocationIcon />
+    },
 
     // --- demo
     {
