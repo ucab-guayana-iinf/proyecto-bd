@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import fs from 'fs';
+import path from 'path';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-import InputIcon from '@material-ui/icons/Input';
+
+const logo = `data:image/jpg;base64,${fs.readFileSync(path.join(__dirname, './assets/images/logo.png')).toString('base64')}`;
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,33 +33,9 @@ const Topbar = props => {
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <Toolbar>
+      <Toolbar style={{ backgroundColor: 'white', boxShadow: '225px 16px 25px -28px rgba(0,0,0,0.75)' }}>
+        <img src={logo} />
         <div className={classes.flexGrow} />
-        <Hidden mdDown>
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton
-            className={classes.signOutButton}
-            color="inherit"
-          >
-            <InputIcon />
-          </IconButton>
-        </Hidden>
-        <Hidden lgUp>
-          <IconButton
-            color="inherit"
-            onClick={onSidebarOpen}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Hidden>
       </Toolbar>
     </AppBar>
   );

@@ -31,15 +31,22 @@ const Sedes = (props) => {
       setUbicaciones(_ubicaciones);
     })()
   }, []);
-  
+
   const headers = [
-    { title: 'Código sede', field: 'codigo_sede', type: 'numeric', editable: 'never' },
-    { title: 'Descripción', field: 'descripcion' },
-    { title: 'Dirección', field: 'codigo_ubicacion', editComponent: (props) => {
+    { title: 'Código sede', field: 'codigo_sede', type: 'numeric', editable: 'never', cellStyle: { width: '150px'} },
+    { title: 'Descripción', field: 'descripcion', cellStyle: { width: '-webkit-fill-available'} },
+    { title: 'Dirección', field: 'codigo_ubicacion', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        const row = ubicaciones.find(({ codigo_ubicacion }) => codigo_ubicacion === data.codigo_ubicacion);
+        return (
+          <span>
+            {row.direccion} - {row.nombre_ciudad}
+          </span>
+        );
+      },
+      editComponent: (props) => {
       return (
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
