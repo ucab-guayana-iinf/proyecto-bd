@@ -17,6 +17,11 @@ const { createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovili
 const { createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles } = require('./movilizaciones_intangibles');
 const { createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso } = require('./historial_responsable_de_uso');
 const { createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios } = require('./historial_responsables_primarios');
+const { createInventarios, readInventarios, updateInventarios, deleteInventarios } = require('./inventarios');
+const { createInventariosxSedes, readInventariosxSedes, updateInventariosxSedes, deleteInventariosxSedes } = require('./inventarios_x_sedes');
+const { createInventariosxEmpleados, readInventariosxEmpleados, updateInventariosxEmpleados, deleteInventariosxEmpleados } = require('./inventarios_x_empleados');
+const { createInventariosxBienes, readInventariosxBienes, updateInventariosxBienes, deleteInventariosxBienes } = require('./inventarios_x_bienes');
+
 
 module.exports = {
   createUbicaciones, readUbicaciones, updateUbicaciones, deleteUbicaciones,
@@ -38,4 +43,8 @@ module.exports = {
   createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles,
   createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso,
   createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios,
+  createInventarios, readInventarios, updateInventarios, deleteInventarios,
+  createInventariosxSedes, readInventariosxSedes, updateInventariosxSedes, deleteInventariosxSedes,
+  createInventariosxEmpleados, readInventariosxEmpleados, updateInventariosxEmpleados, deleteInventariosxEmpleados,
+  createInventariosxBienes, readInventariosxBienes, updateInventariosxBienes, deleteInventariosxBienes,
 };
