@@ -6,20 +6,21 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   `codigo_componente`,
-   `nombre_componente`,
- ];
- const neededAttributes = [
-   `codigo_componente`,
-   `nombre_componente`,
- ];
+  `anio`,
+  `semestre`,
+  `ci_empleado`,
+];
+const neededAttributes = [
+  `anio`,
+  `semestre`,
+  `ci_empleado`,
+];
 
-const updateNombresComponentes = async (params, onError = () => {}) => {
+const updateInventariosxEmpleados = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
-    condition,
-    value,
+    conditions,
     data,
   } = params;
 
@@ -29,11 +30,8 @@ const updateNombresComponentes = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE nombres_componentes SET ${values} WHERE ${condition}${value}`;
-
-  if (!condition) {
-    QUERY = `UPDATE nombres_componentes SET ${values} WHERE codigo_componente=${value}`;
-  }
+  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  QUERY = `UPDATE inventarios_x_empleados SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);
 
@@ -46,4 +44,4 @@ const updateNombresComponentes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateNombresComponentes;
+module.exports = updateInventariosxEmpleados;

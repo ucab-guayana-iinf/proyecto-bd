@@ -10,7 +10,6 @@ const { createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdifi
 const { createBienesNaturales, readBienesNaturales, updateBienesNaturales, deleteBienesNaturales } = require('./bienes_naturales');
 const { createFotografiasBienesNaturales, readFotografiasBienesNaturales, updateFotografiasBienesNaturales, deleteFotografiasBienesNaturales } = require('./fotografias_bienes_naturales');
 const { createComponentes, readComponentes, updateComponentes, deleteComponentes } = require('./componentes');
-const { createNombresComponentes, readNombresComponentes, updateNombresComponentes, deleteNombresComponentes } = require('./nombres_componentes');
 const { createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones } = require('./edificaciones');
 const { createComponentesxComponentes, readComponentesxComponentes, updateComponentesxComponentes, deleteComponentesxComponentes } = require('./componentes_x_componentes');
 const { createFormatos, readFormatos, updateFormatos, deleteFormatos } = require('./formatos');
@@ -18,6 +17,11 @@ const { createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovili
 const { createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles } = require('./movilizaciones_intangibles');
 const { createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso } = require('./historial_responsable_de_uso');
 const { createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios } = require('./historial_responsables_primarios');
+const { createInventarios, readInventarios, updateInventarios, deleteInventarios } = require('./inventarios');
+const { createInventariosxSedes, readInventariosxSedes, updateInventariosxSedes, deleteInventariosxSedes } = require('./inventarios_x_sedes');
+const { createInventariosxEmpleados, readInventariosxEmpleados, updateInventariosxEmpleados, deleteInventariosxEmpleados } = require('./inventarios_x_empleados');
+const { createInventariosxBienes, readInventariosxBienes, updateInventariosxBienes, deleteInventariosxBienes } = require('./inventarios_x_bienes');
+
 
 module.exports = {
   createUbicaciones, readUbicaciones, updateUbicaciones, deleteUbicaciones,
@@ -32,7 +36,6 @@ module.exports = {
   createBienesNaturales, readBienesNaturales, updateBienesNaturales, deleteBienesNaturales,
   createFotografiasBienesNaturales, readFotografiasBienesNaturales, updateFotografiasBienesNaturales, deleteFotografiasBienesNaturales,
   createComponentes, readComponentes, updateComponentes, deleteComponentes,
-  createNombresComponentes, readNombresComponentes, updateNombresComponentes, deleteNombresComponentes,
   createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones,
   createComponentesxComponentes, readComponentesxComponentes, updateComponentesxComponentes, deleteComponentesxComponentes,
   createFormatos, readFormatos, updateFormatos, deleteFormatos,
@@ -40,4 +43,8 @@ module.exports = {
   createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles,
   createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso,
   createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios,
+  createInventarios, readInventarios, updateInventarios, deleteInventarios,
+  createInventariosxSedes, readInventariosxSedes, updateInventariosxSedes, deleteInventariosxSedes,
+  createInventariosxEmpleados, readInventariosxEmpleados, updateInventariosxEmpleados, deleteInventariosxEmpleados,
+  createInventariosxBienes, readInventariosxBienes, updateInventariosxBienes, deleteInventariosxBienes,
 };
