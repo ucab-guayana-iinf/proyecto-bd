@@ -8,10 +8,12 @@ const {
  const attributes = [
    `codigo_bien`,
    `codigo_componente`,
+   `nombre_componente`,
  ];
  const neededAttributes = [
    `codigo_bien`,
    `codigo_componente`,
+   `nombre_componente`,
  ];
 
 const updateComponentes = async (params, onError = () => {}) => {
