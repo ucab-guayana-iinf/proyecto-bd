@@ -6,19 +6,15 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   'numero_factura',
-   'numero_orden',
-   'proveedor',
-   'precio_compra',
-   'plazo_garantia'
+   `codigo_componente`,
+   `nombre_componente`,
  ];
  const neededAttributes = [
-   'numero_factura',
-   'proveedor',
-   'precio_compra',
+   `codigo_componente`,
+   `nombre_componente`,
  ];
 
-const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
+const updateNombresComponentes = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -33,10 +29,10 @@ const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE facturas_activos_tangibles SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE nombres_componentes SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE facturas_activos_tangibles SET ${values} WHERE numero_factura=${value}`;
+    QUERY = `UPDATE nombres_componentes SET ${values} WHERE codigo_componente=${value}`;
   }
 
   console.log(QUERY);
@@ -50,4 +46,4 @@ const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateFacturasActivosTangibles;
+module.exports = updateNombresComponentes;

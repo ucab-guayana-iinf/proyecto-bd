@@ -6,24 +6,19 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   'numero_factura',
-   'numero_orden',
-   'proveedor',
-   'precio_compra',
-   'plazo_garantia'
- ];
- const neededAttributes = [
-   'numero_factura',
-   'proveedor',
-   'precio_compra',
- ];
+  `ci`,
+  `codigo_bien`,
+];
+const neededAttributes = [
+  `ci`,
+  `codigo_bien`,
+];
 
-const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
+const updateHistorialResponsableDeUso = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
-    condition,
-    value,
+    conditions,
     data,
   } = params;
 
@@ -33,11 +28,8 @@ const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE facturas_activos_tangibles SET ${values} WHERE ${condition}${value}`;
-
-  if (!condition) {
-    QUERY = `UPDATE facturas_activos_tangibles SET ${values} WHERE numero_factura=${value}`;
-  }
+  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  QUERY = `UPDATE historial_responsable_de_uso SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);
 
@@ -50,4 +42,4 @@ const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateFacturasActivosTangibles;
+module.exports = updateHistorialResponsableDeUso;

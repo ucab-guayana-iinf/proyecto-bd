@@ -8,7 +8,15 @@ const { createFacturasActivosTangibles, readFacturasActivosTangibles, updateFact
 const { createActivosIntangibles, readActivosIntangibles, updateActivosIntangibles, deleteActivosIntangibles } = require('./activos_intangibles');
 const { createBienesNaturales, readBienesNaturales, updateBienesNaturales, deleteBienesNaturales } = require('./bienes_naturales');
 const { createFotografiasBienesNaturales, readFotografiasBienesNaturales, updateFotografiasBienesNaturales, deleteFotografiasBienesNaturales } = require('./fotografias_bienes_naturales');
-const { createCommponentes, readCommponentes, updateCommponentes, deleteCommponentes } = require('./componentes');
+const { createComponentes, readComponentes, updateComponentes, deleteComponentes } = require('./componentes');
+const { createNombresComponentes, readNombresComponentes, updateNombresComponentes, deleteNombresComponentes } = require('./nombres_componentes');
+const { createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones } = require('./edificaciones');
+const { createComponentesxComponentes, readComponentesxComponentes, updateComponentesxComponentes, deleteComponentesxComponentes } = require('./componentes_x_componentes');
+const { createFormatos, readFormatos, updateFormatos, deleteFormatos } = require('./formatos');
+const { createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovilizacionesTangibles, deleteMovilizacionesTangibles } = require('./movilizaciones_tangibles');
+const { createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles } = require('./movilizaciones_intangibles');
+const { createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso } = require('./historial_responsable_de_uso');
+const { createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios } = require('./historial_responsables_primarios');
 
 module.exports = {
   createUbicaciones, readUbicaciones, updateUbicaciones, deleteUbicaciones,
@@ -21,5 +29,13 @@ module.exports = {
   createActivosIntangibles, readActivosIntangibles, updateActivosIntangibles, deleteActivosIntangibles,
   createBienesNaturales, readBienesNaturales, updateBienesNaturales, deleteBienesNaturales,
   createFotografiasBienesNaturales, readFotografiasBienesNaturales, updateFotografiasBienesNaturales, deleteFotografiasBienesNaturales,
-  createCommponentes, readCommponentes, updateCommponentes, deleteCommponentes
+  createComponentes, readComponentes, updateComponentes, deleteComponentes,
+  createNombresComponentes, readNombresComponentes, updateNombresComponentes, deleteNombresComponentes,
+  createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones,
+  createComponentesxComponentes, readComponentesxComponentes, updateComponentesxComponentes, deleteComponentesxComponentes,
+  createFormatos, readFormatos, updateFormatos, deleteFormatos,
+  createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovilizacionesTangibles, deleteMovilizacionesTangibles,
+  createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles,
+  createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso,
+  createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios,
 };
