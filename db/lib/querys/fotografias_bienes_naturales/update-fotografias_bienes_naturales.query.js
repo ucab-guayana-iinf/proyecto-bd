@@ -6,19 +6,15 @@ const {
  } = require('../../../utils');
 
  const attributes = [
-   'numero_factura',
-   'numero_orden',
-   'proveedor',
-   'precio_compra',
-   'plazo_garantia'
+   `codigo_bien_natural`,
+   `fotografia`,
  ];
  const neededAttributes = [
-   'numero_factura',
-   'proveedor',
-   'precio_compra',
+   `codigo_bien_natural`,
+   `fotografia`,
  ];
 
-const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
+const updateFotografiasBienesNaturales = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
@@ -33,10 +29,10 @@ const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  let QUERY = `UPDATE facturas_activos_tangibles SET ${values} WHERE ${condition}${value}`;
+  let QUERY = `UPDATE fotografias_bienes_naturales SET ${values} WHERE ${condition}${value}`;
 
   if (!condition) {
-    QUERY = `UPDATE facturas_activos_tangibles SET ${values} WHERE numero_factura=${value}`;
+    QUERY = `UPDATE fotografias_bienes_naturales SET ${values} WHERE codigo_bien_natural=${value}`;
   }
 
   console.log(QUERY);
@@ -50,4 +46,4 @@ const updateFacturasActivosTangibles = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = updateFacturasActivosTangibles;
+module.exports = updateFotografiasBienesNaturales;
