@@ -17,6 +17,7 @@ const { createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovili
 const { createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles } = require('./movilizaciones_intangibles');
 const { createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso } = require('./historial_responsable_de_uso');
 const { createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios } = require('./historial_responsables_primarios');
+const { createInventarios, readInventarios, updateInventarios, deleteInventarios } = require('./inventarios');
 
 module.exports = {
   createUbicaciones, readUbicaciones, updateUbicaciones, deleteUbicaciones,
@@ -38,4 +39,5 @@ module.exports = {
   createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles,
   createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso,
   createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios,
+  createInventarios, readInventarios, updateInventarios, deleteInventarios,
 };
