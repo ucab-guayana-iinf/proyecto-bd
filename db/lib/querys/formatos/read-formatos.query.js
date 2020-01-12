@@ -10,7 +10,6 @@ const readFormatos = async (onError = () => {}) => {
 
   try {
     const response = await promisifyQuery(db, QUERY);
-
     return response;
   } catch (error) {
     onError(error.message);
