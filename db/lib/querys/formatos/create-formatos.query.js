@@ -6,13 +6,6 @@ const {
   validateInput,
 } = require('../../../utils');
 
-// `codigo_bien` INT,
-// `descripcion` VARCHAR(255),
-// `fecha_incorporacion` DATETIME,
-// `fecha_desincorporacion` DATETIME,
-// `origen` VARCHAR(255),
-// `codigo_unidad` INT,
-// `tipo` VARCHAR(255),
 
 const attributes = [
   `numero_formato`,
