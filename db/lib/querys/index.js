@@ -13,6 +13,10 @@ const { createNombresComponentes, readNombresComponentes, updateNombresComponent
 const { createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones } = require('./edificaciones');
 const { createComponentesxComponentes, readComponentesxComponentes, updateComponentesxComponentes, deleteComponentesxComponentes } = require('./componentes_x_componentes');
 const { createFormatos, readFormatos, updateFormatos, deleteFormatos } = require('./formatos');
+const { createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovilizacionesTangibles, deleteMovilizacionesTangibles } = require('./movilizaciones_tangibles');
+const { createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles } = require('./movilizaciones_intangibles');
+const { createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso } = require('./historial_responsable_de_uso');
+const { createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios } = require('./historial_responsables_primarios');
 
 module.exports = {
   createUbicaciones, readUbicaciones, updateUbicaciones, deleteUbicaciones,
@@ -30,4 +34,8 @@ module.exports = {
   createEdificaciones, readEdificaciones, updateEdificaciones, deleteEdificaciones,
   createComponentesxComponentes, readComponentesxComponentes, updateComponentesxComponentes, deleteComponentesxComponentes,
   createFormatos, readFormatos, updateFormatos, deleteFormatos,
+  createMovilizacionesTangibles, readMovilizacionesTangibles, updateMovilizacionesTangibles, deleteMovilizacionesTangibles,
+  createMovilizacionesIntangibles, readMovilizacionesIntangibles, updateMovilizacionesIntangibles, deleteMovilizacionesIntangibles,
+  createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHistorialResponsableDeUso, deleteHistorialResponsableDeUso,
+  createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios,
 };
