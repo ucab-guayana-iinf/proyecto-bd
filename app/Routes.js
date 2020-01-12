@@ -17,6 +17,7 @@ import {
   Edificaciones as EdificacionesView,
   BienesNaturales as BienesNaturalesView,
   Componentes as ComponentesView,
+  Formatos as FormatosView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -93,40 +94,10 @@ const Routes = () => {
         path="/componentes"
       />
       <RouteWithLayout
-        component={DashboardView}
+        component={FormatosView}
         exact
         layout={MainLayout}
-        path="/dashboard"
-      />
-      <RouteWithLayout
-        component={UserListView}
-        exact
-        layout={MainLayout}
-        path="/users"
-      />
-      <RouteWithLayout
-        component={ProductListView}
-        exact
-        layout={MainLayout}
-        path="/products"
-      />
-      <RouteWithLayout
-        component={TypographyView}
-        exact
-        layout={MainLayout}
-        path="/typography"
-      />
-      <RouteWithLayout
-        component={IconsView}
-        exact
-        layout={MainLayout}
-        path="/icons"
-      />
-      <RouteWithLayout
-        component={AccountView}
-        exact
-        layout={MainLayout}
-        path="/account"
+        path="/formatos"
       />
       <RouteWithLayout
         component={SettingsView}

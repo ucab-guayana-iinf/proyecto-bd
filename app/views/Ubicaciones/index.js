@@ -58,7 +58,6 @@ const Ubicaciones = (props) => {
                 nombre_ciudad: data.nombre_ciudad || 'Abejales'
               },
             }, onError);
-            console.log('data: ', data)
           }}
           onUpdate={(data, onError) => {
             updateUbicaciones({

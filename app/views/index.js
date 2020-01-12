@@ -12,3 +12,4 @@ export { default as Facturas } from './Facturas';
 export { default as Edificaciones } from './Edificaciones';
 export { default as BienesNaturales } from './Bienes_Naturales';
 export { default as Componentes } from './Componentes';
+export { default as Formatos } from './Formatos';

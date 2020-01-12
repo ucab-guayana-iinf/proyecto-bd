@@ -166,12 +166,12 @@ CREATE TABLE IF NOT EXISTS `fotografias_bienes_naturales` ( `codigo_bien_natural
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `componentes` (
 --   `codigo_bien` INT,
---   `codigo_componente` INT UNIQUE NOT NULL,
+--   `codigo_componente` INT UNIQUE NOT NULL AUTO_INCREMENT,
 --   PRIMARY KEY (`codigo_bien`, `codigo_componente`),
 --   FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `componentes` ( `codigo_bien` INT, `codigo_componente` INT UNIQUE NOT NULL, PRIMARY KEY (`codigo_bien`, `codigo_componente`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `componentes` ( `codigo_bien` INT, `codigo_componente` INT UNIQUE NOT NULL AUTO_INCREMENT, PRIMARY KEY (`codigo_bien`, `codigo_componente`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `nombres_componentes` (

@@ -52,7 +52,7 @@ const BienesNaturales = (props) => {
   }, []);
 
   const headers = [
-    // { title: 'Avatar', field: 'imageUrl', 
+    // { title: 'Avatar', field: 'imageUrl',
     //   render: (data) => {
     //     <img src={data.fotografia} style={{width: 40, borderRadius: '50%'}}/>
     // }},
@@ -143,7 +143,6 @@ const BienesNaturales = (props) => {
             }, onError)
           }}
           onUpdate={(data, onError) => {
-            console.log('data: ', data);
             updateBienesNaturales({
               data,
               value: data.codigo_bien,
