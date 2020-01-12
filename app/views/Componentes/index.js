@@ -50,6 +50,7 @@ const Componentes = (props) => {
       );
     }},
     { title: 'Código Componente', field: 'codigo_componente', type: 'numeric', editable: 'never', cellStyle: { width: '150px'} },
+    { title: 'Nombre Componente', field: 'nombre_componente', cellStyle: { width: '150px'} },
   ];
 
   return (
@@ -71,14 +72,20 @@ const Componentes = (props) => {
           onUpdate={(data, onError) => {
             updateComponentes({
               data,
-              value: data.codigo_componente,
+              conditions: {
+                 Pk1: data.codigo_componente,
+                 Pk2: data.codigo_bien
+               }
             },
             onError);
           }}
           onDelete={(data, onError) => {
             deleteComponentes({
               data,
-              value: data.codigo_bien
+              conditions: {
+                 Pk1: data.codigo_componente,
+                 Pk2: data.codigo_bien
+               }
             }, onError)
           }}
         />

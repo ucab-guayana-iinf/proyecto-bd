@@ -119,11 +119,11 @@ const Sidebar = props => {
       href: '/componentes',
       icon: <SettingsInputCompositeIcon />
     },
-    {
-      title: 'Nombre Componentes',
-      href: '/nombre-componentes',
-      icon: <SortByAlphaIcon/>
-    },
+    // {
+    //   title: 'Nombre Componentes',
+    //   href: '/nombre-componentes',
+    //   icon: <SortByAlphaIcon/>
+    // },
     {
       title: 'Formatos',
       href: '/formatos',
