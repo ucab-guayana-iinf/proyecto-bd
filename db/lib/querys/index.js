@@ -19,6 +19,8 @@ const { createHistorialResponsableDeUso, readHistorialResponsableDeUso, updateHi
 const { createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios } = require('./historial_responsables_primarios');
 const { createInventarios, readInventarios, updateInventarios, deleteInventarios } = require('./inventarios');
 const { createInventariosxSedes, readInventariosxSedes, updateInventariosxSedes, deleteInventariosxSedes } = require('./inventarios_x_sedes');
+const { createInventariosxEmpleados, readInventariosxEmpleados, updateInventariosxEmpleados, deleteInventariosxEmpleados } = require('./inventarios_x_empleados');
+
 
 module.exports = {
   createUbicaciones, readUbicaciones, updateUbicaciones, deleteUbicaciones,
@@ -42,4 +44,5 @@ module.exports = {
   createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios, updateHistorialResponsablesPrimarios, deleteHistorialResponsablesPrimarios,
   createInventarios, readInventarios, updateInventarios, deleteInventarios,
   createInventariosxSedes, readInventariosxSedes, updateInventariosxSedes, deleteInventariosxSedes,
+  createInventariosxEmpleados, readInventariosxEmpleados, updateInventariosxEmpleados, deleteInventariosxEmpleados,
 };
