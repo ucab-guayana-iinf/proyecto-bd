@@ -20,6 +20,7 @@ const { createHistorialResponsablesPrimarios, readHistorialResponsablesPrimarios
 const { createInventarios, readInventarios, updateInventarios, deleteInventarios } = require('./inventarios');
 const { createInventariosxSedes, readInventariosxSedes, updateInventariosxSedes, deleteInventariosxSedes } = require('./inventarios_x_sedes');
 const { createInventariosxEmpleados, readInventariosxEmpleados, updateInventariosxEmpleados, deleteInventariosxEmpleados } = require('./inventarios_x_empleados');
+const { createInventariosxBienes, readInventariosxBienes, updateInventariosxBienes, deleteInventariosxBienes } = require('./inventarios_x_bienes');
 
 
 module.exports = {
@@ -45,4 +46,5 @@ module.exports = {
   createInventarios, readInventarios, updateInventarios, deleteInventarios,
   createInventariosxSedes, readInventariosxSedes, updateInventariosxSedes, deleteInventariosxSedes,
   createInventariosxEmpleados, readInventariosxEmpleados, updateInventariosxEmpleados, deleteInventariosxEmpleados,
+  createInventariosxBienes, readInventariosxBienes, updateInventariosxBienes, deleteInventariosxBienes,
 };
