@@ -19,6 +19,7 @@ import {
   Componentes as ComponentesView,
   Formatos as FormatosView,
   MovilizacionesTangibles as MovilizacionesTangiblesView,
+  MovilizacionesIntangibles as MovilizacionesIntangiblesView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -105,6 +106,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/movilizaciones-tangibles"
+      />
+      <RouteWithLayout
+        component={MovilizacionesIntangiblesView}
+        exact
+        layout={MainLayout}
+        path="/movilizaciones-intangibles"
       />
       <RouteWithLayout
         component={SettingsView}

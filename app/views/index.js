@@ -14,3 +14,4 @@ export { default as BienesNaturales } from './Bienes_Naturales';
 export { default as Componentes } from './Componentes';
 export { default as Formatos } from './Formatos';
 export { default as MovilizacionesTangibles } from './Movilizaciones_Tangibles';
+export { default as MovilizacionesIntangibles } from './Movilizaciones_Intangibles';

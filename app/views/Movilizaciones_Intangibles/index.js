@@ -4,12 +4,12 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Table } from '../../components';
 import {
-  createMovilizacionesTangibles,
-  readMovilizacionesTangibles,
-  updateMovilizacionesTangibles,
-  deleteMovilizacionesTangibles,
+  createMovilizacionesIntangibles,
+  readMovilizacionesIntangibles,
+  updateMovilizacionesIntangibles,
+  deleteMovilizacionesIntangibles,
   readFormatos,
-  readActivosTangibles,
+  readActivosIntangibles,
 } from '../../../db/lib/querys';
 
 const useStyles = makeStyles(theme => ({
@@ -21,18 +21,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const MovilizacionesTangibles = (props) => {
+const MovilizacionesIntangibles = (props) => {
   const classes = useStyles();
   const [formatos, setFormatos] = useState([]);
-  const [activosTangibles, setActivosTangibles] = useState([]);
+  const [activosIntangibles, setActivosIntangibles] = useState([]);
   const { enqueueSnackbar } = props;
 
   useEffect(() => {
     (async() => {
       const _formatos = await readFormatos();
-      const _activosTangibles = await readActivosTangibles();
+      const _activosIntangibles = await readActivosIntangibles();
       setFormatos(_formatos);
-      setActivosTangibles(_activosTangibles);
+      setActivosIntangibles(_activosIntangibles);
     })()
   }, []);
 
@@ -52,14 +52,14 @@ const MovilizacionesTangibles = (props) => {
         </Select>
       );
     }},
-    { title: 'Código de Bien Tangible', field: 'codigo_bien_tangible', cellStyle: { width: '-webkit-fill-available' },
+    { title: 'Código de Bien Intangible', field: 'codigo_bien_intangible', cellStyle: { width: '-webkit-fill-available' },
       editComponent: (props) => {
       return (
         <Select
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          {activosTangibles.map((activo) => (
+          {activosIntangibles.map((activo) => (
             <MenuItem key={activo.codigo_bien} value={activo.codigo_bien}>
               {activo.numero_formato}
             </MenuItem>
@@ -73,33 +73,33 @@ const MovilizacionesTangibles = (props) => {
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
-          title="Movilizaciones Tangibles"
+          title="Movilizaciones Intangibles"
           headers={headers}
-          data={readMovilizacionesTangibles}
+          data={readMovilizacionesIntangibles}
           selection
           onAdd={(data, onError) => {
-            createMovilizacionesTangibles({
+            createMovilizacionesIntangibles({
               data: {
                 ...data,
                 numero_formato: data.numero_formato || '',
-                codigo_bien_tangible: data.codigo_bien_tangible || ''
+                codigo_bien_intangible: data.codigo_bien_intangible || ''
               },
             }, onError)
           }}
           onUpdate={(data, onError) => {
-            updateMovilizacionesTangibles({
+            updateMovilizacionesIntangibles({
               conditions: {
                  Pk1: data.numero_formato,
-                 Pk2: data.codigo_bien_tangible
+                 Pk2: data.codigo_bien_intangible
                }
 
             }, onError);
           }}
           onDelete={(data, onError) => {
-            deleteMovilizacionesTangibles({
+            deleteMovilizacionesIntangibles({
               conditions: {
                  Pk1: data.numero_formato,
-                 Pk2: data.codigo_bien_tangible
+                 Pk2: data.codigo_bien_intangible
                }
 
             }, onError)
@@ -110,4 +110,4 @@ const MovilizacionesTangibles = (props) => {
   );
 };
 
-export default MovilizacionesTangibles;
+export default MovilizacionesIntangibles;
