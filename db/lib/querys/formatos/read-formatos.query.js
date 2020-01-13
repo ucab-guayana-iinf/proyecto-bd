@@ -10,7 +10,9 @@ const readFormatos = async (onError = () => {}) => {
 
   try {
     const response = await promisifyQuery(db, QUERY);
-
+    if (response.fecha_formato) {
+      response.fecha_formato = mysqlDatetimeToJS(response.fecha_formato);
+    }
     return response;
   } catch (error) {
     onError(error.message);
