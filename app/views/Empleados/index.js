@@ -35,23 +35,32 @@ const Empleados = (props) => {
   const headers = [
     { title: 'CI', field: 'ci', type: 'numeric', editable: 'onAdd' },
     { title: 'Nombre', field: 'nombre_completo' },
-    { title: 'Unidad', field: 'codigo_unidad', editComponent: (props) => {
-      return (
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={props.value || ''}
-          onChange={(e) => props.onChange(e.target.value)}
-        >
-          {unidades.map((unidad) => (
-            <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
-              {unidad.nombre_unidad}
-            </MenuItem>
-          ))}
-        </Select>
-      );
-    }},
-  ];
+    { title: 'Unidad', field: 'codigo_unidad', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        const row = unidades.find(({ codigo_unidad }) => codigo_unidad === data.codigo_unidad);
+        return (
+          <span>
+            {row.codigo_unidad} - {row.nombre_unidad}
+          </span>
+        );
+      },
+      editComponent: (props) => {
+        return (
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={props.value || ''}
+            onChange={(e) => props.onChange(e.target.value)}
+          >
+            {unidades.map((unidad) => (
+              <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
+                {row.codigo_unidad} {unidad.nombre_unidad}
+              </MenuItem>
+            ))}
+          </Select>
+        );
+      }},
+    ];
 
   return (
     <div className={classes.root}>

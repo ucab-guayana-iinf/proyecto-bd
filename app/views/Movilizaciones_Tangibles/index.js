@@ -88,6 +88,7 @@ const MovilizacionesTangibles = (props) => {
           }}
           onUpdate={(data, onError) => {
             updateMovilizacionesTangibles({
+              data,
               conditions: {
                  Pk1: data.numero_formato,
                  Pk2: data.codigo_bien_tangible
@@ -97,6 +98,7 @@ const MovilizacionesTangibles = (props) => {
           }}
           onDelete={(data, onError) => {
             deleteMovilizacionesTangibles({
+              data,
               conditions: {
                  Pk1: data.numero_formato,
                  Pk2: data.codigo_bien_tangible

@@ -17,3 +17,4 @@ export { default as MovilizacionesTangibles } from './Movilizaciones_Tangibles';
 export { default as MovilizacionesIntangibles } from './Movilizaciones_Intangibles';
 export { default as HistorialResponsablesPrimarios } from './Responsables_Primarios';
 export { default as HistorialResponsableDeUso } from './Responsables_Uso';
+export { default as Inventarios } from './Inventarios';

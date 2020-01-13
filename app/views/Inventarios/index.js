@@ -4,13 +4,13 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Table } from '../../components';
 import {
-  createHistorialResponsablesPrimarios,
-  readHistorialResponsablesPrimarios,
-  updateHistorialResponsablesPrimarios,
-  deleteHistorialResponsablesPrimarios,
+  createInventarios,
+  readInventarios,
+  updateInventarios,
+  deleteInventarios,
   readEmpleados,
-  readUnidades,
 } from '../../../db/lib/querys';
+import { jsDatetimeToMysql } from '../../../db/utils';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,25 +21,47 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const HistorialResponsablesPrimarios = (props) => {
+const Inventarios = (props) => {
   const classes = useStyles();
   const [empleados, setEmpleados] = useState([]);
-  const [unidades, setUnidades] = useState([]);
   const { enqueueSnackbar } = props;
+  const status = [
+    'EN EJECUCIÓN',
+    'EN CONCILIACIÓN',
+    'CERRADO'
+  ];
 
   useEffect(() => {
     (async() => {
       const _empleados = await readEmpleados();
-      const _unidades = await readUnidades();
       setEmpleados(_empleados);
-      setUnidades(_unidades);
     })()
   }, []);
 
   const headers = [
-    { title: 'Empleado', field: 'ci', cellStyle: { width: '-webkit-fill-available' },
+    { title: 'Año', field: 'anio', type: 'numeric', editable: 'onAdd', cellStyle: { width: '150px'} },
+    { title: 'Semestre', field: 'semestre', type: 'numeric', editable: 'onAdd', cellStyle: { width: '150px'} },
+    { title: 'Fecha de Inicio', field: 'fecha_inicio', type: 'date' },
+    { title: 'Fecha Final', field: 'fecha_fin', type: 'date' },
+    { title: 'Status', field: 'status', editComponent: (props) => {
+      return (
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={props.value || ''}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          {status.map((state) => (
+            <MenuItem key={state} value={state}>
+              {state}
+            </MenuItem>
+          ))}
+        </Select>
+      );
+    }},
+    { title: 'Lider de Inventario', field: 'ci_lider_inventario', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
-        const row = empleados.find(({ ci }) => ci === data.ci);
+        const row = empleados.find(({ ci }) => ci === data.ci_lider_inventario);
         return (
           <span>
             {row.ci} - {row.nombre_completo}
@@ -60,67 +82,43 @@ const HistorialResponsablesPrimarios = (props) => {
         </Select>
       );
     }},
-    { title: 'Unidad', field: 'codigo_unidad', cellStyle: { width: '-webkit-fill-available' },
-      render: (data) => {
-        const row = unidades.find(({ codigo_unidad }) => codigo_unidad === data.codigo_unidad);
-        return (
-          <span>
-            {row.codigo_unidad} - {row.nombre_unidad}
-          </span>
-        );
-      },
-      editComponent: (props) => {
-      return (
-        <Select
-          value={props.value || ''}
-          onChange={(e) => props.onChange(e.target.value)}
-        >
-          {unidades.map((ubicacion) => (
-            <MenuItem key={ubicacion.codigo_unidad} value={ubicacion.codigo_unidad}>
-              {ubicacion.codigo_unidad} {ubicacion.nombre_unidad}
-            </MenuItem>
-          ))}
-        </Select>
-      );
-    }},
   ];
 
   return (
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
-          title="Historial Responsables Primarios"
+          title="Inventarios"
           headers={headers}
-          data={readHistorialResponsablesPrimarios}
+          data={readInventarios}
           selection
           onAdd={(data, onError) => {
-            createHistorialResponsablesPrimarios({
+            createInventarios({
               data: {
                 ...data,
-                ci: data.ci || '',
-                codigo_unidad: data.codigo_unidad || '',
+                fecha_inicio: jsDatetimeToMysql(data.fecha_inicio) || null,
+                fecha_fin: jsDatetimeToMysql(data.fecha_fin) || null,
+                ci_lider_inventario: data.ci_lider_inventario || ''
               },
             }, onError)
           }}
           onUpdate={(data, onError) => {
-            updateHistorialResponsablesPrimarios({
+            updateInventarios({
               data,
               conditions: {
-                 Pk1: data.ci,
-                 Pk2: data.codigo_unidad
+                 Pk1: data.anio,
+                 Pk2: data.semestre
                }
-
             },
             onError);
           }}
           onDelete={(data, onError) => {
-            deleteHistorialResponsablesPrimarios({
+            deleteInventarios({
               data,
               conditions: {
-                 Pk1: data.ci,
-                 Pk2: data.codigo_unidad
+                 Pk1: data.anio,
+                 Pk2: data.semestre
                }
-
             }, onError)
           }}
         />
@@ -129,4 +127,4 @@ const HistorialResponsablesPrimarios = (props) => {
   );
 };
 
-export default HistorialResponsablesPrimarios;
+export default Inventarios;

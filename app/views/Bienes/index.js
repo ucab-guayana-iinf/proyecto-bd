@@ -45,7 +45,15 @@ const Bienes = (props) => {
     { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', type: 'date' },
     { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', type: 'date' },
     { title: 'Origen', field: 'origen' },
-    { title: 'Unidad', field: 'codigo_unidad', editComponent: (props) => {
+    { title: 'Unidad', field: 'codigo_unidad', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        const row = unidades.find(({ codigo_unidad }) => codigo_unidad === data.codigo_unidad);
+        return (
+          <span>
+            {row.codigo_unidad} - {row.nombre_unidad}
+          </span>
+        );
+      }, editComponent: (props) => {
       return (
         <Select
           labelId="demo-simple-select-label"
@@ -55,7 +63,7 @@ const Bienes = (props) => {
         >
           {unidades.map((unidad) => (
             <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
-              {unidad.nombre_unidad}
+              {row.codigo_unidad} {unidad.nombre_unidad}
             </MenuItem>
           ))}
         </Select>

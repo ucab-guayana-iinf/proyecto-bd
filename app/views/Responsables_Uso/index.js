@@ -104,6 +104,7 @@ const HistorialResponsablesPrimarios = (props) => {
           }}
           onUpdate={(data, onError) => {
             updateHistorialResponsablesPrimarios({
+              data,
               conditions: {
                  Pk1: data.ci,
                  Pk2: data.codigo_bien
@@ -114,6 +115,7 @@ const HistorialResponsablesPrimarios = (props) => {
           }}
           onDelete={(data, onError) => {
             deleteHistorialResponsablesPrimarios({
+              data,
               conditions: {
                  Pk1: data.ci,
                  Pk2: data.codigo_bien
