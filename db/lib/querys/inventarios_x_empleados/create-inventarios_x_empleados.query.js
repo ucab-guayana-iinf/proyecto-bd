@@ -7,16 +7,17 @@ const {
 } = require('../../../utils');
 
 const attributes = [
-  `codigo_bien`,
-  `codigo_componente`,
-  `nombre_componente`,
+  `anio`,
+  `semestre`,
+  `ci_empleado`,
 ];
 const neededAttributes = [
-  `codigo_bien`,
-  `nombre_componente`,
+  `anio`,
+  `semestre`,
+  `ci_empleado`,
 ];
 
-const createComponentes = async (params, onError = () => {}) => {
+const createInventariosxEmpleados = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -26,7 +27,7 @@ const createComponentes = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO componentes ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO inventarios_x_empleados ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -38,4 +39,4 @@ const createComponentes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createComponentes;
+module.exports = createInventariosxEmpleados;
