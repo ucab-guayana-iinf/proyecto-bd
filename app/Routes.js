@@ -20,6 +20,8 @@ import {
   Formatos as FormatosView,
   MovilizacionesTangibles as MovilizacionesTangiblesView,
   MovilizacionesIntangibles as MovilizacionesIntangiblesView,
+  HistorialResponsablesPrimarios as HistorialResponsablesPrimariosView,
+  HistorialResponsableDeUso as HistorialResponsableDeUsoView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -112,6 +114,19 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/movilizaciones-intangibles"
+      />
+      <RouteWithLayout
+        component={HistorialResponsablesPrimariosView}
+        component={HistorialResponsablesPrimariosView}
+        exact
+        layout={MainLayout}
+        path="/responsables-primarios"
+      />
+      <RouteWithLayout
+        component={HistorialResponsableDeUsoView}
+        exact
+        layout={MainLayout}
+        path="/responsables-uso"
       />
       <RouteWithLayout
         component={SettingsView}
