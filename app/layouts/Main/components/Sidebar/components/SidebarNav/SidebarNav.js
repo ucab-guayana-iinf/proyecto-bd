@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
       marginTop: 'auto',
     }
   },
+  nestedItem: {
+    padding: '10px 8px',
+  },
   button: {
     color: colors.blueGrey[800],
     padding: '10px 8px',
@@ -100,6 +103,7 @@ const SidebarNav = props => {
           <div key={page.title}>
             <ListItem
               button
+              className={classes.nestedItem}
               onClick={() => handleClick(page.title)}
             >
               <div className={classes.icon}>{page.icon}</div>
@@ -112,6 +116,7 @@ const SidebarNav = props => {
               in={state[page.title]}
               timeout="auto"
               unmountOnExit
+              style={{ paddingLeft: 11 }}
             >
               {page.items.map(_page => (
                 <ListItem
