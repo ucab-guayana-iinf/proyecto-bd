@@ -43,6 +43,7 @@ const BienesNaturales = (props) => {
     'ENFERMO',
     'EXTINTO'
   ];
+  const newData = bienes.filter(({ tipo }) => tipo === 'BIEN NATURAL');
 
   useEffect(() => {
     (async() => {
@@ -58,7 +59,7 @@ const BienesNaturales = (props) => {
     // }},
     { title: 'Código Bien', field: 'codigo_bien', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
-        const row = bienes.find(({ codigo_bien }) => codigo_bien === data.codigo_bien);
+        const row = newData.find(({ codigo_bien }) => codigo_bien === data.codigo_bien);
         return (
           <span>
             {row.codigo_bien} - {row.descripcion}
@@ -73,7 +74,7 @@ const BienesNaturales = (props) => {
             value={props.value || ''}
             onChange={(e) => props.onChange(e.target.value)}
           >
-            {bienes.map((bien) => (
+            {newData.map((bien) => (
               <MenuItem key={bien.codigo_bien} value={bien.codigo_bien}>
                 {bien.descripcion}
               </MenuItem>
@@ -83,13 +84,22 @@ const BienesNaturales = (props) => {
     }},
     { title: 'Nombre Científico', field: 'nombre_cientifico', cellStyle: { width: '-webkit-fill-available'} },
     { title: 'Nombre Vulgar', field: 'nombre_vulgar', cellStyle: { width: '-webkit-fill-available'} },
-    { title: 'Frutal', field: 'es_frutal', cellStyle: { width: '-webkit-fill-available'}, editComponent: (props) => {
+    { title: 'Frutal', field: 'es_frutal', cellStyle: { width: '-webkit-fill-available'},
+      render: (data) => {
+        return (
+          <Switch
+            checked={Boolean(data.es_frutal)}
+            disabled
+          />
+        );
+      },
+      editComponent: (props) => {
         return (
           <FormGroup>
             <FormControlLabel
               control={
                 <Switch
-                  checked={props.value || false}
+                  checked={Boolean(props.value) || false}
                   onChange={(e) => props.onChange(!props.value)}
                 />
               }

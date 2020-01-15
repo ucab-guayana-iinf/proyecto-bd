@@ -134,13 +134,22 @@ const Formatos = (props) => {
         </Select>
       );
     }},
-    { title: 'Aprobación del Emisor', field: 'aprobacion_emisor', cellStyle: { width: '-webkit-fill-available'}, editComponent: (props) => {
+    { title: 'Aprobación del Emisor', field: 'aprobacion_emisor', cellStyle: { width: '-webkit-fill-available'},
+      render: (data) => {
+        return (
+          <Switch
+            checked={Boolean(data.aprobacion_emisor)}
+            disabled
+          />
+        );
+      },
+      editComponent: (props) => {
         return (
           <FormGroup>
             <FormControlLabel
               control={
                 <Switch
-                  checked={props.value || false}
+                  checked={Boolean(props.value) || false}
                   onChange={(e) => props.onChange(!props.value)}
                 />
               }
@@ -148,13 +157,22 @@ const Formatos = (props) => {
           </FormGroup>
         );
       }},
-    { title: 'Aprobación del Receptor', field: 'aprobacion_receptor', cellStyle: { width: '-webkit-fill-available'}, editComponent: (props) => {
+    { title: 'Aprobación del Receptor', field: 'aprobacion_receptor', cellStyle: { width: '-webkit-fill-available'},
+      render: (data) => {
+        return (
+          <Switch
+            checked={Boolean(data.aprobacion_receptor)}
+            disabled
+          />
+        );
+      },
+      editComponent: (props) => {
         return (
           <FormGroup>
             <FormControlLabel
               control={
                 <Switch
-                  checked={props.value || false}
+                  checked={Boolean(props.value) || false}
                   onChange={(e) => props.onChange(!props.value)}
                 />
               }
@@ -174,14 +192,10 @@ const Formatos = (props) => {
           data={readFormatos}
           selection
           onAdd={(data, onError) => {
-            if (!data.fecha_formato) {
-              delete data.fecha_formato;
-            } else {
-              data.fecha_formato = jsDatetimeToMysql(data.fecha_formato);
-            }
             createFormatos({
               data: {
                 ...data,
+                fecha_formato: jsDatetimeToMysql(data.fecha_formato) || null,
                 codigo_unidad_emisora: data.codigo_unidad_emisora || '',
                 codigo_unidad_receptora: data.codigo_unidad_receptora || '',
                 ficha_responsable_cedente: data.ficha_responsable_cedente || '',

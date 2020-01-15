@@ -63,7 +63,7 @@ const Bienes = (props) => {
         >
           {unidades.map((unidad) => (
             <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
-              {row.codigo_unidad} {unidad.nombre_unidad}
+              {unidad.codigo_unidad} {unidad.nombre_unidad}
             </MenuItem>
           ))}
         </Select>
@@ -107,6 +107,16 @@ const Bienes = (props) => {
             }, onError)
           }}
           onUpdate={(data, onError) => {
+            if (!data.fecha_incorporacion) {
+              delete data.fecha_incorporacion;
+            } else {
+              data.fecha_incorporacion = jsDatetimeToMysql(data.fecha_incorporacion);
+            }
+            if (!data.fecha_desincorporacion) {
+              delete data.fecha_desincorporacion;
+            } else {
+              data.fecha_desincorporacion = jsDatetimeToMysql(data.fecha_desincorporacion);
+            }
             updateBienes({
               data,
               value: data.codigo_bien,

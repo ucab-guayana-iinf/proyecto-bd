@@ -8,6 +8,11 @@ import {
   readInventarios,
   updateInventarios,
   deleteInventarios,
+  createInventariosxSedes,
+  readInventariosxSedes,
+  updateInventariosxSedes,
+  deleteInventariosxSedes,
+  readSedes,
   readEmpleados,
 } from '../../../db/lib/querys';
 import { jsDatetimeToMysql } from '../../../db/utils';
@@ -24,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 const Inventarios = (props) => {
   const classes = useStyles();
   const [empleados, setEmpleados] = useState([]);
+  const [sedes, setSedes] = useState([]);
   const { enqueueSnackbar } = props;
   const status = [
     'EN EJECUCIÓN',
@@ -34,7 +40,9 @@ const Inventarios = (props) => {
   useEffect(() => {
     (async() => {
       const _empleados = await readEmpleados();
+      const _sedes = await readSedes();
       setEmpleados(_empleados);
+      setSedes(_sedes);
     })()
   }, []);
 
@@ -82,8 +90,31 @@ const Inventarios = (props) => {
         </Select>
       );
     }},
+    { title: 'Sede', field: 'codigo_sede', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        const row = sedes.find(({ ci }) => ci === data.codigo_sede);
+        return (
+          <span>
+            {row.codigo_sede} - {row.descripcion}
+          </span>
+        );
+      },
+      editComponent: (props) => {
+      return (
+        <Select
+          value={props.value || ''}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          {sedes.map((sede) => (
+            <MenuItem key={sede.codigo_sede} value={sede.codigo_sede}>
+              {sede.codigo_sede} {sede.descripcion}
+            </MenuItem>
+          ))}
+        </Select>
+      );
+    }},
   ];
-
+///TODO: Add redirection to table InventariosxBienes
   return (
     <div className={classes.root}>
       <div className={classes.content}>
@@ -92,6 +123,7 @@ const Inventarios = (props) => {
           headers={headers}
           data={readInventarios}
           selection
+          onRowClick={(e,data)=> console.log('data:',data);}
           onAdd={(data, onError) => {
             createInventarios({
               data: {
@@ -99,6 +131,12 @@ const Inventarios = (props) => {
                 fecha_inicio: jsDatetimeToMysql(data.fecha_inicio) || null,
                 fecha_fin: jsDatetimeToMysql(data.fecha_fin) || null,
                 ci_lider_inventario: data.ci_lider_inventario || ''
+              },
+            }, onError);
+            createInventariosxSedes({
+              data: {
+                ...data,
+                codigo_sede: data.codigo_sede || ''
               },
             }, onError)
           }}
@@ -111,6 +149,15 @@ const Inventarios = (props) => {
                }
             },
             onError);
+            updateInventariosxSedes({
+              data,
+              conditions: {
+                 Pk1: data.anio,
+                 Pk2: data.semestre,
+                 Pk3: data.codigo_sede,
+               }
+            },
+            onError);
           }}
           onDelete={(data, onError) => {
             deleteInventarios({
@@ -118,6 +165,14 @@ const Inventarios = (props) => {
               conditions: {
                  Pk1: data.anio,
                  Pk2: data.semestre
+               }
+            }, onError);
+            deleteInventariosxSedes({
+              data,
+              conditions: {
+                 Pk1: data.anio,
+                 Pk2: data.semestre,
+                 Pk3: data.codigo_sede,
                }
             }, onError)
           }}

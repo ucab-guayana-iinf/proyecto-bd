@@ -54,7 +54,7 @@ const Empleados = (props) => {
           >
             {unidades.map((unidad) => (
               <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
-                {row.codigo_unidad} {unidad.nombre_unidad}
+                {unidad.codigo_unidad} {unidad.nombre_unidad}
               </MenuItem>
             ))}
           </Select>
