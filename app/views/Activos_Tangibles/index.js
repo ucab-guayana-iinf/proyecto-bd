@@ -32,6 +32,7 @@ const Tangibles = (props) => {
     'EN PREPARACIÓN',
     'DESINCORPORADO'
   ];
+  const newData = bienes.filter(({ tipo }) => tipo === 'ACTIVO TANGIBLE');
 
   useEffect(() => {
     (async() => {
@@ -41,21 +42,31 @@ const Tangibles = (props) => {
   }, []);
 
   const headers = [
-    { title: 'Código Bien', field: 'codigo_bien', editComponent: (props) => {
-      return (
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={props.value || ''}
-          onChange={(e) => props.onChange(e.target.value)}
-        >
-          {bienes.map((bien) => (
-            <MenuItem key={bien.codigo_bien} value={bien.codigo_bien}>
-              {bien.descripcion}
-            </MenuItem>
-          ))}
-        </Select>
-      );
+    { title: 'Código Bien', field: 'codigo_bien', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        stateData = data;
+        const row = newData.find(({ codigo_bien }) => codigo_bien === data.codigo_bien);
+        return (
+          <span>
+            {row.codigo_bien} - {row.descripcion}
+          </span>
+        );
+      },
+      editComponent: (props) => {
+        return (
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={props.value || ''}
+            onChange={(e) => props.onChange(e.target.value)}
+          >
+            {newData.map((bien) => (
+              <MenuItem key={bien.codigo_bien} value={bien.codigo_bien}>
+                {bien.descripcion}
+              </MenuItem>
+            ))}
+          </Select>
+        );
     }},
     { title: 'Número de Factura', field: 'numero_factura', type: 'numeric', editable: 'onAdd' },
     { title: 'Status', field: 'status', editComponent: (props) => {

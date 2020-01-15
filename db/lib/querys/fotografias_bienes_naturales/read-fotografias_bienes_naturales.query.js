@@ -4,7 +4,7 @@ const {
   mysqlDatetimeToJS,
 } = require('../../../utils');
 
-const readFotogrfiasBienesNaturales = async (onError = () => {}) => {
+const readFotografiasBienesNaturales = async (onError = () => {}) => {
   const db = await getConnection();
   const QUERY = `SELECT * FROM fotografias_bienes_naturales`;
 
@@ -18,4 +18,4 @@ const readFotogrfiasBienesNaturales = async (onError = () => {}) => {
   }
 };
 
-module.exports = readFotogrfiasBienesNaturales;
+module.exports = readFotografiasBienesNaturales;

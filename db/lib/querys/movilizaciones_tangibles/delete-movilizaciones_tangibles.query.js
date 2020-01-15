@@ -1,19 +1,19 @@
 const getConnection = require('../../getConnection');
 const promisifyQuery = require('../../promisifyQuery');
+const {
+  spreadObj,
+} = require('../../../utils');
 
-const deleteNombres_Componentes = async (params, onError = () => {}) => {
+
+const deleteMovilizacionesTangibles = async (params, onError = () => {}) => {
   const db = await getConnection();
 
   const {
-    condition,
-    value,
+    conditions,
   } = params;
 
-  let QUERY = `DELETE FROM nombres_componentes WHERE ${condition}${value}`;
-
-  if (!condition) {
-    QUERY = `DELETE FROM nombres_componentes WHERE codigo_componente=${value}`;
-  }
+  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  QUERY = `DELETE FROM movilizaciones_tangibles WHERE ${conditionsValues}`;
 
   console.log(QUERY);
 
@@ -26,4 +26,4 @@ const deleteNombres_Componentes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = deleteNombres_Componentes;
+module.exports = deleteMovilizacionesTangibles;

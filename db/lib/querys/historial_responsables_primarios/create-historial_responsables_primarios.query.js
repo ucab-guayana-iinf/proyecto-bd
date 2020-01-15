@@ -7,15 +7,15 @@ const {
 } = require('../../../utils');
 
 const attributes = [
-  `codigo_componente`,
-  `nombre_componente`,
+  `ci`,
+  `codigo_unidad`,
 ];
 const neededAttributes = [
-  `codigo_componente`,
-  `nombre_componente`,
+  `ci`,
+  `codigo_unidad`,
 ];
 
-const createNombresComponentes = async (params, onError = () => {}) => {
+const createHistorialResponsablesPrimarios = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -25,7 +25,7 @@ const createNombresComponentes = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO nombres_componentes ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO historial_responsables_primarios ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
@@ -37,4 +37,4 @@ const createNombresComponentes = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createNombresComponentes;
+module.exports = createHistorialResponsablesPrimarios;

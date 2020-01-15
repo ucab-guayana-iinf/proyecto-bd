@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
 const Bienes = (props) => {
   const classes = useStyles();
   const [unidades, setUnidades] = useState([]);
-  const { enqueueSnackbar } = props;
   const tiposBienes = [
     'ACTIVO TANGIBLE',
     'ACTIVO INTANGIBLE',
@@ -42,10 +41,16 @@ const Bienes = (props) => {
   const headers = [
     { title: 'Código Bien', field: 'codigo_bien', type: 'numeric', editable: 'never' },
     { title: 'Descripción', field: 'descripcion' },
-    { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', type: 'date' },
-    { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', type: 'date' },
     { title: 'Origen', field: 'origen' },
-    { title: 'Unidad', field: 'codigo_unidad', editComponent: (props) => {
+    { title: 'Unidad', field: 'codigo_unidad', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        const row = unidades.find(({ codigo_unidad }) => codigo_unidad === data.codigo_unidad);
+        return (
+          <span>
+            {row.codigo_unidad} - {row.nombre_unidad}
+          </span>
+        );
+      }, editComponent: (props) => {
       return (
         <Select
           labelId="demo-simple-select-label"
@@ -55,7 +60,7 @@ const Bienes = (props) => {
         >
           {unidades.map((unidad) => (
             <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
-              {unidad.nombre_unidad}
+              {unidad.codigo_unidad} {unidad.nombre_unidad}
             </MenuItem>
           ))}
         </Select>
@@ -77,6 +82,8 @@ const Bienes = (props) => {
         </Select>
       );
     }},
+    { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', type: 'date' },
+    { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', type: 'date' },
   ];
 
   return (
@@ -88,17 +95,29 @@ const Bienes = (props) => {
           data={readBienes}
           selection
           onAdd={(data, onError) => {
-            createBienes({
-              data: {
-                ...data,
-                fecha_incorporacion: jsDatetimeToMysql(data.fecha_incorporacion) || null,
-                fecha_desincorporacion: jsDatetimeToMysql(data.fecha_desincorporacion) || null,
-                codigo_unidad: data.codigo_unidad || 0,
-                status: data.tipo || ''
-              },
-            }, onError)
+            if (data.fecha_desincorporacion) {
+              data.fecha_desincorporacion = jsDatetimeToMysql(data.fecha_desincorporacion);
+            } else {
+              delete data.fecha_desincorporacion;
+            }
+            if (data.fecha_incorporacion) {
+              data.fecha_incorporacion = jsDatetimeToMysql(data.fecha_incorporacion)
+            } else {
+              delete data.fecha_incorporacion;
+            }
+            createBienes({ data }, onError);
           }}
           onUpdate={(data, onError) => {
+            if (!data.fecha_incorporacion) {
+              delete data.fecha_incorporacion;
+            } else {
+              data.fecha_incorporacion = jsDatetimeToMysql(data.fecha_incorporacion);
+            }
+            if (!data.fecha_desincorporacion) {
+              delete data.fecha_desincorporacion;
+            } else {
+              data.fecha_desincorporacion = jsDatetimeToMysql(data.fecha_desincorporacion);
+            }
             updateBienes({
               data,
               value: data.codigo_bien,

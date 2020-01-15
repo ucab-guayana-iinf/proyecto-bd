@@ -14,6 +14,15 @@ import {
   Tangibles as TangiblesView,
   Intangibles as IntangiblesView,
   Facturas as FacturasView,
+  Edificaciones as EdificacionesView,
+  BienesNaturales as BienesNaturalesView,
+  Componentes as ComponentesView,
+  Formatos as FormatosView,
+  MovilizacionesTangibles as MovilizacionesTangiblesView,
+  MovilizacionesIntangibles as MovilizacionesIntangiblesView,
+  HistorialResponsablesPrimarios as HistorialResponsablesPrimariosView,
+   HistorialResponsableDeUso as HistorialResponsableDeUsoView,
+  Inventarios as InventariosView,
 } from './views';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
@@ -72,40 +81,58 @@ const Routes = () => {
         path="/facturas"
       />
       <RouteWithLayout
-        component={DashboardView}
+        component={EdificacionesView}
         exact
         layout={MainLayout}
-        path="/dashboard"
+        path="/edificaciones"
       />
       <RouteWithLayout
-        component={UserListView}
+        component={BienesNaturalesView}
         exact
         layout={MainLayout}
-        path="/users"
+        path="/bienes-naturales"
       />
       <RouteWithLayout
-        component={ProductListView}
+        component={ComponentesView}
         exact
         layout={MainLayout}
-        path="/products"
+        path="/componentes"
       />
       <RouteWithLayout
-        component={TypographyView}
+        component={FormatosView}
         exact
         layout={MainLayout}
-        path="/typography"
+        path="/formatos"
       />
       <RouteWithLayout
-        component={IconsView}
+        component={MovilizacionesTangiblesView}
         exact
         layout={MainLayout}
-        path="/icons"
+        path="/movilizaciones-tangibles"
       />
       <RouteWithLayout
-        component={AccountView}
+        component={MovilizacionesIntangiblesView}
         exact
         layout={MainLayout}
-        path="/account"
+        path="/movilizaciones-intangibles"
+      />
+      <RouteWithLayout
+        component={HistorialResponsablesPrimariosView}
+        exact
+        layout={MainLayout}
+        path="/responsables-primarios"
+      />
+      <RouteWithLayout
+        component={HistorialResponsableDeUsoView}
+        exact
+        layout={MainLayout}
+        path="/responsables-uso"
+      />
+      <RouteWithLayout
+        component={InventariosView}
+        exact
+        layout={MainLayout}
+        path="/inventario"
       />
       <RouteWithLayout
         component={SettingsView}

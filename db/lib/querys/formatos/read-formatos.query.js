@@ -4,13 +4,15 @@ const {
   mysqlDatetimeToJS,
 } = require('../../../utils');
 
-const readNombresComponentes = async (onError = () => {}) => {
+const readFormatos = async (onError = () => {}) => {
   const db = await getConnection();
-  const QUERY = `SELECT * FROM nombres_componentes`;
+  const QUERY = `SELECT * FROM formatos`;
 
   try {
     const response = await promisifyQuery(db, QUERY);
-
+    if (response.fecha_formato) {
+      response.fecha_formato = mysqlDatetimeToJS(response.fecha_formato);
+    }
     return response;
   } catch (error) {
     onError(error.message);
@@ -18,4 +20,4 @@ const readNombresComponentes = async (onError = () => {}) => {
   }
 };
 
-module.exports = readNombresComponentes;
+module.exports = readFormatos;

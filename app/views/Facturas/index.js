@@ -72,7 +72,6 @@ const Facturas = (props) => {
             }, onError)
           }}
           onUpdate={(data, onError) => {
-            console.log('data: ', data);
             updateFacturasActivosTangibles({
               data,
               value: data.numero_factura,
