@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
 const Bienes = (props) => {
   const classes = useStyles();
   const [unidades, setUnidades] = useState([]);
-  const { enqueueSnackbar } = props;
   const tiposBienes = [
     'ACTIVO TANGIBLE',
     'ACTIVO INTANGIBLE',
@@ -42,8 +41,6 @@ const Bienes = (props) => {
   const headers = [
     { title: 'Código Bien', field: 'codigo_bien', type: 'numeric', editable: 'never' },
     { title: 'Descripción', field: 'descripcion' },
-    { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', type: 'date' },
-    { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', type: 'date' },
     { title: 'Origen', field: 'origen' },
     { title: 'Unidad', field: 'codigo_unidad', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
@@ -85,6 +82,8 @@ const Bienes = (props) => {
         </Select>
       );
     }},
+    { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', type: 'date' },
+    { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', type: 'date' },
   ];
 
   return (
