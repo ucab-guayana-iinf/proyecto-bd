@@ -123,7 +123,7 @@ const Inventarios = (props) => {
           headers={headers}
           data={readInventarios}
           selection
-          onRowClick={(e,data)=> console.log('data:',data);}
+          onRowClick={(e,data) => console.log(`data: ${data}`)}
           onAdd={(data, onError) => {
             createInventarios({
               data: {
