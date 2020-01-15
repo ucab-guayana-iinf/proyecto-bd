@@ -45,6 +45,8 @@ const Empleados = (props) => {
         );
       },
       editComponent: (props) => {
+        console.log(props);
+        const row = unidades.find(({ codigo_unidad }) => codigo_unidad === props.value);
         return (
           <Select
             labelId="demo-simple-select-label"

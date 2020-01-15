@@ -70,6 +70,7 @@ const Inventarios = (props) => {
     { title: 'Lider de Inventario', field: 'ci_lider_inventario', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
         const row = empleados.find(({ ci }) => ci === data.ci_lider_inventario);
+        if (!row) return <span>Por asignar</span>
         return (
           <span>
             {row.ci} - {row.nombre_completo}
@@ -77,19 +78,20 @@ const Inventarios = (props) => {
         );
       },
       editComponent: (props) => {
-      return (
-        <Select
-          value={props.value || ''}
-          onChange={(e) => props.onChange(e.target.value)}
-        >
-          {empleados.map((empleado) => (
-            <MenuItem key={empleado.ci} value={empleado.ci}>
-              {empleado.ci} {empleado.nombre_completo}
-            </MenuItem>
-          ))}
-        </Select>
-      );
-    }},
+        return (
+          <Select
+            value={props.value || ''}
+            onChange={(e) => props.onChange(e.target.value)}
+          >
+            {empleados.map((empleado) => (
+              <MenuItem key={empleado.ci} value={empleado.ci}>
+                {empleado.ci} {empleado.nombre_completo}
+              </MenuItem>
+            ))}
+          </Select>
+        );
+      }
+    },
     { title: 'Sede', field: 'codigo_sede', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
         const row = sedes.find(({ ci }) => ci === data.codigo_sede);

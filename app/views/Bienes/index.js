@@ -96,15 +96,17 @@ const Bienes = (props) => {
           data={readBienes}
           selection
           onAdd={(data, onError) => {
-            createBienes({
-              data: {
-                ...data,
-                fecha_incorporacion: jsDatetimeToMysql(data.fecha_incorporacion) || null,
-                fecha_desincorporacion: jsDatetimeToMysql(data.fecha_desincorporacion) || null,
-                codigo_unidad: data.codigo_unidad || 0,
-                status: data.tipo || ''
-              },
-            }, onError)
+            if (data.fecha_desincorporacion) {
+              data.fecha_desincorporacion = jsDatetimeToMysql(data.fecha_desincorporacion);
+            } else {
+              delete data.fecha_desincorporacion;
+            }
+            if (data.fecha_incorporacion) {
+              data.fecha_incorporacion = jsDatetimeToMysql(data.fecha_incorporacion)
+            } else {
+              delete data.fecha_incorporacion;
+            }
+            createBienes({ data }, onError);
           }}
           onUpdate={(data, onError) => {
             if (!data.fecha_incorporacion) {
