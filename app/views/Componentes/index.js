@@ -8,6 +8,10 @@ import {
   readComponentes,
   updateComponentes,
   deleteComponentes,
+  createComponentesxComponentes,
+  readComponentesxComponentes,
+  updateComponentesxComponentes,
+  deleteComponentesxComponentes,
   readBienes,
 } from '../../../db/lib/querys';
 
@@ -23,17 +27,22 @@ const useStyles = makeStyles(theme => ({
 const Componentes = (props) => {
   const classes = useStyles();
   const [bienes, setBienes] = useState([]);
-  const { enqueueSnackbar } = props;
+  const [components, setComponents] = useState([]);
+  const [compXcomp, setCompXComp] = useState([]);
 
   useEffect(() => {
     (async() => {
       const _bienes = await readBienes();
+      const _components = await readComponentes();
+      const _compXcomp = await readComponentesxComponentes();
       setBienes(_bienes);
+      setComponents(_components);
+      setCompXComp(_compXcomp);
     })()
   }, []);
 
   const headers = [
-    { title: 'Código Bien', field: 'codigo_bien', cellStyle: { width: '-webkit-fill-available' },
+    { title: 'Código Bien', field: 'codigo_bien', cellStyle: { width: '180px' },
       render: (data) => {
         const row = bienes.find(({ codigo_bien }) => codigo_bien === data.codigo_bien);
         return (
@@ -62,14 +71,41 @@ const Componentes = (props) => {
     { title: 'Nombre Componente', field: 'nombre_componente', cellStyle: { width: '150px'} },
   ];
 
+  const getData = async () => {
+    const data = [];
+
+    components.forEach((component) => {
+      const {
+        codigo_componente,
+      } = component;
+
+      const childrenComponents = compXcomp.findAll(({ codigo_componente_padre }) => codigo_componente_padre === codigo_componente);
+
+      if (childrenComponents) {
+        childrenComponents.forEach((childrenComponent) => {
+          const childrenComponentData = components.find(({ codigo_componente }) => codigo_componente === childrenComponent.codigo_componente);
+          data.push({
+            ...childrenComponentData,
+            parent: codigo_componente,
+          })
+        })
+      } else {
+        data.push(component);
+      }
+    });
+    console.log(data);
+
+    return data;
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
           title="Componentes"
           headers={headers}
-          data={readComponentes}
-          selection
+          data={getData}
+          parentChildData={(row, rows) => rows.find(a => a.codigo_componente === row.parent)}
           onAdd={(data, onError) => {
             createComponentes({
               data: {
