@@ -24,20 +24,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Componentes = (props) => {
+const Componentes = () => {
   const classes = useStyles();
   const [bienes, setBienes] = useState([]);
   const [components, setComponents] = useState([]);
   const [compXcomp, setCompXComp] = useState([]);
 
+  const init = async () => {
+    const _bienes = await readBienes();
+    const _components = await readComponentes();
+    const _compXcomp = await readComponentesxComponentes();
+    setBienes(_bienes);
+    setComponents(_components);
+    setCompXComp(_compXcomp);
+  };
+
   useEffect(() => {
     (async() => {
-      const _bienes = await readBienes();
-      const _components = await readComponentes();
-      const _compXcomp = await readComponentesxComponentes();
-      setBienes(_bienes);
-      setComponents(_components);
-      setCompXComp(_compXcomp);
+      await init();
     })()
   }, []);
 
@@ -45,14 +49,17 @@ const Componentes = (props) => {
     { title: 'Código Bien', field: 'codigo_bien', cellStyle: { width: '180px' },
       render: (data) => {
         const row = bienes.find(({ codigo_bien }) => codigo_bien === data.codigo_bien);
+        if (!row) {
+          return null;
+        }
         return (
           <span>
-            {row.codigo_bien} - {row.descripcion}
+            {row.codigo_bien}{' '}-{' '}{row.descripcion}
           </span>
         );
       },
       editComponent: (props) => {
-      return (
+       return (
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -69,31 +76,64 @@ const Componentes = (props) => {
     }},
     { title: 'Código Componente', field: 'codigo_componente', type: 'numeric', editable: 'never', cellStyle: { width: '150px'} },
     { title: 'Nombre Componente', field: 'nombre_componente', cellStyle: { width: '150px'} },
+    {
+      title: 'Componente Padre', field: 'codigo_componente_padre', cellStyle: { width: '150px' },
+      render: ({ codigo_componente_padre }) => (
+        <span>
+          {codigo_componente_padre || 'N/A'}
+        </span>
+      ),
+      addComponent: (props) => {
+        <Select
+          value={props.value || 'N/A'}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          <MenuItem key="N/A" value="N/A">
+            N/A
+          </MenuItem>
+          {components.map((component) => (
+            <MenuItem key={component.codigo_componente} value={component.codigo_componente}>
+              {component.codigo_componente} - {component.nombre_componente}
+            </MenuItem>
+          ))}
+        </Select>
+      },
+      editComponent: (props) => (
+        <Select
+          value={props.value || 'N/A'}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          <MenuItem key="N/A" value="N/A">
+            N/A
+          </MenuItem>
+          {components.filter(({ codigo_componente }) => codigo_componente !== props.rowData.codigo_componente).map((component) => (
+            <MenuItem key={component.codigo_componente} value={component.codigo_componente}>
+              {component.codigo_componente} - {component.nombre_componente}
+            </MenuItem>
+          ))}
+        </Select>
+      ),
+    },
   ];
 
   const getData = async () => {
-    const data = [];
+    const _components = await readComponentes();
+    const _children = await readComponentesxComponentes();
 
-    components.forEach((component) => {
-      const {
-        codigo_componente,
-      } = component;
+    const data = _components.map((component) => {
+      if (_children) {
+        const parent = _children.find(({ codigo_componente }) => codigo_componente === component.codigo_componente);
 
-      const childrenComponents = compXcomp.findAll(({ codigo_componente_padre }) => codigo_componente_padre === codigo_componente);
-
-      if (childrenComponents) {
-        childrenComponents.forEach((childrenComponent) => {
-          const childrenComponentData = components.find(({ codigo_componente }) => codigo_componente === childrenComponent.codigo_componente);
-          data.push({
-            ...childrenComponentData,
-            parent: codigo_componente,
-          })
-        })
-      } else {
-        data.push(component);
+        if (parent) {
+          component.codigo_componente_padre = parent.codigo_componente_padre;
+        }
       }
+
+      return component;
     });
-    console.log(data);
+
+    console.log('data');
+    console.table(data);
 
     return data;
   };
@@ -105,33 +145,127 @@ const Componentes = (props) => {
           title="Componentes"
           headers={headers}
           data={getData}
-          parentChildData={(row, rows) => rows.find(a => a.codigo_componente === row.parent)}
-          onAdd={(data, onError) => {
-            createComponentes({
+          onAdd={async (data, onError) => {
+            const {
+              codigo_componente_padre,
+              ...rest
+            } = data;
+
+            const { insertId: codigo_componente } = await createComponentes({
               data: {
-                ...data,
-                codigo_bien: data.codigo_bien || ''
+                ...rest,
+                codigo_bien: (data && data.codigo_bien) || ''
               },
-            }, onError)
+            }, onError);
+            
+            if (codigo_componente_padre && codigo_componente_padre !== 'N/A') {
+              await createComponentesxComponentes({
+                data: {
+                  codigo_componente,
+                  codigo_componente_padre,
+                },
+              }, onError);
+            }
+            
+            await init();
           }}
-          onUpdate={(data, onError) => {
-            updateComponentes({
+          onUpdate={async (data, onError, oldData) => {
+            const {
+              codigo_bien,
+              codigo_componente,
+              codigo_componente_padre,
+              nombre_componente,
+            } = data;
+
+            if (codigo_componente_padre === 'N/A' && oldData.codigo_componente_padre === 'N/A') {
+              console.log('prev was N/A, new is N/A')
+            }
+
+            if (
+              (codigo_componente_padre !== 'N/A' && oldData.codigo_componente_padre === 'N/A')
+              || (!oldData.codigo_componente_padre && codigo_componente_padre && codigo_componente_padre !== 'N/A')
+            ) {
+              console.log('prev was N/A, new is a value')
+              await createComponentesxComponentes({
+                data: {
+                  codigo_componente,
+                  codigo_componente_padre,
+                },
+              }, onError);
+            }
+
+            if (codigo_componente_padre === 'N/A' && oldData.codigo_componente_padre !== 'N/A') {
+              console.log('prev was a value, new is N/A')
+              const itExists = compXcomp.find(({ codigo_componente_padre, codigo_componente }) =>
+                codigo_componente_padre === oldData.codigo_componente_padre
+                && codigo_componente === oldData.codigo_componente
+              );
+              console.log(itExists);
+              if (itExists) {
+                console.log('it exists');
+                await deleteComponentesxComponentes({
+                  data,
+                  conditions: {
+                    codigo_componente: oldData.codigo_componente,
+                    codigo_componente_padre: oldData.codigo_componente_padre,
+                  },
+                }, onError);
+              } else {
+                console.log('it is not in compXcomp');
+              }
+            }
+
+            if (
+              codigo_componente_padre && codigo_componente_padre !== 'N/A'
+              && oldData.codigo_componente_padre && oldData.codigo_componente_padre !== 'N/A'
+            ) {
+              console.log('prev was a value, new is a value')
+              await updateComponentesxComponentes({
+                data,
+                conditions: {
+                  codigo_componente: oldData.codigo_componente,
+                  codigo_componente_padre: oldData.codigo_componente_padre,
+                },
+              }, onError);
+            }
+
+            await updateComponentes({
               data,
               conditions: {
-                 Pk1: data.codigo_componente,
-                 Pk2: data.codigo_bien
-               }
-            },
-            onError);
+                codigo_componente,
+                codigo_bien,
+                nombre_componente
+              }
+            }, onError);
+
+            await init();
           }}
-          onDelete={(data, onError) => {
-            deleteComponentes({
+          onDelete={async (data, onError) => {
+            const {
+              codigo_bien,
+              codigo_componente,
+              codigo_componente_padre,
+            } = data;
+
+            if (codigo_componente_padre && codigo_componente_padre !== 'N/A') {
+              await deleteComponentesxComponentes({
+                data,
+                conditions: {
+                  codigo_componente,
+                  codigo_componente_padre,
+                },
+              }, onError);
+            }
+
+            await deleteComponentes({
               data,
               conditions: {
-                 Pk1: data.codigo_componente,
-                 Pk2: data.codigo_bien
-               }
-            }, onError)
+                codigo_componente,
+                codigo_bien,
+              }
+            }, onError);
+
+            await init();
           }}
         />
       </div>

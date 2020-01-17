@@ -28,7 +28,7 @@ const updateComponentesxComponentes = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  const conditionsValues = spreadObj(conditions, attributes).replace(',', ' AND');
   QUERY = `UPDATE componentes_x_componentes SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);

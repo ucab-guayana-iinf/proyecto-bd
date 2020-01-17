@@ -49,7 +49,7 @@ const Table = (props) => {
     new Promise(resolve => {
       setIsLoading(true);
       setTimeout(() => {
-        onUpdate(newData, onError);
+        onUpdate(newData, onError, oldData);
         setIsLoading(false);
         resolve();
       }, 200);
@@ -76,14 +76,7 @@ const Table = (props) => {
       isLoading={isLoading}
       localization={localization}
       editable={{ onRowAdd, onRowUpdate, onRowDelete }}
-      options={{ selection, pageSize }}
-      actions={
-        selection && [{
-          tooltip: `Eliminar '${title}' seleccionadas`,
-          icon: tableIcons.Delete,
-          onClick: (evt, oldData) => oldData.forEach((item) => onRowDelete(item))
-        }]
-      }
+      options={{ pageSize }}
       {...rest}
     />
   );

@@ -4,6 +4,10 @@ const {
   spreadObj,
 } = require('../../../utils');
 
+const neededAttributes = [
+  'codigo_componente',
+  'codigo_componente_padre'
+];
 
 const deleteComponentesxComponentes = async (params, onError = () => {}) => {
   const db = await getConnection();
@@ -12,7 +16,7 @@ const deleteComponentesxComponentes = async (params, onError = () => {}) => {
     conditions,
   } = params;
 
-  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  const conditionsValues = spreadObj(conditions, neededAttributes).replace(',', ' AND');
   QUERY = `DELETE FROM componentes_x_componentes WHERE ${conditionsValues}`;
 
   console.log(QUERY);

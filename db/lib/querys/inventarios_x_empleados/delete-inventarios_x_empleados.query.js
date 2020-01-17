@@ -12,7 +12,7 @@ const deleteInventariosxEmpleados = async (params, onError = () => {}) => {
     conditions,
   } = params;
 
-  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  const conditionsValues = spreadObj(conditions).replace(',', ' AND');
   QUERY = `DELETE FROM inventarios_x_empleados WHERE ${conditionsValues}`;
 
   console.log(QUERY);

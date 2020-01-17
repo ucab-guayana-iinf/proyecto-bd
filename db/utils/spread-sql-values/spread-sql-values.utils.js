@@ -34,11 +34,9 @@ const spreadObj = (obj = {}, keys = []) => {
 
     if (index === arr.length - 1) {
       output += `\`${key}\` = ${v(value)}`;
-      return;
+    } else {
+      output += `\`${key}\` = ${v(value)}, `;
     }
-
-    output += `\`${key}\` = ${v(value)}, `;
-    return;
   });
 
   return output;
@@ -99,6 +97,7 @@ const validateInput = (data, neededAttributes, onError) => {
   const keys = getKeys(data, neededAttributes);
   const validString = /^(?!\s*$).+/gi;
   if (!neededAttributes.every(key => keys.includes(key) && String(data[key]).match(validString))) {
+    console.log(`needed keys: ${JSON.stringify(keys)}`);
     onError('Debe llenar todos los campos');
     return false;
   }

@@ -12,7 +12,7 @@ const deleteHistorialResponsableDeUso = async (params, onError = () => {}) => {
     conditions,
   } = params;
 
-  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  const conditionsValues = spreadObj(conditions).replace(',', ' AND');
   QUERY = `DELETE FROM historial_responsable_de_uso WHERE ${conditionsValues}`;
 
   console.log(QUERY);
