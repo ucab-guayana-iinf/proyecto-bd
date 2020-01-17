@@ -182,25 +182,15 @@ CREATE TABLE IF NOT EXISTS `fotografias_bienes_naturales` ( `codigo_bien_natural
 CREATE TABLE IF NOT EXISTS `componentes` ( `codigo_bien` INT, `codigo_componente` INT UNIQUE NOT NULL AUTO_INCREMENT, `nombre_componente` VARCHAR(255) NOT NULL, PRIMARY KEY (`codigo_bien`, `codigo_componente`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
--- CREATE TABLE IF NOT EXISTS `nombres_componentes` (
---   `codigo_componente` INT NOT NULL,
---   `nombre_componente` VARCHAR(255) NOT NULL,
---   PRIMARY KEY (`codigo_componente`),
---   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
--- ) ENGINE = InnoDB;
----- en linea
---CREATE TABLE IF NOT EXISTS `nombres_componentes` ( `codigo_componente` INT NOT NULL, `nombre_componente` VARCHAR(255) NOT NULL, PRIMARY KEY (`codigo_componente`), FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
-
----- bonito
 -- CREATE TABLE IF NOT EXISTS `componentes_x_componentes` (
 --   `codigo_componente` INT,
 --   `codigo_componente_padre` INT NOT NULL,
 --   PRIMARY KEY (`codigo_componente`, `codigo_componente_padre`),
---   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE,
---   FOREIGN KEY (`codigo_componente_padre`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE
+--   FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE CASCADE ON UPDATE CASCADE,
+--   FOREIGN KEY (`codigo_componente_padre`) REFERENCES `componentes` (`codigo_componente`) ON DELETE CASCADE ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `componentes_x_componentes` ( `codigo_componente` INT, `codigo_componente_padre` INT NOT NULL, PRIMARY KEY (`codigo_componente`, `codigo_componente_padre`), FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_componente_padre`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `componentes_x_componentes` ( `codigo_componente` INT, `codigo_componente_padre` INT NOT NULL, PRIMARY KEY (`codigo_componente`, `codigo_componente_padre`), FOREIGN KEY (`codigo_componente`) REFERENCES `componentes` (`codigo_componente`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_componente_padre`) REFERENCES `componentes` (`codigo_componente`) ON DELETE CASCADE ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` (
@@ -230,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` ( `codigo_component
 --   FOREIGN KEY (`codigo_unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `formatos` ( `numero_formato` INT NOT NULL AUTO_INCREMENT, `codigo_unidad_emisora` INT NOT NULL, `codigo_unidad_receptora` INT NOT NULL, `ficha_responsable_cedente` INT NOT NULL, `ficha_responsable_receptor` INT NOT NULL, `aprobacion_emisor` boolean NOT NULL DEFAULT false, `aprobacion_receptor` boolean NOT NULL DEFAULT false, `fecha_formato` DATETIME NOT NULL, PRIMARY KEY (`numero_formato`), FOREIGN KEY (`ficha_responsable_cedente`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/ FOREIGN KEY (`ficha_responsable_receptor`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/ FOREIGN KEY (`codigo_unidad_emisora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `formatos` ( `numero_formato` INT NOT NULL AUTO_INCREMENT, `codigo_unidad_emisora` INT NOT NULL, `codigo_unidad_receptora` INT NOT NULL, `ficha_responsable_cedente` INT NOT NULL, `ficha_responsable_receptor` INT NOT NULL, `aprobacion_emisor` boolean NOT NULL DEFAULT false, `aprobacion_receptor` boolean NOT NULL DEFAULT false, `fecha_formato` DATETIME NOT NULL, PRIMARY KEY (`numero_formato`), FOREIGN KEY (`ficha_responsable_cedente`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`ficha_responsable_receptor`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_unidad_emisora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `movilizaciones_tangibles` (

@@ -30,7 +30,7 @@ const updateInventariosxEmpleados = async (params, onError = () => {}) => {
 
   const values = spreadObj(data, attributes);
 
-  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  const conditionsValues = spreadObj(conditions).replace(',', ' AND');
   QUERY = `UPDATE inventarios_x_empleados SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);

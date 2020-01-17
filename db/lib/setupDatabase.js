@@ -37,10 +37,10 @@ const setupDatabase = (runScripts = true) => new Promise(async (resolve, reject)
   });
 
   if (runScripts) {
-    // run source.sql
     signale.log('running source.sql');
     const sourcePath = path.join(process.cwd(), '/db/source.sql');
-    console.log(`DB Source path: ${sourcePath}`);
+
+    signale.log(`DB Source path: ${sourcePath}`);
     const rl = readline.createInterface({
       input: fs.createReadStream(sourcePath),
       terminal: false,

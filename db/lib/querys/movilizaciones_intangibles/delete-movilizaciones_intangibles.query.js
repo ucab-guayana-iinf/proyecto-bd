@@ -12,7 +12,7 @@ const deleteMovilizacionesIntangibles = async (params, onError = () => {}) => {
     conditions,
   } = params;
 
-  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  const conditionsValues = spreadObj(conditions).replace(',', ' AND');
   QUERY = `DELETE FROM movilizaciones_intangibles WHERE ${conditionsValues}`;
 
   console.log(QUERY);
