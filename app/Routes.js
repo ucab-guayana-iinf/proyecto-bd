@@ -21,9 +21,14 @@ import {
   MovilizacionesTangibles as MovilizacionesTangiblesView,
   MovilizacionesIntangibles as MovilizacionesIntangiblesView,
   HistorialResponsablesPrimarios as HistorialResponsablesPrimariosView,
-   HistorialResponsableDeUso as HistorialResponsableDeUsoView,
+  HistorialResponsableDeUso as HistorialResponsableDeUsoView,
   Inventarios as InventariosView,
+  Reportes as ReportesView,
 } from './views';
+import ReportesBienView from './views/Reportes/ReportesBien';
+import ReportesBienesNaturalesView from './views/Reportes/ReportesBienesNaturales';
+import ReportesBienesXTipoView from './views/Reportes/ReportesBienesXTipo';
+import ReportesMovilizacionesBienView from './views/Reportes/ReportesMovilizacionesBien';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
 //       o se le borran los iconos a todo..
@@ -139,6 +144,36 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/configuracion"
+      />
+      <RouteWithLayout
+        component={ReportesView}
+        exact
+        layout={MainLayout}
+        path="/reportes"
+      />
+      <RouteWithLayout
+        component={ReportesBienesNaturalesView}
+        exact
+        layout={MainLayout}
+        path="/reportes/bienes-naturales"
+      />
+      <RouteWithLayout
+        component={ReportesBienesXTipoView}
+        exact
+        layout={MainLayout}
+        path="/reportes/bienes-tipo"
+      />
+      <RouteWithLayout
+        component={ReportesMovilizacionesBienView}
+        exact
+        layout={MainLayout}
+        path="/reportes/bienes-movilizaciones"
+      />
+      <RouteWithLayout
+        component={ReportesBienView}
+        exact
+        layout={MainLayout}
+        path="/reportes/bien"
       />
       <Redirect to="/ubicaciones" />
     </Switch>
