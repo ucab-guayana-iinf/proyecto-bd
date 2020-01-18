@@ -210,8 +210,8 @@ CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` ( `codigo_component
 --   `codigo_unidad_receptora` INT NOT NULL,
 --   `ficha_responsable_cedente` INT NOT NULL,
 --   `ficha_responsable_receptor` INT NOT NULL,
---   `aprobacion_emisor` boolean NOT NULL DEFAULT false,
---   `aprobacion_receptor` boolean NOT NULL DEFAULT false,
+--   `aprobacion_emisor` booleane,
+--   `aprobacion_receptor` boolean,
 --   `fecha_formato` DATETIME NOT NULL,
 --   PRIMARY KEY (`numero_formato`),
 --   FOREIGN KEY (`ficha_responsable_cedente`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE,/*REVISAR*/
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `componentes_x_activos_tangibles` ( `codigo_component
 --   FOREIGN KEY (`codigo_unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `formatos` ( `numero_formato` INT NOT NULL AUTO_INCREMENT, `codigo_unidad_emisora` INT NOT NULL, `codigo_unidad_receptora` INT NOT NULL, `ficha_responsable_cedente` INT NOT NULL, `ficha_responsable_receptor` INT NOT NULL, `aprobacion_emisor` boolean NOT NULL DEFAULT false, `aprobacion_receptor` boolean NOT NULL DEFAULT false, `fecha_formato` DATETIME NOT NULL, PRIMARY KEY (`numero_formato`), FOREIGN KEY (`ficha_responsable_cedente`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`ficha_responsable_receptor`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_unidad_emisora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `formatos` ( `numero_formato` INT NOT NULL AUTO_INCREMENT, `codigo_unidad_emisora` INT NOT NULL, `codigo_unidad_receptora` INT NOT NULL, `ficha_responsable_cedente` INT NOT NULL, `ficha_responsable_receptor` INT NOT NULL, `aprobacion_emisor` boolean DEFAULT false, `aprobacion_receptor` boolean DEFAULT false, `fecha_formato` DATETIME NOT NULL, PRIMARY KEY (`numero_formato`), FOREIGN KEY (`ficha_responsable_cedente`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`ficha_responsable_receptor`) REFERENCES `empleados` (`ci`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_unidad_emisora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`codigo_unidad_receptora`) REFERENCES `unidades` (`codigo_unidad`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
 
 ---- bonito
 -- CREATE TABLE IF NOT EXISTS `movilizaciones_tangibles` (
@@ -317,5 +317,3 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (`anio` INT,`semestre` VARC
 -- ) ENGINE = InnoDB;
 ---- en linea
 CREATE TABLE IF NOT EXISTS `inventarios_x_bienes` ( `anio` INT, `semestre` VARCHAR(255), `codigo_bien` INT, `ci_empleado` INT, `fecha_realizacion` DATETIME, PRIMARY KEY (`anio`, `semestre`, `codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
-
-
