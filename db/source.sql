@@ -317,3 +317,5 @@ CREATE TABLE IF NOT EXISTS `inventarios_x_empleados` (`anio` INT,`semestre` VARC
 -- ) ENGINE = InnoDB;
 ---- en linea
 CREATE TABLE IF NOT EXISTS `inventarios_x_bienes` ( `anio` INT, `semestre` VARCHAR(255), `codigo_bien` INT, `ci_empleado` INT, `fecha_realizacion` DATETIME, PRIMARY KEY (`anio`, `semestre`, `codigo_bien`), FOREIGN KEY (`codigo_bien`) REFERENCES `bienes` (`codigo_bien`) ON DELETE RESTRICT ON UPDATE CASCADE, FOREIGN KEY (`anio`, `semestre`) REFERENCES `inventarios` (`anio`, `semestre`) ON DELETE RESTRICT ON UPDATE CASCADE ) ENGINE = InnoDB;
+
+
