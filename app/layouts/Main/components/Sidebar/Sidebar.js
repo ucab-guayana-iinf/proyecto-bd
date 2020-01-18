@@ -27,6 +27,7 @@ import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import HistoryIcon from '@material-ui/icons/History';
 import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import { Profile, SidebarNav } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -167,6 +168,11 @@ const Sidebar = props => {
       title: 'Inventario',
       href: '/inventario',
       icon: <MoveToInboxIcon/>,
+    },
+    {
+      title: 'Reportes',
+      href: '/reportes',
+      icon: <LibraryBooksIcon />,
     },
     {
       title: 'Configuración',

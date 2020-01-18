@@ -18,3 +18,4 @@ export { default as MovilizacionesIntangibles } from './Movilizaciones_Intangibl
 export { default as HistorialResponsablesPrimarios } from './Responsables_Primarios';
 export { default as HistorialResponsableDeUso } from './Responsables_Uso';
 export { default as Inventarios } from './Inventarios';
+export { default as Reportes } from './Reportes';
