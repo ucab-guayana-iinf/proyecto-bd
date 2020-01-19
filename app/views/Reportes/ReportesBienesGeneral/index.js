@@ -1,8 +1,19 @@
 import React, {Fragment, useEffect, useState, useRef} from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Select, MenuItem, FormControl, InputLabel, Checkbox, ListItemText, Input, Drawer } from '@material-ui/core';
+import PrintIcon from '@material-ui/icons/Print';
 import { Table } from '../../../components';
 import ReporteDetalladoBien from './ReporteDetallado';
+import {
+  Select,
+  IconButton,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Checkbox,
+  ListItemText,
+  Input,
+  Drawer
+} from '@material-ui/core';
 import {
   readUnidades,
   readSedes,
@@ -169,9 +180,15 @@ const ReportesBienesGeneral = () => {
   return (
     <div className={classes.root}>
       <div className={classes.content}>
-        <h1>
-          Reporte General de los Bienes
-        </h1>
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+          <h1>
+            Reporte General de los Bienes
+          </h1>
+          <IconButton onClick={print}>
+            <PrintIcon size={40} />
+          </IconButton>
+        </div>
+
         <br />
 
         <Value amount={total}>
