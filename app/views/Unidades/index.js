@@ -92,7 +92,7 @@ const Unidades = (props) => {
         );
       }
     },
-    { title: 'Fecha', field: 'fecha_jefe', editable: 'never', type: 'date', cellStyle: { width: '200px' } },
+    { title: 'Fecha', field: 'fecha_jefe', type: 'date', cellStyle: { width: '200px' } },
   ];
 
   return (
