@@ -26,9 +26,8 @@ import {
   Reportes as ReportesView,
 } from './views';
 import ReportesBienView from './views/Reportes/ReportesBien';
-import ReportesBienesNaturalesView from './views/Reportes/ReportesBienesNaturales';
-import ReportesBienesXTipoView from './views/Reportes/ReportesBienesXTipo';
-import ReportesMovilizacionesBienView from './views/Reportes/ReportesMovilizacionesBien';
+import ReportesBienesGeneralView from './views/Reportes/ReportesBienesGeneral';
+import ReportesBienesXSedeView from './views/Reportes/ReportesBienesXSede';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
 //       o se le borran los iconos a todo..
@@ -152,22 +151,16 @@ const Routes = () => {
         path="/reportes"
       />
       <RouteWithLayout
-        component={ReportesBienesNaturalesView}
+        component={ReportesBienesGeneralView}
         exact
         layout={MainLayout}
-        path="/reportes/bienes-naturales"
+        path="/reportes/bienes-general"
       />
       <RouteWithLayout
-        component={ReportesBienesXTipoView}
+        component={ReportesBienesXSedeView}
         exact
         layout={MainLayout}
-        path="/reportes/bienes-tipo"
-      />
-      <RouteWithLayout
-        component={ReportesMovilizacionesBienView}
-        exact
-        layout={MainLayout}
-        path="/reportes/bienes-movilizaciones"
+        path="/reportes/bienes-sede"
       />
       <RouteWithLayout
         component={ReportesBienView}

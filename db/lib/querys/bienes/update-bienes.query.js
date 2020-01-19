@@ -13,6 +13,7 @@ const {
    'origen',
    'codigo_unidad',
    'tipo',
+   'ci_responsable',
  ];
  const neededAttributes = [
    'descripcion',

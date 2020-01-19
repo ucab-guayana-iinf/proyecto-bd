@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import NatureIcon from '@material-ui/icons/Nature';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import AllOutIcon from '@material-ui/icons/AllOut';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import AppsIcon from '@material-ui/icons/Apps';
 
 const useStyles = makeStyles(theme => ({
@@ -16,7 +17,35 @@ const useStyles = makeStyles(theme => ({
 
   // ---
   box: {
-
+    maxWidth: 250,
+    height: 300,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'column',
+    backgroundColor: 'white',
+    borderRadius: 6,
+    padding: '0 10px',
+    boxShadow: '-1px 3px 12px 0px rgba(0,0,0,0.2)',
+    transition: 'all .25s ease-in',
+    '&:hover': {
+      boxShadow: '-1px 3px 25px 0px rgba(0,0,0,0.3)',
+    },
+    '&:hover > svg': {
+      fontSize: 50,
+    },
+  },
+  boxTitle: {
+    color: 'black',
+  },
+  boxDescription: {
+    color: 'gray',
+  },
+  icon: {
+    color: 'black',
+    fontSize: 40,
+    height: 50,
+    transition: 'all .35s ease-in',
   }
 }));
 
@@ -49,7 +78,7 @@ const Box = (props) => {
 const Reportes = () => {
   const classes = useStyles();
   const boxes = [
-    { to: '/reportes/bien', Icon: <AllOutIcon />, text: 'Bien', description: 'Genere reportes sobre un Bien en específico' },
+    { to: '/reportes/bien', Icon: <MenuBookIcon size={60} className={classes.icon} />, text: 'Bienes', description: 'Genere reportes sobre los Bienes en general o sobre un Bien en específico' },
   ];
 
   return (

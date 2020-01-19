@@ -66,9 +66,9 @@ const Componentes = () => {
             value={props.value || ''}
             onChange={(e) => props.onChange(e.target.value)}
           >
-            {bienes.map((bien) => (
+            {bienes.filter(({tipo}) => tipo === 'ACTIVO TANGIBLE').map((bien) => (
               <MenuItem key={bien.codigo_bien} value={bien.codigo_bien}>
-                {bien.descripcion}
+                {bien.codigo_bien}{' '}-{' '}{bien.descripcion}
               </MenuItem>
             ))}
           </Select>
@@ -78,11 +78,24 @@ const Componentes = () => {
     { title: 'Nombre Componente', field: 'nombre_componente', cellStyle: { width: '150px'} },
     {
       title: 'Componente Padre', field: 'codigo_componente_padre', cellStyle: { width: '150px' },
-      render: ({ codigo_componente_padre }) => (
-        <span>
-          {codigo_componente_padre || 'N/A'}
-        </span>
-      ),
+      render: (data) => {
+        const {
+          codigo_componente_padre,
+        } = data;
+        const father = components.find(({codigo_componente}) => codigo_componente === codigo_componente_padre);
+        if (!father) {
+          return (
+            <span>
+              N/A
+            </span>
+          );
+        }
+        return (
+          <span>
+            {codigo_componente_padre}{' - '}{father.nombre_componente}
+          </span>
+        )
+      },
       addComponent: (props) => {
         <Select
           value={props.value || 'N/A'}
@@ -157,7 +170,7 @@ const Componentes = () => {
                 codigo_bien: (data && data.codigo_bien) || ''
               },
             }, onError);
-            
+
             if (codigo_componente_padre && codigo_componente_padre !== 'N/A') {
               await createComponentesxComponentes({
                 data: {
@@ -166,7 +179,7 @@ const Componentes = () => {
                 },
               }, onError);
             }
-            
+
             await init();
           }}
           onUpdate={async (data, onError, oldData) => {

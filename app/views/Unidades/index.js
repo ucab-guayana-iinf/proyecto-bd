@@ -92,7 +92,7 @@ const Unidades = (props) => {
         );
       }
     },
-    { title: 'Fecha', field: 'fecha_jefe', editable: 'never', type: 'date', cellStyle: { width: '200px' } },
+    { title: 'Fecha', field: 'fecha_jefe', type: 'date', cellStyle: { width: '200px' } },
   ];
 
   return (
@@ -115,7 +115,8 @@ const Unidades = (props) => {
 
             createUnidades({ data }, onError);
           }}
-          onUpdate={(data, onError) => {
+          onUpdate={(data, onError, oldData) => {
+            console.log(data);
             if (!data.ci_jefe) {
               delete data.ci_jefe;
             }
@@ -127,7 +128,7 @@ const Unidades = (props) => {
 
             updateUnidades({
               data,
-              value: data.codigo_unidad,
+              value: oldData.codigo_unidad,
             }, onError);
           }}
           onDelete={(data, onError) => {

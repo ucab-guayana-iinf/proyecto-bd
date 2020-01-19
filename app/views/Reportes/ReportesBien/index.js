@@ -5,19 +5,17 @@ import NatureIcon from '@material-ui/icons/Nature';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import AllOutIcon from '@material-ui/icons/AllOut';
 import AppsIcon from '@material-ui/icons/Apps';
+import {Button} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3)
   },
   content: {
+    display: 'flex',
+    flexDirection: 'column',
     marginTop: theme.spacing(2)
   },
-
-  // ---
-  box: {
-    
-  }
 }));
 
 const Box = (props) => {
@@ -33,7 +31,7 @@ const Box = (props) => {
     <Link to={to}>
       <div className={classes.box}>
         <Icon />
-        
+
         <h2 className={classes.boxTitle}>
           {text}
         </h2>
@@ -55,9 +53,21 @@ const Reportes = () => {
   return (
     <div className={classes.root}>
       <div className={classes.content}>
-        {boxes.map((values) => (
-          <Box {...values} />
-        ))}
+        <Link to="/reportes/bienes-general">
+          Reporte general de los bienes
+        </Link>
+
+        <br />
+
+        <Link to="/reportes/bien">
+          Reporte de un bien en específico
+        </Link>
+
+        <br />
+
+        <Link to="/reportes/bienes-sede">
+          Reporte de Bienes por Sede
+        </Link>
       </div>
     </div>
   );

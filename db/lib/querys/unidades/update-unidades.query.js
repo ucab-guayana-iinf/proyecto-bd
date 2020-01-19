@@ -25,7 +25,7 @@ const updateUnidades = async (params, onError = () => {}) => {
     data,
   } = params;
 
-  if (!validateInput(data, attributes, onError)) {
+  if (!validateInput(data, neededAttributes, onError)) {
     return null;
   }
 
