@@ -22,7 +22,7 @@ const headers = [
   { field: 'origen', title: 'Origen', },
   { field: 'tipo', title: 'Tipo', },
   { field: 'ci_jefe', title: 'Responsable Primario', },
-  { field: 'responsable', title: 'Responsable', },
+  { field: 'ci_responsable', title: 'Responsable', },
 ]
 
 const useStyles = makeStyles(theme => ({
@@ -53,6 +53,7 @@ const getReporteGeneral = async (flag = 0) => {
       fecha_desincorporacion,
       origen,
       tipo,
+      ci_responsable,
     } = bien;
 
     const unidad = unidades.find(({codigo_unidad}) => codigo_unidad === bien.codigo_unidad);
@@ -66,7 +67,8 @@ const getReporteGeneral = async (flag = 0) => {
       unidad: unidad.nombre_unidad,
       origen,
       tipo: tipo || 'N/A',
-      ci_jefe: unidad.ci_jefe,
+      ci_jefe: unidad.ci_jefe || 'N/A',
+      ci_responsable: ci_responsable || 'N/A',
     }
   });
 

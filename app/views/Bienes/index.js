@@ -9,6 +9,7 @@ import {
   updateBienes,
   deleteBienes,
   readUnidades,
+  readEmpleados,
 } from '../../../db/lib/querys';
 import { jsDatetimeToMysql } from '../../../db/utils';
 
@@ -24,6 +25,8 @@ const useStyles = makeStyles(theme => ({
 const Bienes = (props) => {
   const classes = useStyles();
   const [unidades, setUnidades] = useState([]);
+  const [empleados, setEmpleados] = useState([]);
+  const [bienes, setBienes] = useState([]);
   const tiposBienes = [
     'ACTIVO TANGIBLE',
     'ACTIVO INTANGIBLE',
@@ -31,10 +34,18 @@ const Bienes = (props) => {
     'BIEN NATURAL',
   ];
 
+  const init = async () => {
+    const _unidades = await readUnidades();
+    const _empleados = await readEmpleados();
+    const _bienes = await readBienes();
+    setUnidades(_unidades);
+    setEmpleados(_empleados);
+    setBienes(_bienes);
+  }
+
   useEffect(() => {
     (async() => {
-      const _unidades = await readUnidades();
-      setUnidades(_unidades);
+      await init();
     })()
   }, []);
 
@@ -45,6 +56,9 @@ const Bienes = (props) => {
     { title: 'Unidad', field: 'codigo_unidad', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
         const row = unidades.find(({ codigo_unidad }) => codigo_unidad === data.codigo_unidad);
+        if (!row) {
+          return null;
+        }
         return (
           <span>
             {row.codigo_unidad} - {row.nombre_unidad}
@@ -53,8 +67,6 @@ const Bienes = (props) => {
       }, editComponent: (props) => {
       return (
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
@@ -82,6 +94,32 @@ const Bienes = (props) => {
         </Select>
       );
     }},
+    { title: 'Responsable', field: 'ci_responsable',
+      render: (data) => {
+        const row = empleados.find(({ ci }) => ci === data.ci_responsable);
+        if (!row) {
+          return null;
+        }
+        return (
+          <span>
+            {row.ci} - {row.nombre_completo}
+          </span>
+        );
+      },
+      editComponent: (props) => {
+      return (
+        <Select
+          value={props.value || ''}
+          onChange={(e) => props.onChange(e.target.value)}
+        >
+          {empleados.map((empleado) => (
+            <MenuItem key={empleado.ci} value={empleado.ci}>
+              {empleado.ci}{' '}-{' '}{empleado.nombre_completo}
+            </MenuItem>
+          ))}
+        </Select>
+      );
+    }},
     { title: 'Fecha de Incorporación', field: 'fecha_incorporacion', type: 'date' },
     { title: 'Fecha de Desincorporación', field: 'fecha_desincorporacion', type: 'date' },
   ];
@@ -95,6 +133,9 @@ const Bienes = (props) => {
           data={readBienes}
           selection
           onAdd={(data, onError) => {
+            if (!data.responsable_de_uso) {
+              delete data.responsable_de_uso;
+            }
             if (data.fecha_desincorporacion) {
               data.fecha_desincorporacion = jsDatetimeToMysql(data.fecha_desincorporacion);
             } else {
@@ -107,7 +148,19 @@ const Bienes = (props) => {
             }
             createBienes({ data }, onError);
           }}
-          onUpdate={(data, onError) => {
+          onUpdate={(data, onError, oldData) => {
+            if (data.responsable_de_uso) {
+              if (oldData.responsable_de_uso) {
+                if (oldData.responsable_de_uso !== data.responsable_de_uso) {
+                  // actualizar el responsable de uso en el historial
+                }
+              } else {
+                // crear el responsable_de_uso en el historial
+              }
+            } else {
+              delete data.responsable_de_uso;
+            }
+
             if (!data.fecha_incorporacion) {
               delete data.fecha_incorporacion;
             } else {
