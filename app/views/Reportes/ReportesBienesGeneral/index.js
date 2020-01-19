@@ -1,7 +1,8 @@
 import React, {Fragment, useEffect, useState, useRef} from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Select, MenuItem, FormControl, InputLabel, Checkbox, ListItemText, Input } from '@material-ui/core';
-import {Table} from '../../../components';
+import { Select, MenuItem, FormControl, InputLabel, Checkbox, ListItemText, Input, Drawer } from '@material-ui/core';
+import { Table } from '../../../components';
+import ReporteDetalladoBien from './ReporteDetallado';
 import {
   readUnidades,
   readSedes,
@@ -126,6 +127,7 @@ const ReportesBienesGeneral = () => {
   const [bienesN, toggleBienesN] = useState(false);
   const [codigoSede, setCodigoSede] = useState(null);
   const [tipoBien, setTipoBien] = useState(tiposDeBien);
+  const [detalleBien, setDetalleBien] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -134,7 +136,21 @@ const ReportesBienesGeneral = () => {
     })();
   }, []);
 
-  if (!data) return 'Cargando...';
+  const toggleDrawer = (bien = null) => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setDetalleBien(bien);
+  };
+
+  if (!data) {
+    return (
+      <div style={{padding: 16}}>
+        Cargando...
+      </div>
+    );
+  }
 
   const {
     count,
@@ -182,6 +198,7 @@ const ReportesBienesGeneral = () => {
           <Table
             tableRef={tableRef}
             headers={headers}
+            onRowClick={(e, data) => setDetalleBien(data)}
             data={async () => getReporteGeneral(1, codigoSede, tipoBien)}
             style={{ marginTop: 20 }}
             localization={{
@@ -258,6 +275,13 @@ const ReportesBienesGeneral = () => {
             }}
           />
         )}
+        <Drawer
+          anchor="right"
+          open={!!detalleBien}
+          onClose={toggleDrawer(null)}
+        >
+          <ReporteDetalladoBien bien={detalleBien} />
+        </Drawer>
       </div>
     </div>
   );

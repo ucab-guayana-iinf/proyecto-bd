@@ -78,7 +78,7 @@ const Box = (props) => {
 const Reportes = () => {
   const classes = useStyles();
   const boxes = [
-    { to: '/reportes/bien', Icon: <MenuBookIcon size={60} className={classes.icon} />, text: 'Bienes', description: 'Genere reportes sobre los Bienes en general o sobre un Bien en específico' },
+    { to: '/reportes/bienes-general', Icon: <MenuBookIcon size={60} className={classes.icon} />, text: 'Bienes', description: 'Genere reportes sobre los Bienes en general o sobre un Bien en específico' },
   ];
 
   return (
