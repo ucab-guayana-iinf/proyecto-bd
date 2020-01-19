@@ -18,7 +18,6 @@ const attributes = [
   `fecha_formato`,
 ];
 const neededAttributes = [
-  `numero_formato`,
   `codigo_unidad_emisora`,
   `codigo_unidad_receptora`,
   `ficha_responsable_cedente`,
