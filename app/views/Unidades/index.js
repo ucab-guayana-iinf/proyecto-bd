@@ -127,9 +127,11 @@ const Unidades = (props) => {
               } = data;
 
               createHistorialResponsablesPrimarios({
-                ...data,
-                ci: ci_jefe || '',
-                codigo_unidad: codigo_unidad || ''
+                data: {
+                  ...data,
+                  ci: ci_jefe || '',
+                  codigo_unidad: codigo_unidad || ''
+                }
               }, onError);
             }
 
@@ -143,22 +145,30 @@ const Unidades = (props) => {
               if (oldData.ci_jefe) {
                 if (oldData.ci_jefe !== data.ci_jefe) {
                   // actualizar el responsable primario en el historial
-                  updateHistorialResponsablesPrimarios({
-                    conditions: {
-                       ci,
-                       codigo_unidad
-                     }
+                  createHistorialResponsablesPrimarios({
+                    data: {
+                      ci: ci || '',
+                      codigo_unidad: codigo_unidad || ''
+                    }
                   }, onError);
                 }
-              } else {
+              } else{
                 // crear el responsable primario en el historial
                 createHistorialResponsablesPrimarios({
-                  ci: ci || '',
-                  codigo_unidad: codigo_unidad || ''
+                  data: {
+                    ci: ci || '',
+                    codigo_unidad: codigo_unidad || ''
+                  }
                 }, onError);
               }
             } else {
-              delete data.ci_jefe;
+              data.ci_jefe = null;
+              createHistorialResponsablesPrimarios({  // se anexa tambien en el historial de que ahorita no tiene responsable
+                data: {
+                  ci: null,
+                  codigo_unidad: codigo_unidad || ''
+                }
+              }, onError);
             }
 
             if (!data.fecha_jefe) {

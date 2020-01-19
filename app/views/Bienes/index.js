@@ -140,7 +140,14 @@ const Bienes = (props) => {
           data={readBienes}
           selection
           onAdd={(data, onError) => {
-            if (!data.ci_responsable) {
+            if (data.ci_responsable) {
+              createHistorialResponsableDeUso({
+                data: {
+                  ci: data.ci_responsable || '',
+                  codigo_bien: data.codigo_bien || ''
+                },
+              }, onError);
+            } else {
               delete data.ci_responsable;
             }
             if (data.fecha_desincorporacion) {
@@ -163,22 +170,30 @@ const Bienes = (props) => {
               if (oldData.ci_responsable) {
                 if (oldData.ci_responsable !== data.ci_responsable) {
                   // actualizar el responsable de uso en el historial
-                  updateHistorialResponsableDeUso({
-                    conditions: {
-                       ci,
-                       codigo_bien
-                     }
+                  createHistorialResponsableDeUso({
+                    data: {
+                      ci: ci || '',
+                      codigo_bien: codigo_bien || ''
+                    }
                   }, onError);
                 }
               } else {
                 // crear el ci_responsable en el historial
                 createHistorialResponsableDeUso({
-                  ci: ci || '',
-                  codigo_bien: codigo_bien || ''
+                  data: {
+                    ci: ci || '',
+                    codigo_bien: codigo_bien || ''
+                  }
                 }, onError);
               }
             } else {
               delete data.ci_responsable;
+              createHistorialResponsableDeUso({ // se anexa tambien en el historial que ahorita no tiene responsable
+                data: {
+                  ci: null,
+                  codigo_bien: codigo_bien || ''
+                }
+              }, onError);
             }
 
             if (!data.fecha_incorporacion) {
