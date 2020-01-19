@@ -20,12 +20,23 @@ const Table = (props) => {
     localization: _localization,
     ...rest
   } = props;
+  const [options, setOptions] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const options = {
-    ..._options,
-    pageSize
-  };
+  useEffect(() => {
+    setOptions({
+      ..._options,
+      pageSize,
+    });
+  }, []);
+
+  useEffect(() => {
+    setOptions({
+      ..._options,
+      pageSize,
+    });
+  }, [_options]);
+
   const __localization = {
     ...localization,
     ..._localization

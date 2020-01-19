@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState, useRef} from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Select, MenuItem } from '@material-ui/core';
+import { Select, MenuItem, FormControl, InputLabel, Checkbox, ListItemText, Input } from '@material-ui/core';
 import {Table} from '../../../components';
 import {
   readUnidades,
@@ -13,8 +13,21 @@ import {
   readEdificaciones,
 } from '../../../../db/lib/querys';
 
+const tiposDeBien = ['BIEN NATURAL', 'ACTIVO TANGIBLE', 'ACTIVO INTANGIBLE', 'EDIFICACION'];
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+      marginRight: 25,
+    },
+  },
+};
+
 const headers = [
-  { field: 'codigo_bien', title: 'Bien', },
+  { field: 'codigo_bien', title: 'Bien', filtering: false, },
   { field: 'descripcion', title: 'Nombre', },
   { field: 'fecha_incorporacion', title: 'Incorporacion', },
   { field: 'fecha_desincorporacion', title: 'Desincorporación', },
@@ -36,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const getReporteGeneral = async (flag = 0, codigoSede) => {
+const getReporteGeneral = async (flag = 0, codigoSede, filtroTipos = []) => {
   const bienes = await readBienes();
   const bienesNaturales = await readBienesNaturales();
   const activosTangibles = await readActivosTangibles();
@@ -50,8 +63,11 @@ const getReporteGeneral = async (flag = 0, codigoSede) => {
     const unidad = unidades.find(({codigo_unidad}) => codigo_unidad === bien.codigo_unidad);
     return unidad.codigo_sede === codigoSede;
   };
+  const filterByTipo = (bien) => {
+    return filtroTipos.includes(bien.tipo);
+  }
 
-  const _bienes = bienes.filter(filterBySede).map((bien) => {
+  const _bienes = bienes.filter(filterBySede).filter(filterByTipo).map((bien) => {
     const {
       codigo_bien,
       descripcion,
@@ -109,6 +125,7 @@ const ReportesBienesGeneral = () => {
   const [data, setData] = useState(null);
   const [bienesN, toggleBienesN] = useState(false);
   const [codigoSede, setCodigoSede] = useState(null);
+  const [tipoBien, setTipoBien] = useState(tiposDeBien);
 
   useEffect(() => {
     (async () => {
@@ -165,10 +182,7 @@ const ReportesBienesGeneral = () => {
           <Table
             tableRef={tableRef}
             headers={headers}
-            data={async () => {
-              const data = await getReporteGeneral(1, codigoSede)
-              return data;
-            }}
+            data={async () => getReporteGeneral(1, codigoSede, tipoBien)}
             style={{ marginTop: 20 }}
             localization={{
               header : {
@@ -184,24 +198,60 @@ const ReportesBienesGeneral = () => {
               Action: () => null,
               Toolbar: () => (
                 <div style={{margin: '2em 0 0 2em'}}>
-                  <span>
-                    Sede:{' '}
-                  </span>
                   {data && sedes && (
-                    <Select
-                      value={codigoSede}
-                      onChange={async (e) => {
-                        setCodigoSede(e.target.value);
-                        setData((await getReporteGeneral(0, e.target.value)));
-                        tableRef.current.onQueryChange();
-                      }}
-                    >
-                      {sedes.map((sede) => (
-                        <MenuItem key={sede.codigo_sede} value={sede.codigo_sede}>
-                          {sede.codigo_sede} - {sede.descripcion}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                    <Fragment>
+                      <FormControl style={{ marginRight: 30, height: 50 }}>
+                        <InputLabel id="demo-mutiple-checkbox-label2">
+                          Sede
+                        </InputLabel>
+                        <Select
+                          labelId="demo-mutiple-checkbox-label2"
+                          id="demo-mutiple-checkbox2"
+                          value={codigoSede}
+                          style={{ minWidth: 150 }}
+                          MenuProps={MenuProps}
+                          onChange={async (e) => {
+                            setCodigoSede(e.target.value);
+                            setData((await getReporteGeneral(0, e.target.value)));
+                            tableRef.current.onQueryChange();
+                          }}
+                        >
+                          {sedes.map((sede) => (
+                            <MenuItem key={sede.codigo_sede} value={sede.codigo_sede}>
+                              {sede.codigo_sede} - {sede.descripcion}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                      <FormControl>
+                        <InputLabel id="demo-mutiple-checkbox-label">
+                          Tipo de Bien
+                        </InputLabel>
+                        <Select
+                          labelId="demo-mutiple-checkbox-label"
+                          id="demo-mutiple-checkbox"
+                          multiple
+                          value={tipoBien}
+                          onChange={async (e) => {
+                            setTipoBien(e.target.value);
+                            setData((await getReporteGeneral(0, codigoSede, e.target.value)));
+                            tableRef.current.onQueryChange();
+                          }}
+                          input={<Input />}
+                          renderValue={selected => selected.join(', ')}
+                          style={{ minWidth: 150 }}
+                          MenuProps={MenuProps}
+                        >
+                          {tiposDeBien.map(name => (
+                            <MenuItem key={name} value={name}>
+                              <Checkbox checked={tipoBien.indexOf(name) > -1} />
+                              <ListItemText primary={name} />
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Fragment>
                   )}
                 </div>
               ),
