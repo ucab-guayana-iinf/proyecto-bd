@@ -16,9 +16,20 @@ const Table = (props) => {
     enqueueSnackbar,
     selection,
     pageSize,
+    options: _options,
+    localization: _localization,
     ...rest
   } = props;
   const [isLoading, setIsLoading] = useState(true);
+
+  const options = {
+    ..._options,
+    pageSize
+  };
+  const __localization = {
+    ...localization,
+    ..._localization
+  };
 
   const data = (query) => new Promise(async (resolve, reject) => {
     const data = await getData();
@@ -74,9 +85,9 @@ const Table = (props) => {
       columns={headers}
       icons={tableIcons}
       isLoading={isLoading}
-      localization={localization}
+      localization={__localization}
       editable={{ onRowAdd, onRowUpdate, onRowDelete }}
-      options={{ pageSize }}
+      options={options}
       {...rest}
     />
   );

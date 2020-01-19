@@ -115,7 +115,8 @@ const Unidades = (props) => {
 
             createUnidades({ data }, onError);
           }}
-          onUpdate={(data, onError) => {
+          onUpdate={(data, onError, oldData) => {
+            console.log(data);
             if (!data.ci_jefe) {
               delete data.ci_jefe;
             }
@@ -127,7 +128,7 @@ const Unidades = (props) => {
 
             updateUnidades({
               data,
-              value: data.codigo_unidad,
+              value: oldData.codigo_unidad,
             }, onError);
           }}
           onDelete={(data, onError) => {
