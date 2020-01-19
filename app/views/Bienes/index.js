@@ -8,6 +8,10 @@ import {
   readBienes,
   updateBienes,
   deleteBienes,
+  createHistorialResponsableDeUso,
+  readHistorialResponsableDeUso,
+  updateHistorialResponsableDeUso,
+  deleteHistorialResponsableDeUso,
   readUnidades,
   readEmpleados,
 } from '../../../db/lib/querys';
@@ -112,11 +116,14 @@ const Bienes = (props) => {
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          {empleados.map((empleado) => (
-            <MenuItem key={empleado.ci} value={empleado.ci}>
-              {empleado.ci}{' '}-{' '}{empleado.nombre_completo}
-            </MenuItem>
-          ))}
+          {empleados.map((empleado) => {
+            if (props.rowData.codigo_unidad === empleado.codigo_unidad)
+              return (
+                <MenuItem key={empleado.ci} value={empleado.ci}>
+                  {empleado.ci} - {empleado.nombre_completo}
+                </MenuItem>
+              );
+          })}
         </Select>
       );
     }},
@@ -133,8 +140,8 @@ const Bienes = (props) => {
           data={readBienes}
           selection
           onAdd={(data, onError) => {
-            if (!data.responsable_de_uso) {
-              delete data.responsable_de_uso;
+            if (!data.ci_responsable) {
+              delete data.ci_responsable;
             }
             if (data.fecha_desincorporacion) {
               data.fecha_desincorporacion = jsDatetimeToMysql(data.fecha_desincorporacion);
@@ -149,16 +156,29 @@ const Bienes = (props) => {
             createBienes({ data }, onError);
           }}
           onUpdate={(data, onError, oldData) => {
-            if (data.responsable_de_uso) {
-              if (oldData.responsable_de_uso) {
-                if (oldData.responsable_de_uso !== data.responsable_de_uso) {
+            const ci = data.ci_responsable;
+            const codigo_bien = data.codigo_bien;
+
+            if (data.ci_responsable) {
+              if (oldData.ci_responsable) {
+                if (oldData.ci_responsable !== data.ci_responsable) {
                   // actualizar el responsable de uso en el historial
+                  updateHistorialResponsableDeUso({
+                    conditions: {
+                       ci,
+                       codigo_bien
+                     }
+                  }, onError);
                 }
               } else {
-                // crear el responsable_de_uso en el historial
+                // crear el ci_responsable en el historial
+                createHistorialResponsableDeUso({
+                  ci: ci || '',
+                  codigo_bien: codigo_bien || ''
+                }, onError);
               }
             } else {
-              delete data.responsable_de_uso;
+              delete data.ci_responsable;
             }
 
             if (!data.fecha_incorporacion) {
@@ -178,6 +198,18 @@ const Bienes = (props) => {
             onError);
           }}
           onDelete={(data, onError) => {
+            if (data.ci_responsable){
+              const ci = data.ci_responsable;
+              const codigo_bien = data.codigo_bien;
+
+              deleteHistorialResponsableDeUso({
+                data,
+                conditions: {
+                   ci,
+                   codigo_bien
+                 }
+              }, onError);
+            }
             deleteBienes({
               data,
               value: data.codigo_bien

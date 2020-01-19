@@ -4,6 +4,10 @@ const {
   spreadObj,
 } = require('../../../utils');
 
+  const neededAttributes = [
+    `ci`,
+    `codigo_unidad`,
+  ];
 
 const deleteHistorialResponsablesPrimarios = async (params, onError = () => {}) => {
   const db = await getConnection();
@@ -12,7 +16,7 @@ const deleteHistorialResponsablesPrimarios = async (params, onError = () => {}) 
     conditions,
   } = params;
 
-  const conditionsValues = spreadObj(conditions).replace(',', ' AND');
+  const conditionsValues = spreadObj(conditions, neededAttributes).replace(',', ' AND');
   QUERY = `DELETE FROM historial_responsables_primarios WHERE ${conditionsValues}`;
 
   console.log(QUERY);
