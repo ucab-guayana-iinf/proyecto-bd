@@ -216,6 +216,8 @@ const ReportesBienesGeneral = () => {
             filename={`reporte-general-${date}-${month}-${year}-${(new Date()).getHours()}:${(new Date()).getMinutes()}:${(new Date()).getSeconds()}:${(new Date()).getMilliseconds()}:${Math.random()}.pdf`}
             options={{
               orientation: 'landscape',
+              units: 'in',
+              format: [400 + (total * 35), 1250]
             }}
           >
             {({ toPdf }) => (
@@ -254,7 +256,7 @@ const ReportesBienesGeneral = () => {
             headers={headers}
             onRowClick={(e, data) => setDetalleBien(data)}
             data={async () => getReporteGeneral(1, codigoSede, tipoBien)}
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 20, boxShadow: 'none', }}
             localization={{
               header : {
                  actions: ''
