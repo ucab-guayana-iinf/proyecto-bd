@@ -38,21 +38,37 @@ const MovilizacionesIntangibles = (props) => {
 
   const headers = [
     { title: 'Número de Formato', field: 'numero_formato', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        const row = formatos.find(({ numero_formato }) => numero_formato === data.numero_formato);
+        return (
+          <span>
+            {(row && row.numero_formato) || ''}
+          </span>
+        );
+      },
       editComponent: (props) => {
-      return (
-        <Select
-          value={props.value || ''}
-          onChange={(e) => props.onChange(e.target.value)}
-        >
-          {formatos.map((formato) => (
-            <MenuItem key={formato.numero_formato} value={formato.numero_formato}>
-              {formato.numero_formato}
-            </MenuItem>
-          ))}
-        </Select>
-      );
+        return (
+          <Select
+            value={props.value || ''}
+            onChange={(e) => props.onChange(e.target.value)}
+          >
+            {formatos.map((formato) => (
+              <MenuItem key={formato.numero_formato} value={formato.numero_formato}>
+                {formato.numero_formato}
+              </MenuItem>
+            ))}
+          </Select>
+        );
     }},
     { title: 'Código de Bien Intangible', field: 'codigo_bien_intangible', cellStyle: { width: '-webkit-fill-available' },
+      render: (data) => {
+        const row = activosIntangibles.find(({ codigo_bien }) => codigo_bien === data.codigo_bien_intangible);
+        return (
+          <span>
+            {(row && row.codigo_bien) || ''}
+          </span>
+        );
+      },
       editComponent: (props) => {
       return (
         <Select
@@ -61,7 +77,7 @@ const MovilizacionesIntangibles = (props) => {
         >
           {activosIntangibles.map((activo) => (
             <MenuItem key={activo.codigo_bien} value={activo.codigo_bien}>
-              {activo.numero_formato}
+              {activo.codigo_bien}
             </MenuItem>
           ))}
         </Select>
@@ -87,21 +103,31 @@ const MovilizacionesIntangibles = (props) => {
             }, onError)
           }}
           onUpdate={(data, onError) => {
+            const {
+               numero_formato,
+               codigo_bien_intangible
+            } = data;
+
             updateMovilizacionesIntangibles({
               data,
               conditions: {
-                 Pk1: data.numero_formato,
-                 Pk2: data.codigo_bien_intangible
+                numero_formato,
+                codigo_bien_intangible
                }
 
             }, onError);
           }}
           onDelete={(data, onError) => {
+            const {
+               numero_formato,
+               codigo_bien_intangible
+            } = data;
+
             deleteMovilizacionesIntangibles({
               data,
               conditions: {
-                 Pk1: data.numero_formato,
-                 Pk2: data.codigo_bien_intangible
+                numero_formato,
+                codigo_bien_intangible
                }
 
             }, onError)

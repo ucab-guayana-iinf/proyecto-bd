@@ -4,6 +4,11 @@ const {
   spreadObj,
 } = require('../../../utils');
 
+  const neededAttributes = [
+    `anio`,
+    `semestre`,
+    `codigo_sede`,
+  ];
 
 const deleteInventariosxSedes = async (params, onError = () => {}) => {
   const db = await getConnection();
@@ -12,7 +17,7 @@ const deleteInventariosxSedes = async (params, onError = () => {}) => {
     conditions,
   } = params;
 
-  const conditionsValues = spreadObj(conditions).replace(',', ' AND');
+  const conditionsValues = spreadObj(conditions, neededAttributes).replace(',', ' AND');
   QUERY = `DELETE FROM inventarios_x_sedes WHERE ${conditionsValues}`;
 
   console.log(QUERY);

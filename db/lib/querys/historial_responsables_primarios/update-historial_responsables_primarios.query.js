@@ -28,7 +28,7 @@ const updateHistorialResponsablesPrimarios = async (params, onError = () => {}) 
 
   const values = spreadObj(data, attributes);
 
-  const conditionsValues = spreadObj(conditions).replace(',', ' AND');
+  const conditionsValues = spreadObj(conditions, neededAttributes).replace(',', ' AND');
   QUERY = `UPDATE historial_responsables_primarios SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);

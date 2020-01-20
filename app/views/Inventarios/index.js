@@ -70,7 +70,7 @@ const Inventarios = (props) => {
     { title: 'Lider de Inventario', field: 'ci_lider_inventario', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
         const row = empleados.find(({ ci }) => ci === data.ci_lider_inventario);
-        if (!row) return <span>Por asignar</span>
+        if (!row) return (<span>Por asignar</span>);
         return (
           <span>
             {row.ci} - {row.nombre_completo}
@@ -94,10 +94,10 @@ const Inventarios = (props) => {
     },
     { title: 'Sede', field: 'codigo_sede', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
-        const row = sedes.find(({ ci }) => ci === data.codigo_sede);
+        const row = sedes.find(({ codigo_sede }) => codigo_sede === data.codigo_sede);
         return (
           <span>
-            {row.codigo_sede} - {row.descripcion}
+            {(row && `${row.codigo_sede} - ${row.descripcion}`) || ''}
           </span>
         );
       },
@@ -116,6 +116,29 @@ const Inventarios = (props) => {
       );
     }},
   ];
+
+  const getData = async () => {
+    const _inventarios = await readInventarios();
+    const _children = await readInventariosxSedes();
+
+    const data = _inventarios.map((inventario) => {
+      if (_children) {
+        const parent = _children.find((sede) => (sede.anio === inventario.anio && sede.semestre === inventario.semestre));
+
+        if (parent) {
+          inventario.codigo_sede = parent.codigo_sede;
+        }
+      }
+
+      return inventario;
+    });
+
+    console.log('data');
+    console.table(data);
+
+    return data;
+  };
+
 ///TODO: Add redirection to table InventariosxBienes
   return (
     <div className={classes.root}>
@@ -123,7 +146,7 @@ const Inventarios = (props) => {
         <Table
           title="Inventarios"
           headers={headers}
-          data={readInventarios}
+          data={getData}
           selection
           onRowClick={(e,data) => console.log(`data: ${data}`)}
           onAdd={(data, onError) => {
@@ -143,38 +166,61 @@ const Inventarios = (props) => {
             }, onError)
           }}
           onUpdate={(data, onError) => {
+            const {
+              anio,
+              semestre,
+              codigo_sede,
+            } = data;
+
+            if (!data.fecha_inicio) {
+              delete data.fecha_inicio;
+            } else {
+              data.fecha_inicio = jsDatetimeToMysql(data.fecha_inicio);
+            }
+
+            if (!data.fecha_fin) {
+              delete data.fecha_fin;
+            } else {
+              data.fecha_fin = jsDatetimeToMysql(data.fecha_fin);
+            }
+
             updateInventarios({
               data,
               conditions: {
-                 Pk1: data.anio,
-                 Pk2: data.semestre
+                 anio,
+                 semestre
                }
             },
             onError);
             updateInventariosxSedes({
               data,
               conditions: {
-                 Pk1: data.anio,
-                 Pk2: data.semestre,
-                 Pk3: data.codigo_sede,
+                 anio,
+                 semestre,
+                 codigo_sede,
                }
             },
             onError);
           }}
           onDelete={(data, onError) => {
+            const {
+              anio,
+              semestre,
+              codigo_sede,
+            } = data;
             deleteInventarios({
               data,
               conditions: {
-                 Pk1: data.anio,
-                 Pk2: data.semestre
+                 anio,
+                 semestre
                }
             }, onError);
             deleteInventariosxSedes({
               data,
               conditions: {
-                 Pk1: data.anio,
-                 Pk2: data.semestre,
-                 Pk3: data.codigo_sede,
+                 anio,
+                 semestre,
+                 codigo_sede,
                }
             }, onError)
           }}

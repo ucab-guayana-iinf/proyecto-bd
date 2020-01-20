@@ -35,8 +35,8 @@ const Formatos = (props) => {
     (async() => {
       const _unidades = await readUnidades();
       const _empleados = await readEmpleados();
-      setEmpleados(_unidades);
-      setUnidades(_empleados);
+      setEmpleados(_empleados);
+      setUnidades(_unidades);
     })()
   }, []);
 
@@ -47,7 +47,7 @@ const Formatos = (props) => {
         const row = unidades.find(({ codigo_unidad }) => codigo_unidad === data.codigo_unidad_emisora);
         return (
           <span>
-            {row.nombre_unidad}
+            {(row && row.nombre_unidad) || ''}
           </span>
         );
       },
@@ -57,11 +57,13 @@ const Formatos = (props) => {
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          {unidades.map((unidad) => (
-            <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
-              {unidad.nombre_unidad}
-            </MenuItem>
-          ))}
+          {unidades.map((unidad) => {
+            return (
+              <MenuItem key={unidad.codigo_unidad} value={unidad.codigo_unidad}>
+                {unidad.nombre_unidad}
+              </MenuItem>
+            );
+          })}
         </Select>
       );
     }},
@@ -70,7 +72,7 @@ const Formatos = (props) => {
         const row = unidades.find(({ codigo_unidad }) => codigo_unidad === data.codigo_unidad_receptora);
         return (
           <span>
-            {row.nombre_unidad}
+            {(row && row.nombre_unidad) || ''}
           </span>
         );
       },
@@ -93,7 +95,7 @@ const Formatos = (props) => {
         const row = empleados.find(({ ci }) => ci === data.ficha_responsable_cedente);
         return (
           <span>
-            {row.nombre_completo}
+            {(row && row.nombre_completo) || ''}
           </span>
         );
       },
@@ -103,11 +105,14 @@ const Formatos = (props) => {
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          {empleados.map((empleado) => (
-            <MenuItem key={empleado.ci} value={empleado.ci}>
-              {empleado.nombre_completo}
-            </MenuItem>
-          ))}
+          {empleados.map((empleado) => {
+            if (props.rowData.codigo_unidad_emisora === empleado.codigo_unidad)
+              return (
+                <MenuItem key={empleado.ci} value={empleado.ci}>
+                  {empleado.nombre_completo}
+                </MenuItem>
+              );
+          })}
         </Select>
       );
     }},
@@ -116,7 +121,7 @@ const Formatos = (props) => {
         const row = empleados.find(({ ci }) => ci === data.ficha_responsable_receptor);
         return (
           <span>
-            {row.nombre_completo}
+            {(row && row.nombre_completo) || ''}
           </span>
         );
       },
@@ -126,11 +131,14 @@ const Formatos = (props) => {
           value={props.value || ''}
           onChange={(e) => props.onChange(e.target.value)}
         >
-          {empleados.map((empleado) => (
-            <MenuItem key={empleado.ci} value={empleado.ci}>
-              {empleado.nombre_completo}
-            </MenuItem>
-          ))}
+        {empleados.map((empleado) => {
+          if (props.rowData.codigo_unidad_receptora === empleado.codigo_unidad)
+            return (
+              <MenuItem key={empleado.ci} value={empleado.ci}>
+                {empleado.nombre_completo}
+              </MenuItem>
+            );
+        })}
         </Select>
       );
     }},
@@ -196,12 +204,15 @@ const Formatos = (props) => {
               data: {
                 ...data,
                 fecha_formato: jsDatetimeToMysql(data.fecha_formato) || null,
+                aprobacion_receptor: data.aprobacion_receptor || false,
+                aprobacion_emisor: data.aprobacion_emisor || false,
                 codigo_unidad_emisora: data.codigo_unidad_emisora || '',
                 codigo_unidad_receptora: data.codigo_unidad_receptora || '',
                 ficha_responsable_cedente: data.ficha_responsable_cedente || '',
                 ficha_responsable_receptor: data.ficha_responsable_receptor || '',
               },
             }, onError)
+
           }}
           onUpdate={(data, onError) => {
             if (!data.fecha_formato) {

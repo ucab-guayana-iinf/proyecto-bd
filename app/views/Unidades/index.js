@@ -8,6 +8,10 @@ import {
   readUnidades,
   updateUnidades,
   deleteUnidades,
+  createHistorialResponsablesPrimarios,
+  readHistorialResponsablesPrimarios,
+  updateHistorialResponsablesPrimarios,
+  deleteHistorialResponsablesPrimarios,
   readSedes,
   readEmpleados,
 } from '../../../db/lib/querys';
@@ -83,11 +87,14 @@ const Unidades = (props) => {
             <MenuItem key={'POR ASIGNAR'} value={''}>
               POR ASIGNAR
             </MenuItem>
-            {empleados.map((empleado) => (
-              <MenuItem key={empleado.ci} value={empleado.ci}>
-                {empleado.ci} - {empleado.nombre_completo}
-              </MenuItem>
-            ))}
+            {empleados.map((empleado) => {
+              if (props.rowData.codigo_unidad === empleado.codigo_unidad)
+                return (
+                  <MenuItem key={empleado.ci} value={empleado.ci}>
+                    {empleado.ci} - {empleado.nombre_completo}
+                  </MenuItem>
+                );
+            })}
           </Select>
         );
       }
@@ -113,13 +120,57 @@ const Unidades = (props) => {
               data.fecha_jefe = jsDatetimeToMysql(data.fecha_jefe);
             }
 
+            if (data.ci_jefe && data.codigo_unidad){
+              const {
+                 ci_jefe,
+                 codigo_unidad
+              } = data;
+
+              createHistorialResponsablesPrimarios({
+                data: {
+                  ...data,
+                  ci: ci_jefe || '',
+                  codigo_unidad: codigo_unidad || ''
+                }
+              }, onError);
+            }
+
             createUnidades({ data }, onError);
           }}
           onUpdate={(data, onError, oldData) => {
-            console.log(data);
-            if (!data.ci_jefe) {
-              delete data.ci_jefe;
+            const ci = data.ci_jefe;
+            const codigo_unidad = data.codigo_unidad;
+
+            if (data.ci_jefe) {
+              if (oldData.ci_jefe) {
+                if (oldData.ci_jefe !== data.ci_jefe) {
+                  // actualizar el responsable primario en el historial
+                  createHistorialResponsablesPrimarios({
+                    data: {
+                      ci: ci || '',
+                      codigo_unidad: codigo_unidad || ''
+                    }
+                  }, onError);
+                }
+              } else{
+                // crear el responsable primario en el historial
+                createHistorialResponsablesPrimarios({
+                  data: {
+                    ci: ci || '',
+                    codigo_unidad: codigo_unidad || ''
+                  }
+                }, onError);
+              }
+            } else {
+              data.ci_jefe = null;
+              createHistorialResponsablesPrimarios({  // se anexa tambien en el historial de que ahorita no tiene responsable
+                data: {
+                  ci: null,
+                  codigo_unidad: codigo_unidad || ''
+                }
+              }, onError);
             }
+
             if (!data.fecha_jefe) {
               delete data.fecha_jefe;
             } else {
@@ -132,6 +183,18 @@ const Unidades = (props) => {
             }, onError);
           }}
           onDelete={(data, onError) => {
+            if (data.ci_jefe && data.ci_jefe !== null){
+              const ci = data.ci_jefe;
+              const codigo_unidad = data.codigo_unidad;
+
+              deleteHistorialResponsablesPrimarios({
+                data,
+                conditions: {
+                   ci,
+                   codigo_unidad
+                 }
+              }, onError);
+            }
             deleteUnidades({
               data,
               value: data.codigo_unidad

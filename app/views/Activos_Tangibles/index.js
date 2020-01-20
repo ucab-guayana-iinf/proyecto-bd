@@ -44,7 +44,6 @@ const Tangibles = (props) => {
   const headers = [
     { title: 'Código Bien', field: 'codigo_bien', cellStyle: { width: '-webkit-fill-available' },
       render: (data) => {
-        stateData = data;
         const row = newData.find(({ codigo_bien }) => codigo_bien === data.codigo_bien);
         return (
           <span>
