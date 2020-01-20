@@ -1,5 +1,6 @@
 import React, {Fragment, useEffect, useState, useRef} from 'react';
 import { makeStyles } from '@material-ui/styles';
+import Pdf from "react-to-pdf";
 import PrintIcon from '@material-ui/icons/Print';
 import { Table } from '../../../components';
 import ReporteDetalladoBien from './ReporteDetallado';
@@ -37,6 +38,21 @@ const MenuProps = {
     },
   },
 };
+
+const months = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre'
+];
 
 const headers = [
   { field: 'codigo_bien', title: 'Bien', filtering: false, },
@@ -132,6 +148,7 @@ const Value = ({children, amount}) => (
 );
 
 const ReportesBienesGeneral = () => {
+  const pdfRef = useRef(null);
   const tableRef = useRef(null);
   const classes = useStyles();
   const [data, setData] = useState(null);
@@ -139,6 +156,11 @@ const ReportesBienesGeneral = () => {
   const [codigoSede, setCodigoSede] = useState(null);
   const [tipoBien, setTipoBien] = useState(tiposDeBien);
   const [detalleBien, setDetalleBien] = useState(null);
+  const now = (new Date());
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const date = now.getDate();
+  const prettyNow = `${date} de ${months[month - 1]}, ${year}`;
 
   useEffect(() => {
     (async () => {
@@ -178,15 +200,32 @@ const ReportesBienesGeneral = () => {
   } = count;
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} ref={pdfRef}>
       <div className={classes.content}>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-          <h1>
-            Reporte General de los Bienes
-          </h1>
-          <IconButton onClick={print}>
-            <PrintIcon size={40} />
-          </IconButton>
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <h1>
+              Reporte General de los Bienes
+            </h1>
+            <span style={{color: 'gray'}}>
+              {prettyNow}
+            </span>
+          </div>
+          <Pdf
+            targetRef={pdfRef}
+            filename={`reporte-general-${date}-${month}-${year}-${(new Date()).getHours()}:${(new Date()).getMinutes()}:${(new Date()).getSeconds()}:${(new Date()).getMilliseconds()}:${Math.random()}.pdf`}
+            options={{
+              orientation: 'landscape',
+              units: 'in',
+              format: [400 + (total * 35), 1250]
+            }}
+          >
+            {({ toPdf }) => (
+              <IconButton onClick={toPdf}>
+                <PrintIcon />
+              </IconButton>
+            )}
+          </Pdf>
         </div>
 
         <br />
@@ -217,7 +256,7 @@ const ReportesBienesGeneral = () => {
             headers={headers}
             onRowClick={(e, data) => setDetalleBien(data)}
             data={async () => getReporteGeneral(1, codigoSede, tipoBien)}
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 20, boxShadow: 'none', }}
             localization={{
               header : {
                  actions: ''
