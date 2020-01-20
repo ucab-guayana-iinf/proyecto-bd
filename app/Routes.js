@@ -25,9 +25,7 @@ import {
   Inventarios as InventariosView,
   Reportes as ReportesView,
 } from './views';
-import ReportesBienView from './views/Reportes/ReportesBien';
 import ReportesBienesGeneralView from './views/Reportes/ReportesBienesGeneral';
-import ReportesBienesXSedeView from './views/Reportes/ReportesBienesXSede';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
 //       o se le borran los iconos a todo..
@@ -155,18 +153,6 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/reportes/bienes-general"
-      />
-      <RouteWithLayout
-        component={ReportesBienesXSedeView}
-        exact
-        layout={MainLayout}
-        path="/reportes/bienes-sede"
-      />
-      <RouteWithLayout
-        component={ReportesBienView}
-        exact
-        layout={MainLayout}
-        path="/reportes/bien"
       />
       <Redirect to="/ubicaciones" />
     </Switch>

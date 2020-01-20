@@ -109,7 +109,6 @@ const Unidades = (props) => {
           title="Unidades"
           headers={headers}
           data={readUnidades}
-          selection
           onAdd={(data, onError) => {
             if (!data.ci_jefe) {
               delete data.ci_jefe;
