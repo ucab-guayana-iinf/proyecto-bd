@@ -104,20 +104,21 @@ const getReporteGeneral = async (flag = 0, codigoSede, filtroTipos = []) => {
       origen,
       tipo,
       ci_responsable,
+      codigo_unidad,
     } = bien;
 
     const unidad = unidades.find(({codigo_unidad}) => codigo_unidad === bien.codigo_unidad);
 
     return {
       codigo_bien,
+      codigo_unidad,
       descripcion,
-      fecha_incorporacion: (fecha_incorporacion && fecha_incorporacion.toString()) || 'N/A',
-      fecha_desincorporacion: (fecha_desincorporacion && fecha_desincorporacion.toString()) || 'N/A',
-      unidad: unidad.nombre_unidad,
       origen,
       tipo: tipo || 'N/A',
       ci_jefe: unidad.ci_jefe || 'N/A',
       ci_responsable: ci_responsable || 'N/A',
+      fecha_incorporacion: (fecha_incorporacion && fecha_incorporacion.toString()) || 'N/A',
+      fecha_desincorporacion: (fecha_desincorporacion && fecha_desincorporacion.toString()) || 'N/A',
     }
   });
 
