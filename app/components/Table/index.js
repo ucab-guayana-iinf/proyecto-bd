@@ -46,7 +46,7 @@ const Table = (props) => {
     const data = await getData();
     setIsLoading(false);
     resolve({
-      data,
+      data: data.slice(query.page * pageSize, query.page * pageSize + pageSize),
       page: query.page,
       totalCount: data.length,
     });
