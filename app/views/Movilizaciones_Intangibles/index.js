@@ -102,11 +102,11 @@ const MovilizacionesIntangibles = (props) => {
               },
             }, onError)
           }}
-          onUpdate={(data, onError) => {
+          onUpdate={(data, onError, oldData) => {
             const {
                numero_formato,
                codigo_bien_intangible
-            } = data;
+            } = oldData;
 
             updateMovilizacionesIntangibles({
               data,

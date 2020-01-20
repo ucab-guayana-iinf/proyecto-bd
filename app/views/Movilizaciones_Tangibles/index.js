@@ -102,12 +102,11 @@ const MovilizacionesTangibles = (props) => {
               },
             }, onError)
           }}
-          onUpdate={(data, onError) => {
+          onUpdate={(data, onError, oldData) => {
             const {
                numero_formato,
                codigo_bien_tangible
-            } = data;
-
+            } = oldData;
             updateMovilizacionesTangibles({
               data,
               conditions: {
