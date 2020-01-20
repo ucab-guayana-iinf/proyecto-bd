@@ -1,6 +1,8 @@
 const { asyncForEach } = require('./async-foreach/async-foreach.utils');
 const { keepAlive } = require('./keep-alive/keep-alive.utils');
 const {
+  jsDateToMysql,
+  jsDatetimeToMysql,
   mysqlDateToJS,
   mysqlDatetimeToJS,
 } = require('./mysql-to-js-dates/mysql-to-js-dates.utils');
@@ -22,4 +24,8 @@ module.exports = {
   spreadObjValues,
   getKeys,
   validateInput,
+  jsDateToMysql,
+  jsDatetimeToMysql,
+  mysqlDateToJS,
+  mysqlDatetimeToJS
 };

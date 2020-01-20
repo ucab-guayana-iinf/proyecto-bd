@@ -20,9 +20,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 const headers = [
-  { title: 'Código ubicación', field: 'codigo_ubicacion', type: 'numeric', editable: 'never' },
-  { title: 'Dirección', field: 'direccion' },
-  { title: 'Ciudad', field: 'nombre_ciudad', editComponent: (props) => {
+  { title: 'Código ubicación', field: 'codigo_ubicacion', type: 'numeric', editable: 'never', cellStyle: { width: '160px' } },
+  { title: 'Dirección', field: 'direccion', cellStyle: { width: '-webkit-fill-available' } },
+  { title: 'Ciudad', field: 'nombre_ciudad', cellStyle: { width: '-webkit-fill-available' }, editComponent: (props) => {
     return (
       <Select
         labelId="demo-simple-select-label"
@@ -47,8 +47,10 @@ const Ubicaciones = (props) => {
     <div className={classes.root}>
       <div className={classes.content}>
         <Table
+          title="Ubicaciones"
           headers={headers}
           data={readUbicaciones}
+          selection
           onAdd={(data, onError) => {
             createUbicaciones({
               data: {

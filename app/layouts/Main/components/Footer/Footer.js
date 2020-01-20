@@ -6,7 +6,8 @@ import { Typography, Link } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(4)
+    padding: theme.spacing(4),
+    marginTop: 'auto',
   }
 }));
 
@@ -21,8 +22,8 @@ const Footer = props => {
       className={clsx(classes.root, className)}
     >
       <Typography variant="caption">
-        Creado por amor al ambiente, por estudiantes de ing. informática
-        en la UCAB Guayana
+        Creado con ❤️ y ☕ por futuros Ing. informáticos de la UCAB Guayana<br />
+        Enero, 2020 | Puerto Ordaz, Venezuela
       </Typography>
     </div>
   );

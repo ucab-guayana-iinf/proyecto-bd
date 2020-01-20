@@ -5,17 +5,27 @@ import { RouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
-  Dashboard as DashboardView,
-  ProductList as ProductListView,
-  UserList as UserListView,
-  Typography as TypographyView,
-  Icons as IconsView,
-  Account as AccountView,
   Settings as SettingsView,
-  SignUp as SignUpView,
-  SignIn as SignInView,
   Ubicaciones as UbicacionesView,
+  Sedes as SedesView,
+  Unidades as UnidadesView,
+  Empleados as EmpleadosView,
+  Bienes as BienesView,
+  Tangibles as TangiblesView,
+  Intangibles as IntangiblesView,
+  Facturas as FacturasView,
+  Edificaciones as EdificacionesView,
+  BienesNaturales as BienesNaturalesView,
+  Componentes as ComponentesView,
+  Formatos as FormatosView,
+  MovilizacionesTangibles as MovilizacionesTangiblesView,
+  MovilizacionesIntangibles as MovilizacionesIntangiblesView,
+  HistorialResponsablesPrimarios as HistorialResponsablesPrimariosView,
+  HistorialResponsableDeUso as HistorialResponsableDeUsoView,
+  Inventarios as InventariosView,
+  Reportes as ReportesView,
 } from './views';
+import ReportesBienesGeneralView from './views/Reportes/ReportesBienesGeneral';
 
 // TODO: o le buscan iconos alusivos al nombre de la vista
 //       o se le borran los iconos a todo..
@@ -31,40 +41,100 @@ const Routes = () => {
         path="/ubicaciones"
       />
       <RouteWithLayout
-        component={DashboardView}
+        component={SedesView}
         exact
         layout={MainLayout}
-        path="/dashboard"
+        path="/sedes"
       />
       <RouteWithLayout
-        component={UserListView}
+        component={UnidadesView}
         exact
         layout={MainLayout}
-        path="/users"
+        path="/unidades"
       />
       <RouteWithLayout
-        component={ProductListView}
+        component={EmpleadosView}
         exact
         layout={MainLayout}
-        path="/products"
+        path="/empleados"
       />
       <RouteWithLayout
-        component={TypographyView}
+        component={BienesView}
         exact
         layout={MainLayout}
-        path="/typography"
+        path="/bienes"
       />
       <RouteWithLayout
-        component={IconsView}
+        component={TangiblesView}
         exact
         layout={MainLayout}
-        path="/icons"
+        path="/activos-tangibles"
       />
       <RouteWithLayout
-        component={AccountView}
+        component={IntangiblesView}
         exact
         layout={MainLayout}
-        path="/account"
+        path="/activos-intangibles"
+      />
+      <RouteWithLayout
+        component={FacturasView}
+        exact
+        layout={MainLayout}
+        path="/facturas"
+      />
+      <RouteWithLayout
+        component={EdificacionesView}
+        exact
+        layout={MainLayout}
+        path="/edificaciones"
+      />
+      <RouteWithLayout
+        component={BienesNaturalesView}
+        exact
+        layout={MainLayout}
+        path="/bienes-naturales"
+      />
+      <RouteWithLayout
+        component={ComponentesView}
+        exact
+        layout={MainLayout}
+        path="/componentes"
+      />
+      <RouteWithLayout
+        component={FormatosView}
+        exact
+        layout={MainLayout}
+        path="/formatos"
+      />
+      <RouteWithLayout
+        component={MovilizacionesTangiblesView}
+        exact
+        layout={MainLayout}
+        path="/movilizaciones-tangibles"
+      />
+      <RouteWithLayout
+        component={MovilizacionesIntangiblesView}
+        exact
+        layout={MainLayout}
+        path="/movilizaciones-intangibles"
+      />
+      <RouteWithLayout
+        component={HistorialResponsablesPrimariosView}
+        exact
+        layout={MainLayout}
+        path="/responsables-primarios"
+      />
+      <RouteWithLayout
+        component={HistorialResponsableDeUsoView}
+        exact
+        layout={MainLayout}
+        path="/responsables-uso"
+      />
+      <RouteWithLayout
+        component={InventariosView}
+        exact
+        layout={MainLayout}
+        path="/inventario"
       />
       <RouteWithLayout
         component={SettingsView}
@@ -73,16 +143,16 @@ const Routes = () => {
         path="/configuracion"
       />
       <RouteWithLayout
-        component={SignUpView}
+        component={ReportesView}
         exact
-        layout={MinimalLayout}
-        path="/sign-up"
+        layout={MainLayout}
+        path="/reportes"
       />
       <RouteWithLayout
-        component={SignInView}
+        component={ReportesBienesGeneralView}
         exact
-        layout={MinimalLayout}
-        path="/sign-in"
+        layout={MainLayout}
+        path="/reportes/bienes-general"
       />
       <Redirect to="/ubicaciones" />
     </Switch>

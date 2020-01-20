@@ -8,10 +8,11 @@ const {
  const attributes = [
    `codigo_bien`,
    `codigo_componente`,
+   `nombre_componente`,
  ];
  const neededAttributes = [
    `codigo_bien`,
-   `codigo_componente`,
+   `codigo_componente`
  ];
 
 const updateComponentes = async (params, onError = () => {}) => {
@@ -26,9 +27,9 @@ const updateComponentes = async (params, onError = () => {}) => {
     return null;
   }
 
-  const values = spreadObj(data, attributes);
+  const values = spreadObj(data, neededAttributes);
 
-  const conditionsValues = spreadObj(conditions).replace(',', 'AND');
+  const conditionsValues = spreadObj(conditions, neededAttributes).replace(',', ' AND');
   QUERY = `UPDATE componentes SET ${values} WHERE ${conditionsValues}`;
 
   console.log(QUERY);

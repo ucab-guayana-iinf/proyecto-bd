@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import PeopleIcon from '@material-ui/icons/People';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
@@ -12,7 +13,21 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LocationIcon from '@material-ui/icons/LocationOn';
-
+import PinDropIcon from '@material-ui/icons/PinDrop';
+import DomainIcon from '@material-ui/icons/Domain';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import ApartmentIcon from '@material-ui/icons/Apartment';
+import NaturePeopleIcon from '@material-ui/icons/NaturePeople';
+import LocationCityIcon from '@material-ui/icons/LocationCity';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import SettingsInputCompositeIcon from '@material-ui/icons/SettingsInputComposite';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import SortByAlphaIcon from '@material-ui/icons/SortByAlpha';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import HistoryIcon from '@material-ui/icons/History';
+import MoveToInboxIcon from '@material-ui/icons/MoveToInbox';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import { Profile, SidebarNav } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -28,13 +43,17 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    paddingTop: '6px',
   },
   divider: {
     margin: theme.spacing(2, 0)
   },
   nav: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
   }
 }));
 
@@ -49,50 +68,116 @@ const Sidebar = props => {
     {
       title: 'Ubicaciones',
       href: '/ubicaciones',
-      icon: <LocationIcon />
+      icon: <PinDropIcon />
     },
-
-    // --- demo
     {
-      title: 'Dashboard',
-      href: '/dashboard',
+      title: 'Sedes',
+      href: '/sedes',
+      icon: <LocationCityIcon />
+    },
+    {
+      title: 'Unidades',
+      href: '/unidades',
+      icon: <ApartmentIcon />
+    },
+    {
+      title: 'Empleados',
+      href: '/empleados',
+      icon: <SupervisedUserCircleIcon />
+    },
+    {
+      title: 'Bienes',
+      href: '/bienes',
+      icon: <MenuBookIcon />
+    },
+    {
+      title: 'Activos Tangibles',
+      href: '/activos-tangibles',
+      icon: <AttachFileIcon />
+    },
+    {
+      title: 'Activos Intangibles',
+      href: '/activos-intangibles',
       icon: <DashboardIcon />
     },
     {
-      title: 'Users',
-      href: '/users',
-      icon: <PeopleIcon />
+      title: 'Facturas Activos Tangibles',
+      href: '/facturas',
+      icon: <ReceiptIcon />
     },
     {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />
+      title: 'Edificaciones',
+      href: '/edificaciones',
+      icon: <DomainIcon />
     },
     {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
+      title: 'Bienes Naturales',
+      href: '/bienes-naturales',
+      icon: <NaturePeopleIcon />
     },
     {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
+      title: 'Componentes',
+      href: '/componentes',
+      icon: <SettingsInputCompositeIcon />
+    },
+    // {
+    //   title: 'Nombre Componentes',
+    //   href: '/nombre-componentes',
+    //   icon: <SortByAlphaIcon/>
+    // },
+    {
+      title: 'Formatos',
+      href: '/formatos',
+      icon: <ListAltIcon/>
     },
     {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />
+      title: 'Movilizaciones',
+      href: '/movilizaciones',
+      icon: <LocalShippingIcon />,
+      items: [
+        {
+          title: 'Tangibles',
+          href: '/movilizaciones-tangibles',
+          icon: <LocalShippingIcon />,
+        },
+        {
+          title: 'Intangibles',
+          href: '/movilizaciones-intangibles',
+          icon: <LocalShippingIcon />,
+        }
+      ],
     },
     {
-      title: 'Account',
-      href: '/account',
-      icon: <AccountBoxIcon />
+      title: 'Historial',
+      href: '/historial',
+      icon: <HistoryIcon/>,
+      items: [
+        {
+          title: 'Responsables primarios',
+          href: '/responsables-primarios',
+          icon: <LocalShippingIcon />,
+        },
+        {
+          title: 'Responsables de uso',
+          href: '/responsables-uso',
+          icon: <LocalShippingIcon />,
+        }
+      ],
     },
-    // NOTE: NO VOLARLO
+    {
+      title: 'Inventario',
+      href: '/inventario',
+      icon: <MoveToInboxIcon/>,
+    },
+    {
+      title: 'Reportes',
+      href: '/reportes',
+      icon: <LibraryBooksIcon />,
+    },
     {
       title: 'Configuración',
       href: '/configuracion',
-      icon: <SettingsIcon />
+      icon: <SettingsIcon />,
     }
   ];
 
@@ -108,8 +193,7 @@ const Sidebar = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >
-        <Profile />
-        <Divider className={classes.divider} />
+        <Divider className={classes.divider} style={{ marginTop: 0 }} />
         <SidebarNav
           className={classes.nav}
           pages={pages}

@@ -15,7 +15,7 @@ const neededAttributes = [
   `fotografia`,
 ];
 
-const createFotografiaBienesNaturales = async (params, onError = () => {}) => {
+const createFotografiasBienesNaturales = async (params, onError = () => {}) => {
   const { data } = params;
   const db = await getConnection();
   const columns = spreadObjKeys(data, attributes);
@@ -37,4 +37,4 @@ const createFotografiaBienesNaturales = async (params, onError = () => {}) => {
   }
 };
 
-module.exports = createFotografiaBienesNaturales;
+module.exports = createFotografiasBienesNaturales;

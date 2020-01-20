@@ -1,4 +1,11 @@
-export * from './create-sedes.query';
-export * from './update-sedes.query';
-export * from './read-sedes.query';
-export * from './delete-sedes.query';
+const createSedes = require('./create-sedes.query');
+const updateSedes = require('./update-sedes.query');
+const readSedes = require('./read-sedes.query');
+const deleteSedes = require('./delete-sedes.query');
+
+module.exports = {
+  createSedes,
+  updateSedes,
+  readSedes,
+  deleteSedes,
+};
