@@ -43,12 +43,29 @@ const Table = (props) => {
   };
 
   const data = (query) => new Promise(async (resolve, reject) => {
-    const data = await getData();
+    let data = await getData();
+
+    const getPaginatedData = (_data = [], page) => {
+      return _data.slice(page * pageSize, page * pageSize + pageSize)
+    }
+    if (query.search !== '') {
+      console.log(data);
+      data = data.filter((row) => {
+        const anyValueMatchesTheSearch = Object.keys(row).some((_key) => String(row[_key]).toLowerCase().includes(query.search.toLowerCase()));
+        console.log(`search: ${query.search} | row: ${JSON.stringify(row)} | matches: ${anyValueMatchesTheSearch}`);
+        return anyValueMatchesTheSearch;
+      });
+      console.log('search result');
+      console.log(data);
+    }
+
+    const localData = getPaginatedData(data, query.page);  // pagination
     setIsLoading(false);
+
     resolve({
-      data: data.slice(query.page * pageSize, query.page * pageSize + pageSize),
+      data: localData,
       page: query.page,
-      totalCount: data.length,
+      totalCount: (data && data.length) || 0,
     });
   });
 
