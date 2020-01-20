@@ -6,7 +6,7 @@ const {
 
 const readHistorialResponsableDeUso = async (onError = () => {}) => {
   const db = await getConnection();
-  const QUERY = `SELECT * FROM historial_responsable_de_uso`;
+  const QUERY = `SELECT * FROM historial_responsables_de_uso`;
 
   try {
     const response = await promisifyQuery(db, QUERY);

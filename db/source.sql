@@ -251,13 +251,13 @@ ALTER TABLE `movilizaciones_intangibles` ADD FOREIGN KEY (`codigo_bien_intangibl
 ALTER TABLE `movilizaciones_intangibles` ADD FOREIGN KEY (`numero_formato`) REFERENCES `formatos` (`numero_formato`); -- ON DELETE RESTRICT ON UPDATE CASCADE;
 
 ---- bonito
--- CREATE TABLE IF NOT EXISTS `historial_reponsables_de_uso` (
+-- CREATE TABLE IF NOT EXISTS `historial_responsables_de_uso` (
 --   `ci` INT,
 --   `codigo_bien` INT NOT NULL,
 --   PRIMARY KEY (`ci`, `codigo_bien`),
 -- ) ENGINE = InnoDB;
 ---- en linea
-CREATE TABLE IF NOT EXISTS `historial_reponsables_de_uso` ( `ci` INT, `codigo_bien` INT NOT NULL, PRIMARY KEY (`ci`, `codigo_bien`)) ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `historial_responsables_de_uso` ( `ci` INT, `codigo_bien` INT NOT NULL, PRIMARY KEY (`ci`, `codigo_bien`)) ENGINE = InnoDB;
 
 ---- bonito-- CREATE TABLE IF NOT EXISTS `historial_responsables_primarios` (
 --   `ci` INT,

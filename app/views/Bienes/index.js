@@ -139,15 +139,8 @@ const Bienes = (props) => {
           headers={headers}
           data={readBienes}
           selection
-          onAdd={(data, onError) => {
-            if (data.ci_responsable) {
-              createHistorialResponsableDeUso({
-                data: {
-                  ci: data.ci_responsable || '',
-                  codigo_bien: data.codigo_bien || ''
-                },
-              }, onError);
-            } else {
+          onAdd={async (data, onError) => {
+            if (!data.ci_responsable) {
               delete data.ci_responsable;
             }
             if (data.fecha_desincorporacion) {
@@ -160,7 +153,17 @@ const Bienes = (props) => {
             } else {
               delete data.fecha_incorporacion;
             }
-            createBienes({ data }, onError);
+
+            const { insertId: codigo_bien } = await createBienes({ data }, onError);
+
+            if (data.ci_responsable) {
+              createHistorialResponsableDeUso({
+                data: {
+                  codigo_bien,
+                  ci: data.ci_responsable,
+                },
+              }, onError);
+            }
           }}
           onUpdate={(data, onError, oldData) => {
             const ci = data.ci_responsable;

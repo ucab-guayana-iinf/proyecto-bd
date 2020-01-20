@@ -5,6 +5,11 @@ const {
 } = require('../../../utils');
 
 
+const neededAttributes = [
+  `ci`,
+  `codigo_bien`,
+];
+
 const deleteHistorialResponsableDeUso = async (params, onError = () => {}) => {
   const db = await getConnection();
 
@@ -12,8 +17,8 @@ const deleteHistorialResponsableDeUso = async (params, onError = () => {}) => {
     conditions,
   } = params;
 
-  const conditionsValues = spreadObj(conditions).replace(',', ' AND');
-  QUERY = `DELETE FROM historial_responsable_de_uso WHERE ${conditionsValues}`;
+  const conditionsValues = spreadObj(conditions, neededAttributes).replace(',', ' AND');
+  const QUERY = `DELETE FROM historial_responsables_de_uso WHERE ${conditionsValues}`;
 
   console.log(QUERY);
 

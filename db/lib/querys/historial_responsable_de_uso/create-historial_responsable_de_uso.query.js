@@ -25,7 +25,7 @@ const createHistorialResponsableDeUso = async (params, onError = () => {}) => {
     return null;
   }
 
-  const QUERY = `INSERT INTO historial_responsable_de_uso ${columns} VALUES ${values};`;
+  const QUERY = `INSERT INTO historial_responsables_de_uso ${columns} VALUES ${values};`;
   console.log(QUERY);
 
   try {
